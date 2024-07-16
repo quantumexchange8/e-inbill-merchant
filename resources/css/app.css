@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --primary-25: #f8fcff;
+        --primary-50: #edf8ff;
+        --primary-100: #d6eeff;
+        --primary-200: #b5e2ff;
+        --primary-300: #83d2ff;
+        --primary-400: #48b8ff;
+        --primary-500: #1e95ff;
+        --primary-600: #0674ff;
+        --primary-700: #0060ff;
+        --primary-800: #084ac5;
+        --primary-900: #0d429b;
+        --primary-950: #0e295d;
+    }
+}
+
+@layer base {
+    @font-face {
+      font-family: 'SF Pro';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/resources/font/SF-Pro-Text-Regular.otf') format('otf');
+    }
+}
+
+@layer base {
+    @font-face {
+      font-family: 'SF Pro';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('/resources/font/SF-Pro-Text-Medium.otf') format('otf');
+    }
+}
+
+@layer base {
+    @font-face {
+      font-family: 'SF Pro';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('/resources/font/SF-Pro-Text-Semibold.otf') format('otf');
+    }
+}
+
+@layer base {
+    @font-face {
+      font-family: 'SF Pro';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('/resources/font/SF-Pro-Text-Bold.otf') format('otf');
+    }
+}
