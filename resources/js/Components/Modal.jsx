@@ -1,54 +1,49 @@
-import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
+import { Button, CloseButton, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import { useState } from 'react';
+import { XIcon } from './Icon/outline';
 
-export default function Modal({ children, show = false, maxWidth = '2xl', closeable = true, onClose = () => {} }) {
-    const close = () => {
-        if (closeable) {
-            onClose();
-        }
-    };
+export default function Modal({ children, show = false, maxWidth = 'md', maxHeight = 'md', isOpen, close, title, footer, closeIcon }) {
 
     const maxWidthClass = {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
+        sm: 'sm:w-[300px] ',
+        md: 'max-w-[500px]',
         lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
-    }[maxWidth];
+        xl: 'sm:w-full md:min-w-[768px] lg:min-w-[1024px] xl:min-w-[1140px]',
+    }[maxWidth] ;
+
+    const maxHeightClass = {
+        sm: 'sm:h-[500px] xl:h-[700px]',
+        md: 'max-h-[500px]',
+        xl: 'sm:h-[500px] xl:min-h-[700px]',
+    }[maxHeight];
 
     return (
-        <Transition show={show} leave="duration-200">
-            <Dialog
-                as="div"
-                id="modal"
-                className="fixed inset-0 flex overflow-y-auto px-4 py-6 sm:px-0 items-center z-50 transform transition-all"
-                onClose={close}
-            >
-                <TransitionChild
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="absolute inset-0 bg-gray-500/75" />
-                </TransitionChild>
+        <>
 
-                <TransitionChild
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enterTo="opacity-100 translate-y-0 sm:scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                    leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
+            <Dialog open={isOpen} as="div" className="relative z-20 focus:outline-none" onClose={close}>
+                <div className="fixed inset-0 z-20 w-screen overflow-y-auto">
+                <div className="flex min-h-full justify-center items-start p-4 bg-black/25">
                     <DialogPanel
-                        className={`mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass}`}
+                        transition
+                        className={`w-full max-w-md rounded-xl bg-white border shadow-md backdrop-blur-2xl duration-100 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ${maxWidthClass} ${maxHeightClass}`}
                     >
+                        <DialogTitle className="text-lg font-bold text-neutral-950 flex justify-between p-5">
+                            <div className='w-full'>
+                                {title}
+                            </div>
+                            <CloseButton>
+                                {closeIcon}
+                                {/* <XIcon /> */}
+                            </CloseButton>
+                        </DialogTitle>
                         {children}
+                        <div className="w-full p-5 bg-white rounded-b-lg">
+                            {footer}
+                        </div>
                     </DialogPanel>
-                </TransitionChild>
+                </div>
+                </div>
             </Dialog>
-        </Transition>
+        </>
     );
 }

@@ -1,114 +1,213 @@
 import React from "react";
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import { EinbillLogo } from "@/Components/Icon/logo";
+import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, SaleReportIcon, XIcon } from "./Icon/outline";
 
-export default function SideBar({ user, showingNavigationDropdown }) {
+export default function SideBar({ user, showingNavigationDropdown, expanded, toggleSidebar }) {
+
+    const { url } = usePage();
 
     return (
-        <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+        <aside className={`fixed inset-y-0 z-20 border-r border-transparent md:border-gray-200 overflow-auto p-4 max-w-60 bg-white
+            scrollbar-thin scrollbar-webkit ease-in-out duration-300
+            ${!expanded ? 'translate-x-[-100%] md:translate-x-0 md:w-[75px]' : 'translate-x-0 w-60'}
+            ease-in-out duration-300
+            ${expanded ? 'block' : 'hidden md:block'}
+            `}
+        >
+            <nav className="flex flex-col gap-6">
+                {!expanded ? (
+                    <div >
+                        <EinbillLogo width="44" height="44"/>
+                    </div>
+                ) : (
+                    <div className="flex justify-between items-center">
+                        <EinbillLogo width="44" height="44"/>
+                        <div className="block md:hidden" onClick={toggleSidebar}>
+                            <XIcon />
+                        </div>
+                    </div>
+                )}
+                <div className={`flex flex-col gap-2 ${!expanded ? 'items-center': ''}`}>
+                    <div>
+                        {
+                            !expanded ? (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <DashboardIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    </div>
                                 </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+                            ) : (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <DashboardIcon color='currentColor' />
+                                        <div className="text-sm font-medium">
+                                            Dashboard
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }  
                     </div>
-                </div>
-
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
+                    <div >
+                        {
+                            !expanded ? (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <EinvoiceIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <EinvoiceIcon color='currentColor' />
+                                        <div className="text-sm font-medium">
+                                            E-invoice
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                        
                     </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
+                    <div >
+                        {
+                            !expanded ? (
+                                <Link href={route('item.item-listing')} className={`${
+                                    url === '/item/item-listing' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
+                                }`}>
+                                    <div className={`${url === '/item/item-listing' ? 'p-3 rounded drop-shadow bg-gray-100 hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <ItemListingIcon color='currentColor' className={`${url === '/item/item-listing' ? 'text-primary-700' : 'text-gray-800'}`}/>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link href={route('item.item-listing')} className={`${
+                                    url === '/item/item-listing' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
+                                }`}>
+                                    <div className={`${url === '/item/item-listing' ? "bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
+                                        <ItemListingIcon color='currentColor' className={`${url === '/item/item-listing' ? 'text-primary-700' : 'text-gray-800'}`}/>
+                                        <div className="text-sm font-medium">
+                                            Item Listing
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                    </div>
+                    <div >
+                        {
+                            !expanded ? (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <SaleReportIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <SaleReportIcon color='currentColor' />
+                                        <div className="text-sm font-medium">
+                                            Sales Report
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                        
+                    </div>
+                    <div >
+                        {
+                            !expanded ? (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <AdminUserIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <AdminUserIcon color='currentColor'/>
+                                        <div className="text-sm font-medium">
+                                            Admin User
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                        
+                    </div>
+                    <div >
+                        {
+                            !expanded ? (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <MyBillingIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <MyBillingIcon color='currentColor' />
+                                        <div className="text-sm font-medium">
+                                            My Billing
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                        
+                    </div>
+                    <div >
+                        {
+                            !expanded ? (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <ConfigIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link href={route('dashboard')} className={`${
+                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                }`}>
+                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <ConfigIcon color='currentColor' />
+                                        <div className="text-sm font-medium">
+                                            Configuration
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                        
                     </div>
                 </div>
             </nav>
+        </aside>
     )
 }

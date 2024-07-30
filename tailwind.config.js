@@ -8,10 +8,15 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
+        "./node_modules/primereact/**/*.{js,ts,jsx,tsx}",
     ],
 
     theme: {
         extend: {
+            backgroundImage: {
+                'gradient-116': 'linear-gradient(116deg, var(--tw-gradient-stops))',
+                'bg-image': "url('/assets/einbill.png')"
+            },
             fontFamily: {
                 'sf-pro': ['SF Pro', 'sans-serif'],
             },
@@ -99,8 +104,21 @@ export default {
                     800: '#7a4019',
                     900: '#68351b',
                     950: '#3d1b0b',
+                },
+                category: {
+                    red: '#ed2939',
+                    orange: '#ff8c00',
+                    yellow: '#ffd700',
+                    green: '#008000',
+                    mint: '#40e0d0',
+                    blue: '#0059cf',
+                    purple: '#6f00ff',
+                    pink: '#ff004f',
                 }
             },
+            boxShadow: {
+                'container': '3px 0px 7.2px 0px rgba(229, 229, 229, 0.31)',
+            }
         },
         fontSize: {
             'xss': ['10px', {
@@ -133,6 +151,7 @@ export default {
             'lg': '1024px',
             'md': '768px',
             'sm': '360px',
+            'xs': '320px',
         }
     },
 

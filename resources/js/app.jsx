@@ -1,11 +1,12 @@
 import './bootstrap';
 import '../css/app.css';
+import 'primeicons/primeicons.css';
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'E-inbill';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

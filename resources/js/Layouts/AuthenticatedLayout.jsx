@@ -1,25 +1,47 @@
-import { useState } from 'react';
-
-
+import { useEffect, useState } from 'react';
 import SideBar from '@/Components/Sidebar';
+import Navbar from '@/Components/Navbar';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarExpanded(!isSidebarExpanded);
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 1024) { // md breakpoint (768px)
+                setIsSidebarExpanded(true);
+            } else {
+                setIsSidebarExpanded(false);
+            }
+        };
+
+        // Set initial state
+        handleResize();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <SideBar user={user} showingNavigationDropdown={showingNavigationDropdown}>
+        <div className="min-h-screen bg-white">
+            <SideBar expanded={isSidebarExpanded} user={user} showingNavigationDropdown={showingNavigationDropdown} toggleSidebar={toggleSidebar} />
+
+            <div className={`min-h-screen flex flex-col ${isSidebarExpanded ? 'md:ml-60' : 'translate-x-0 md:ml-[74px]'}`}>
+                <Navbar header={header} toggleSidebar={toggleSidebar} expanded={isSidebarExpanded}/>
                 
-            </SideBar>
-            
-
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
-
-            <main>{children}</main>
+                <main className='w-full flex justify-center p-5'>
+                    <div className='max-w-[1440px] w-full md:p-5 rounded-lg md:border md:border-neutral-100 bg-white md:shadow-container'>
+                        {children}
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

@@ -23,13 +23,13 @@ export default ({
 
     switch (variant) {
         case 'secondary':
-            variantClasses = `bg-gray-100 text-primary-700 text-xs hover:bg-gray-200 disabled:text-primary-700 disabled:bg-gray-100`
+            variantClasses = `bg-gray-100 text-xs hover:bg-gray-200 disabled:text-primary-700 disabled:bg-gray-100`
             break
         case 'tertiary':
             variantClasses = `bg-transparent text-primary-700 text-xs border border-primary-700 rounded hover:border-primary-800 hover:bg-transparent hover:text-primary-800 disabled:text-primary-700 disabled:bg-transparent`
             break
         case 'ghost':
-            variantClasses = `bg-transparent text-primary-700 text-xs hover:bg-transparent hover:text-primary-800 hover:underline hover:underline-offset-4 disabled:text-primary-700 disabled:bg-transparent`
+            variantClasses = `bg-transparent text-primary-700 underline underline-offset-4 text-xs hover:bg-transparent hover:text-primary-800 hover:underline hover:underline-offset-4 disabled:text-primary-700 disabled:bg-transparent`
             break
         case 'success':
             variantClasses = `bg-gradient-to-r from-[#00b827] via-[#06e432] via-[#06d22c] to-[#00c728] text-xs hover:bg-gradient-to-r hover:from-secondary-700 hover:to-secondary-700 text-white`
