@@ -95,7 +95,7 @@ export default function Login({ status, canResetPassword }) {
                         </div>
                     </div>
 
-                    <Button className='w-full flex justify-center' size='lg'>
+                    <Button className='w-full flex justify-center' size='lg' disabled={processing}>
                         <span className='text-sm font-medium'>
                             Log In
                         </span>

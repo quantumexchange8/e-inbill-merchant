@@ -25,6 +25,11 @@
         --primary-900: #0d429b;
         --primary-950: #0e295d;
     }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 }
 
 @layer base {

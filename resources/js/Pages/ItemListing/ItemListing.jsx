@@ -12,6 +12,7 @@ import ManageCategory from "./Partials/ManageCategory";
 import ConfirmDialogMessage from "@/Components/ConfirmDialogMessage";
 import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
 import ItemListingTable from "./Partials/ItemListingTable";
+import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -87,62 +88,73 @@ export default function ItemListing({ categories }) {
                     </div>
                 </div>
                 
-                <div className="w-full">
-                    <Tab.Group
-                        onChange={(index) => {
-                            // Map index to category name
-                            const category = index === 0 ? 'all' : categories[index - 1]?.name;
-                            setSelectedTab(category);
-                        }}
-                    >
-                        <Tab.List className="flex">
-
-                            <Tab
-                                className={({ selected }) =>
-                                    classNames(
-                                    'p-2 text-sm font-medium leading-5 flex items-end gap-2',
-                                    'focus:outline-none border-b border-gray-200 hover:border-gray-700',
-                                    selected
-                                        ? 'bg-white text-primary-700 font-medium border-b-2 border-primary-700'
-                                        : 'text-blue-100 hover:bg-white/[0.12] hover:text-gray-700 font-medium'
-                                    )
-                                }
+                {
+                    categories.length > 0 ? (
+                        <div className="w-full">
+                            <Tab.Group
+                                onChange={(index) => {
+                                    // Map index to category name
+                                    const category = index === 0 ? 'all' : categories[index - 1]?.name;
+                                    setSelectedTab(category);
+                                }}
                             >
-                                <span>All</span>
-                                {/* <span className="w-5 h-5 py-0.5 px-1 rounded bg-primary-700 text-primary-25 text-xss font-medium flex items-center justify-center">
-                                    18
-                                </span> */}
-                            </Tab>
-                            {
-                                categories.map((category, index) => (
-                                    <Tab 
-                                        key={index}
+                                <Tab.List className="flex">
+
+                                    <Tab
                                         className={({ selected }) =>
                                             classNames(
                                             'p-2 text-sm font-medium leading-5 flex items-end gap-2',
                                             'focus:outline-none border-b border-gray-200 hover:border-gray-700',
                                             selected
                                                 ? 'bg-white text-primary-700 font-medium border-b-2 border-primary-700'
-                                                : 'text-gray-200 hover:bg-white/[0.12] hover:text-gray-700 font-medium'
+                                                : 'text-blue-100 hover:bg-white/[0.12] hover:text-gray-700 font-medium'
                                             )
                                         }
                                     >
-                                        <span>{category.name}</span>
+                                        <span>All</span>
                                         {/* <span className="w-5 h-5 py-0.5 px-1 rounded bg-primary-700 text-primary-25 text-xss font-medium flex items-center justify-center">
                                             18
                                         </span> */}
                                     </Tab>
-                                ))
-                            }
-                            
-                        </Tab.List>
-                        <Tab.Panels className="mt-2">
-                            <Tab.Panel>
-                                <ItemListingTable type={selectedTab} searchVal={searchVal}/>
-                            </Tab.Panel>
-                        </Tab.Panels>
-                    </Tab.Group>
-                </div>
+                                    {
+                                        categories.map((category, index) => (
+                                            <Tab 
+                                                key={index}
+                                                className={({ selected }) =>
+                                                    classNames(
+                                                    'p-2 text-sm font-medium leading-5 flex items-end gap-2',
+                                                    'focus:outline-none border-b border-gray-200 hover:border-gray-700',
+                                                    selected
+                                                        ? 'bg-white text-primary-700 font-medium border-b-2 border-primary-700'
+                                                        : 'text-gray-200 hover:bg-white/[0.12] hover:text-gray-700 font-medium'
+                                                    )
+                                                }
+                                            >
+                                                <span>{category.name}</span>
+                                                {/* <span className="w-5 h-5 py-0.5 px-1 rounded bg-primary-700 text-primary-25 text-xss font-medium flex items-center justify-center">
+                                                    18
+                                                </span> */}
+                                            </Tab>
+                                        ))
+                                    }
+                                    
+                                </Tab.List>
+                                <Tab.Panels className="mt-2">
+                                    <ItemListingTable type={selectedTab} searchVal={searchVal}/>
+                                </Tab.Panels>
+                            </Tab.Group>
+                        </div>
+                    ) : (
+                        <div className="w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                            <div>
+                                <img src={ManageCategoryImgNoCont} alt="manage_category" />
+                            </div>
+                            <div className="text-gray-400 text-sm font-medium">
+                                You haven't added any item yet
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </Authenticated>
     )

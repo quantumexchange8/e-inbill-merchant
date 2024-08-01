@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
 use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,7 +21,7 @@ class ItemController extends Controller
         ]);
     }
 
-    public function newCategory(Request $request)
+    public function newCategory(CategoryRequest $request)
     {
 
         $category = Category::create([
@@ -30,7 +33,7 @@ class ItemController extends Controller
         return redirect()->back()->with('success', 'success created!');
     }
 
-    public function editCategory(Request $request)
+    public function editCategory(EditCategoryRequest $request)
     {
 
         dd($request->all());
@@ -38,11 +41,30 @@ class ItemController extends Controller
         return redirect()->back()->with('success', 'success updated!');
     }
 
-    public function deleteCategory($id)
+    public function deleteCategory(Request $request)
     {
 
-        dd($id);
+        $delete = Category::find($request->id);
+        $delete->delete();
 
         return redirect()->back()->with('success', 'success updated!');
+    }
+
+    public function getItem(Request $request)
+    {
+
+        $item = Item::query();
+
+        $datas = $item->get();
+
+        return response()->json($datas);
+    }
+
+    public function newItem(Request $request)
+    {
+        dd($request->all());
+
+
+        return redirect()->back()->with('success', 'success created!');
     }
 }

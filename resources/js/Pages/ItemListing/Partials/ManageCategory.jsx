@@ -10,6 +10,8 @@ import EditCategory from "./Category/EditCategory";
 import DeleteCategory from "./Category/DeleteCategory";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { ConfirmLogoutIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
+import toast from 'react-hot-toast';
+import InputError from "@/Components/InputError";
 
 export default function ManageCategory({ categories }) {
     
@@ -57,6 +59,7 @@ export default function ManageCategory({ categories }) {
 
     const confirm1 = (id) => {
         setSelectedCategoryId(id);
+        setData('id', id)
         setDialogVisible(true);
     };
 
@@ -74,6 +77,12 @@ export default function ManageCategory({ categories }) {
                 CloseNewCategory();
                 setIsLoading(false);
                 reset();
+                toast.success('Category added successfully.', {
+                    title: 'Category added successfully.',
+                    description: 'You can manage or add more category under ‘Manage Category’.',
+                    duration: 3000,
+                    variant: 'variant1',
+                });
             }
         });
     } 
@@ -114,7 +123,7 @@ export default function ManageCategory({ categories }) {
             </Button>
 
             <Modal 
-                title='Add Item'
+                title='Manage Category'
                 maxWidth='md'
                 maxHeight='md' 
                 isOpen={isOpen} close={closeModal}
@@ -133,43 +142,45 @@ export default function ManageCategory({ categories }) {
                     </div>
                 }
             >
+                <div className="h-full md:max-h-[356px] overflow-auto">
+                    {
+                        categories.length > 0 ? (
+                            categories.map((category, index) => (
+                                <div key={index} className="px-5">
+                                    <div className="flex justify-between py-4 border-b border-gray-100">
+                                        <div className="flex items-center gap-3">
+                                            <div>
 
-                {
-                    categories.length > 0 ? (
-                        categories.map((category, index) => (
-                            <div key={index} className="max-h-[356px] overflow-auto px-5">
-                                <div className="flex justify-between py-4 border-b border-gray-100">
-                                    <div className="flex items-center gap-3">
-                                        <div>
-
+                                            </div>
+                                            <div className="flex gap-2 items-center">
+                                                <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: category.color }}></div>
+                                                <div>{category.name}</div>
+                                            </div>
                                         </div>
-                                        <div className="flex gap-2 items-center">
-                                            <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: category.color }}></div>
-                                            <div>{category.name}</div>
-                                        </div>
-                                    </div>
 
-                                    <div className="flex items-center gap-3">
-                                        <EditCategory category={category} colors={colors} />
+                                        <div className="flex items-center gap-3">
+                                            <EditCategory category={category} colors={colors} />
+                                            <DeleteCategory category={category}/>
 
-                                        <div className="cursor-pointer" onClick={() => confirm1(category.id)}>
-                                            <DeleteIcon />
+                                            {/* <div className="cursor-pointer" onClick={() => confirm1(category.id)}>
+                                                <DeleteIcon />
+                                            </div> */}
+                                            
                                         </div>
-                                        
                                     </div>
                                 </div>
+                            ))
+                        ) : (
+                            <div className="flex flex-col items-center gap-3 py-2">
+                                <img src={ManageCategoryImgNoCont} alt="manage_category" />
+                                <div className="text-gray-400 text-sm font-medium">
+                                    No category has been created yet
+                                </div>
                             </div>
-                        ))
-                    ) : (
-                        <div className="flex flex-col items-center gap-3">
-                            <img src={ManageCategoryImgNoCont} alt="manage_category" />
-                            <div className="text-gray-400 text-sm font-medium">
-                                No category has been created yet
-                            </div>
-                        </div>
-                    )
-                    
-                }
+                        )
+                        
+                    }
+                </div>
             </Modal>
 
             <form >
@@ -209,37 +220,43 @@ export default function ManageCategory({ categories }) {
                         </div>
                     }
                 >
-                    <div className="max-h-[356px] h-auto overflow-auto">
+                    <div className="h-full md:max-h-[356px] overflow-auto">
                         <div className="flex flex-col gap-5">
                             <div className="px-5 flex flex-col gap-4">
                                 <div className="flex gap-1">
                                     <span className="text-error-500 text-xs font-semibold">*</span><InputLabel value='Category Name' />
                                 </div>
-
-                                <TextInput 
-                                    id="name"
-                                    type='text'
-                                    name="name"
-                                    value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    hasError={!!errors.name}
-                                    placeholder='e.g. Main Course'
-                                />
+                                <div className="w-full flex flex-col space-y-2">
+                                    <TextInput 
+                                        id="name"
+                                        type='text'
+                                        name="name"
+                                        value={data.name}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        hasError={!!errors.name}
+                                        placeholder='e.g. Main Course'
+                                        className=' w-full'
+                                    />
+                                    <InputError message={errors.name} className="mt-2" />
+                                </div>
                             </div>
                             <div className="px-5 flex flex-col gap-4">
                                 <div className="text-neutral-950 text-sm font-bold">
                                     Category Color
                                 </div>
-                                <div className="flex flex-row items-center justify-between">
-                                    {colors.map((color) => (
-                                        <div
-                                            key={color.name}
-                                            className={`rounded-full w-10 h-10 flex items-center justify-center ${color.name} ${selected === color.name ? 'border-4 border-primary-200' : 'hover:border-2 hover:border-primary-50'}`}
-                                            onClick={() => handleColorSelect(color.name, color.colorCode)}
-                                        >
-                                            {selected === color.name ? <CheckIcon className='text-white' /> : ''}
-                                        </div>
-                                    ))}
+                                <div className="flex flex-col space-y-2">
+                                    <div className="flex flex-row items-center justify-between">
+                                        {colors.map((color) => (
+                                            <div
+                                                key={color.name}
+                                                className={`rounded-full w-10 h-10 flex items-center justify-center ${color.name} ${selected === color.name ? 'border-4 border-primary-200' : 'hover:border-2 hover:border-primary-50'}`}
+                                                onClick={() => handleColorSelect(color.name, color.colorCode)}
+                                            >
+                                                {selected === color.name ? <CheckIcon className='text-white' /> : ''}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <InputError message={errors.color} className="mt-2" />
                                 </div>
                             </div>
                         </div>
@@ -247,47 +264,7 @@ export default function ManageCategory({ categories }) {
                 </Modal>
             </form>
 
-            <ConfirmDialog
-                visible={dialogVisible}
-                onHide={() => setDialogVisible(false)}
-                content={({ headerRef, contentRef, footerRef, hide, message }) => (
-                    <div className="relative flex flex-col gap-6 items-center p-5 rounded-lg border border-primary-200 max-w-[300px] bg-white">
-                        <div className="w-full flex justify-center h-3 pt-4">
-                            <div className="absolute top-[-42px]">
-                                <DeleteLogoIcon className='drop-shadow-[0_11px_21px_rgba(250, 57, 66, 0.36)]' />
-                            </div>
-                        </div>
-                        <div className='flex flex-col gap-3 items-center'>
-                            <div className="font-bold text-lg text-neutral-950 font-sf-pro" ref={headerRef}>
-                                Delete this category?
-                            </div>
-                            <div className='text-neutral-950 text-base font-sf-pro text-center' ref={contentRef}>
-                                Deleting this category will leave its items uncategorised. Are you sure?
-                            </div>
-                        </div>
-                        <div className="w-full flex items-center gap-2 " ref={footerRef}>
-                            <Button
-                                onClick={(event) => {
-                                    hide(event);
-                                    reject();
-                                }}
-                                size='lg'
-                                variant='secondary'
-                                className="w-full flex justify-center font-sf-pro"
-                            >Cancel</Button>
-                            <Button
-                                onClick={(event) => {
-                                    hide(event);
-                                    accept();
-                                    onSubmit();
-                                }}
-                                size='lg'
-                                className="w-full flex justify-center font-sf-pro bg-[#0060FF]"
-                            >Confirm</Button>
-                        </div>
-                    </div>
-                )}
-            />
+            
         </>
     )
 }

@@ -12,7 +12,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
     const { url } = usePage();
 
     return (
-        <aside className={`fixed inset-y-0 z-20 border-r border-transparent md:border-gray-200 overflow-auto p-4 max-w-60 bg-white
+        <aside className={`fixed inset-y-0 z-20 border-r border-transparent md:border-gray-200 overflow-auto p-4 max-w-60 bg-gray-25
             scrollbar-thin scrollbar-webkit ease-in-out duration-300
             ${!expanded ? 'translate-x-[-100%] md:translate-x-0 md:w-[75px]' : 'translate-x-0 w-60'}
             ease-in-out duration-300
@@ -40,7 +40,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
                                     <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                        <DashboardIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                        <DashboardIcon color='currentColor' className={`${url === '/dashboard' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                     </div>
                                 </Link>
                             ) : (

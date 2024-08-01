@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import SideBar from '@/Components/Sidebar';
 import Navbar from '@/Components/Navbar';
+import { CustomToaster } from '@/Components/CustomToaster';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -30,16 +31,18 @@ export default function Authenticated({ user, header, children }) {
     }, []);
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-[#FCFCFD]">
             <SideBar expanded={isSidebarExpanded} user={user} showingNavigationDropdown={showingNavigationDropdown} toggleSidebar={toggleSidebar} />
 
             <div className={`min-h-screen flex flex-col ${isSidebarExpanded ? 'md:ml-60' : 'translate-x-0 md:ml-[74px]'}`}>
                 <Navbar header={header} toggleSidebar={toggleSidebar} expanded={isSidebarExpanded}/>
                 
                 <main className='w-full flex justify-center p-5'>
-                    <div className='max-w-[1440px] w-full md:p-5 rounded-lg md:border md:border-neutral-100 bg-white md:shadow-container'>
+                    <div className='max-w-[1440px] w-full md:p-5 rounded-lg md:border md:border-neutral-100 bg-gray-25 md:shadow-container'>
                         {children}
                     </div>
+
+                    <CustomToaster />
                 </main>
             </div>
         </div>

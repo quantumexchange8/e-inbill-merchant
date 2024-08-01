@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { LogoutIcon, MenuIcon, NotificationIcon } from './Icon/outline';
 import { useForm, usePage } from '@inertiajs/react';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
@@ -7,14 +7,31 @@ import Modal from './Modal';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
 import Button from './Button';
+import toast from 'react-hot-toast';
 
 export default function Navbar({ user, header, toggleSidebar }) {
 
     const { auth } = usePage().props;
 
     const [isOpen, setIsOpen] = useState(false)
+    const [scroll, setScroll] = useState(true)
 
     const { data, setData, post, processing, reset } = useForm({});
+
+    const controlNavbar = () => {
+        if (window.scrollY > 100) {
+            setScroll(false)
+        } else {
+            setScroll(true)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', controlNavbar)
+        return () => {
+            window.removeEventListener('scroll', controlNavbar)
+        }
+    }, [])
 
     const toggleProfile = () => {
         setIsOpen(true)
@@ -48,11 +65,22 @@ export default function Navbar({ user, header, toggleSidebar }) {
         submit();
     }
     const submit = () => {
-        post(route('logout'));
+        post(route('logout'), {
+                method: 'POST',
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success('You’ve successfully log out.', {
+                        title: 'You’ve successfully log out.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+            }
+        );
     };
 
     return (
-        <nav className='w-full bg-white  md:shadow-[0_3px_28px_0_rgba(56, 97, 122, 0.08)] py-2 px-3 md:px-4'>
+        <nav className={`sticky top-0 z-10 ease-in duration-500 w-full bg-gray-25 border-b border-gray-200 md:shadow-navbar py-2 px-3 md:px-4`}>
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-6'>
                     <div className='p-2.5 cursor-pointer bg-neutral-100 hover:bg-neutral-300 rounded-[4px]' onClick={toggleSidebar}>
