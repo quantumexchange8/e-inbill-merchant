@@ -60,18 +60,18 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                     <div >
                         {
                             !expanded ? (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('invoice.e-invoice')} className={`${
+                                    url === '/invoice/e-invoice' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                        <EinvoiceIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    <div className={`${url === '/invoice/e-invoice' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <EinvoiceIcon color='currentColor' className={`${url === '/invoice/e-invoice' ? 'text-secondary-600' : 'text-gray-800'}`}/>
                                     </div>
                                 </Link>
                             ) : (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('invoice.e-invoice')} className={`${
+                                    url === '/invoice/e-invoice' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                    <div className={`${url === '/invoice/e-invoice' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                         <EinvoiceIcon color='currentColor' />
                                         <div className="text-sm font-medium">
                                             E-invoice
@@ -109,18 +109,18 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                     <div >
                         {
                             !expanded ? (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('sales.sales-report')} className={`${
+                                    url === '/sales/sales-report' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                        <SaleReportIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    <div className={`${url === '/sales/sales-report' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <SaleReportIcon color='currentColor' className={`${url === '/sales/sales-report' ? 'text-secondary-600' : 'text-gray-800'}`}/>
                                     </div>
                                 </Link>
                             ) : (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('sales.sales-report')} className={`${
+                                    url === '/sales/sales-report' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                    <div className={`${url === '/sales/sales-report' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                         <SaleReportIcon color='currentColor' />
                                         <div className="text-sm font-medium">
                                             Sales Report
@@ -134,18 +134,18 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                     <div >
                         {
                             !expanded ? (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('admin.my-admin')} className={`${
+                                    url === '/admin/my-admin' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                        <AdminUserIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    <div className={`${url === '/admin/my-admin' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <AdminUserIcon color='currentColor' className={`${url === '/admin/my-admin' ? 'text-secondary-600' : 'text-gray-800'}`}/>
                                     </div>
                                 </Link>
                             ) : (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('admin.my-admin')} className={`${
+                                    url === '/admin/my-admin' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                    <div className={`${url === '/admin/my-admin' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                         <AdminUserIcon color='currentColor'/>
                                         <div className="text-sm font-medium">
                                             Admin User
@@ -159,18 +159,18 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                     <div >
                         {
                             !expanded ? (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('billing.my-billing')} className={`${
+                                    url === '/billing/my-billing' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                        <MyBillingIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    <div className={`${url === '/billing/my-billing' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <MyBillingIcon color='currentColor' className={`${url === '/billing/my-billing' ? 'text-secondary-600' : 'text-gray-800'}`}/>
                                     </div>
                                 </Link>
                             ) : (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('billing.my-billing')} className={`${
+                                    url === '/billing/my-billing' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                    <div className={`${url === '/billing/my-billing' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                         <MyBillingIcon color='currentColor' />
                                         <div className="text-sm font-medium">
                                             My Billing
@@ -184,18 +184,18 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                     <div >
                         {
                             !expanded ? (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('configuration.configuration')} className={`${
+                                    url === '/configuration/configuration' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                        <ConfigIcon color='currentColor' className={`${url === '/dashboard' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                    <div className={`${url === '/configuration/configuration' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                        <ConfigIcon color='currentColor' className={`${url === '/configuration/configuration' ? 'text-secondary-600' : 'text-gray-800'}`}/>
                                     </div>
                                 </Link>
                             ) : (
-                                <Link href={route('dashboard')} className={`${
-                                    url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                <Link href={route('configuration.configuration')} className={`${
+                                    url === '/configuration/configuration' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                 }`}>
-                                    <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                    <div className={`${url === '/configuration/configuration' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                         <ConfigIcon color='currentColor' />
                                         <div className="text-sm font-medium">
                                             Configuration

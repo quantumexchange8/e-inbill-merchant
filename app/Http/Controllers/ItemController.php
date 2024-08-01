@@ -29,4 +29,20 @@ class ItemController extends Controller
 
         return redirect()->back()->with('success', 'success created!');
     }
+
+    public function editCategory(Request $request)
+    {
+
+        dd($request->all());
+
+        return redirect()->back()->with('success', 'success updated!');
+    }
+
+    public function deleteCategory($id)
+    {
+
+        dd($id);
+
+        return redirect()->back()->with('success', 'success updated!');
+    }
 }

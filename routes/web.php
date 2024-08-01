@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\BillingController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SalesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +34,9 @@ Route::middleware('auth')->group(function () {
      *           E-Invoice
      * ==============================
      */
+    Route::prefix('invoice')->group(function () {
+        Route::get('/e-invoice', [InvoiceController::class, 'eInvoice'])->name('invoice.e-invoice');
+    });
 
      /**
      * ==============================
@@ -39,6 +47,8 @@ Route::middleware('auth')->group(function () {
      Route::prefix('item')->group(function () {
         Route::get('/item-listing', [ItemController::class, 'itemListing'])->name('item.item-listing');
         Route::post('/new-category', [ItemController::class, 'newCategory'])->name('item.new-category');
+        Route::post('/edit-category', [ItemController::class, 'editCategory'])->name('item.edit-category');
+        Route::post('/delete-category/{id}', [ItemController::class, 'deleteCategory'])->name('item.delete-category');
      });
 
      /**
@@ -46,24 +56,38 @@ Route::middleware('auth')->group(function () {
      *           Sales Report
      * ==============================
      */
+    Route::prefix('sales')->group(function () {
+        Route::get('/sales-report', [SalesController::class, 'salesReport'])->name('sales.sales-report');
+    });
 
      /**
      * ==============================
      *           Admin user
      * ==============================
      */
+    Route::prefix('admin')->group(function () {
+        Route::get('/admin', [AdminUserController::class, 'admin'])->name('admin.my-admin');
+    });
+
 
      /**
      * ==============================
      *           My Billing
      * ==============================
      */
+    Route::prefix('billing')->group(function () {
+        Route::get('/my-billing', [BillingController::class, 'myBilling'])->name('billing.my-billing');
+    });
 
     /**
      * ==============================
      *           Configuration
      * ==============================
      */
+    Route::prefix('configuration')->group(function () {
+        Route::get('/configuration', [ConfigurationController::class, 'configuration'])->name('configuration.configuration');
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

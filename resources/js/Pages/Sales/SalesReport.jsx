@@ -1,7 +1,7 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import React from "react";
 
-export default function Einvoice() {
+export default function SalesReport() {
 
     return (
         <Authenticated>

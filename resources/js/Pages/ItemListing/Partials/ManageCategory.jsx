@@ -6,6 +6,10 @@ import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
+import EditCategory from "./Category/EditCategory";
+import DeleteCategory from "./Category/DeleteCategory";
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { ConfirmLogoutIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
 
 export default function ManageCategory({ categories }) {
     
@@ -13,8 +17,11 @@ export default function ManageCategory({ categories }) {
     const [isNcewCategoryOpen, setIsNewCategoryOpen] = useState(false)
     const [selected, setSelected] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    const [dialogVisible, setDialogVisible] = useState(false);
+    
     const { data, setData, post, processing, errors, reset } = useForm({
+        id: '',
         name: '',
         color: '',
     });
@@ -34,6 +41,27 @@ export default function ManageCategory({ categories }) {
     const CloseNewCategory = () => {
         setIsNewCategoryOpen(false)
         reset()
+    }
+
+    const accept = () => {
+        // Call submit function for the selected category
+        submit();
+        setData('id', selectedCategoryId);
+        setDialogVisible(false);
+
+    };
+
+    const reject = () => {
+        setDialogVisible(false);
+    };
+
+    const confirm1 = (id) => {
+        setSelectedCategoryId(id);
+        setDialogVisible(true);
+    };
+
+    const onSubmit = () => {
+        submit();
     }
 
     const submit = (e) => {
@@ -65,10 +93,6 @@ export default function ManageCategory({ categories }) {
         setSelected(colorName);
         setData('color', colorCode);
     };
-
-    const editCategory = (id) => {
-        console.log(id)
-    }
 
     const delteCategory = (id) => {
         console.log(id)
@@ -120,18 +144,18 @@ export default function ManageCategory({ categories }) {
 
                                         </div>
                                         <div className="flex gap-2 items-center">
-                                            <div className={`w-2.5 h-2.5 rounded-full bg-[${category.color}]`} ></div>
+                                            <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: category.color }}></div>
                                             <div>{category.name}</div>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <div className="cursor-pointer" onClick={() => {editCategory(category.id)}}>
-                                            <EditIcon />
-                                        </div>
-                                        <div className="cursor-pointer" onClick={() => {delteCategory(category.id)}}>
+                                        <EditCategory category={category} colors={colors} />
+
+                                        <div className="cursor-pointer" onClick={() => confirm1(category.id)}>
                                             <DeleteIcon />
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -222,6 +246,48 @@ export default function ManageCategory({ categories }) {
                     </div>
                 </Modal>
             </form>
+
+            <ConfirmDialog
+                visible={dialogVisible}
+                onHide={() => setDialogVisible(false)}
+                content={({ headerRef, contentRef, footerRef, hide, message }) => (
+                    <div className="relative flex flex-col gap-6 items-center p-5 rounded-lg border border-primary-200 max-w-[300px] bg-white">
+                        <div className="w-full flex justify-center h-3 pt-4">
+                            <div className="absolute top-[-42px]">
+                                <DeleteLogoIcon className='drop-shadow-[0_11px_21px_rgba(250, 57, 66, 0.36)]' />
+                            </div>
+                        </div>
+                        <div className='flex flex-col gap-3 items-center'>
+                            <div className="font-bold text-lg text-neutral-950 font-sf-pro" ref={headerRef}>
+                                Delete this category?
+                            </div>
+                            <div className='text-neutral-950 text-base font-sf-pro text-center' ref={contentRef}>
+                                Deleting this category will leave its items uncategorised. Are you sure?
+                            </div>
+                        </div>
+                        <div className="w-full flex items-center gap-2 " ref={footerRef}>
+                            <Button
+                                onClick={(event) => {
+                                    hide(event);
+                                    reject();
+                                }}
+                                size='lg'
+                                variant='secondary'
+                                className="w-full flex justify-center font-sf-pro"
+                            >Cancel</Button>
+                            <Button
+                                onClick={(event) => {
+                                    hide(event);
+                                    accept();
+                                    onSubmit();
+                                }}
+                                size='lg'
+                                className="w-full flex justify-center font-sf-pro bg-[#0060FF]"
+                            >Confirm</Button>
+                        </div>
+                    </div>
+                )}
+            />
         </>
     )
 }

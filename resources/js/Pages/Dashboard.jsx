@@ -1,3 +1,5 @@
+import Button from '@/Components/Button';
+import { Epc, InvoiceToday, ItemSoldToday, OrderToday, SalesToday } from '@/Components/Icon/Brand';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
@@ -9,8 +11,136 @@ export default function Dashboard({ auth }) {
         >
             <Head title="Dashboard" />
 
-            <div>
-                
+            <div className='flex flex-col gap-5'>
+
+
+                <div className='flex flex-col gap-5'>
+                    <div className='flex flex-col-reverse md:flex-row gap-5'>
+                        <div className='w-full flex flex-nowrap gap-5 items-center md:grid grid-cols-2 md:gap-5 overflow-auto'>
+                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border-l-4 rounded-l border-category-purple  flex flex-row justify-between w-full py-1 pl-4'>
+                                    <div className='flex flex-col gap-[3px]'>
+                                        <div className='text-xs text-gray-950 font-sf-pro'>
+                                            Invoice Sent Today
+                                        </div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                    </div>
+                                    <div>
+                                        <InvoiceToday />
+                                    </div>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <div className='rounded bg-error-50 py-1 px-2 flex gap-1'>
+                                        <span></span>
+                                    </div>
+                                    <div className='text-gray-900 text-xs font-sf-pro'>than yesterday</div>
+                                </div>
+                            </div>
+                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border-l-4 rounded-l border-category-orange  flex flex-row justify-between w-full py-1 pl-4'>
+                                    <div className='flex flex-col gap-[3px]'>
+                                        <div className='text-xs text-gray-950 font-sf-pro'>
+                                            Sales Today (RM)
+                                        </div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0.00</div>
+                                    </div>
+                                    <div>
+                                        <SalesToday />
+                                    </div>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <div className='rounded bg-error-50 py-1 px-2 flex gap-1'>
+                                        <span></span>
+                                    </div>
+                                    <div className='text-gray-900 text-xs font-sf-pro'>than yesterday</div>
+                                </div>
+                            </div>
+                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border-l-4 rounded-l border-category-pink  flex flex-row justify-between w-full py-1 pl-4'>
+                                    <div className='flex flex-col gap-[3px]'>
+                                        <div className='text-xs text-gray-950 font-sf-pro'>
+                                            Order Today
+                                        </div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                    </div>
+                                    <div>
+                                        <OrderToday />
+                                    </div>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <div className='rounded bg-error-50 py-1 px-2 flex gap-1'>
+                                        <span></span>
+                                    </div>
+                                    <div className='text-gray-900 text-xs font-sf-pro'>than yesterday</div>
+                                </div>
+                            </div>
+                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border-l-4 rounded-l border-primary-700  flex flex-row justify-between w-full py-1 pl-4'>
+                                    <div className='flex flex-col gap-[3px]'>
+                                        <div className='text-xs text-gray-950 font-sf-pro'>
+                                            Invoice Sent Today
+                                        </div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                    </div>
+                                    <div>
+                                        <ItemSoldToday />
+                                    </div>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <div className='rounded bg-error-50 py-1 px-2 flex gap-1'>
+                                        <span></span>
+                                    </div>
+                                    <div className='text-gray-900 text-xs font-sf-pro'>than yesterday</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='relative min-h-[165px] overflow-hidden md:max-w-[233px] w-full flex flex-col justify-between p-5 shadow-container border border-neutral-100 rounded-lg bg-[#0674FF]'>
+                            <div className='relative z-10 max-w-[142px] w-full flex flex-col justify-between gap-4 md:max-h-[133px]'>
+                                <div className='flex flex-col gap-2'>
+                                    <div className='flex flex-col gap-1'>
+                                        <div className='text-white text-xs font-sf-pro'>Welcome Back,</div>
+                                        <div className='text-white text-base md:text-lg font-bold font-sf-pro'>{auth.user.name}</div>
+                                    </div>
+                                    <div className='text-primary-100 text-xs font-sf-pro'>
+                                        Get started with your invoicing tasks right away.
+                                    </div>
+                                </div>
+                                <div>
+                                    <Button 
+                                        variant='success'
+                                        size='sm'
+                                        className=''
+
+                                    >
+                                        Go to my e-Invoice
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className='absolute right-0 md:-bottom-8 md:right-0 md:z-0'>
+                                <Epc />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='flex flex-col md:flex-row gap-5'>
+                        <div className='w-full'></div>
+                        <div className='w-full'></div>
+                    </div>
+                </div>
+
+                <div className='flex flex-col md:flex-row items-center gap-5'>
+                    <div className='p-5 w-full'>
+
+                    </div>
+                    <div className='py-5 w-full'>
+
+                    </div>
+                </div>
+
+                <div className='flex flex-col md:flex-row items-center gap-5'>
+
+                </div>
             </div>
         </AuthenticatedLayout>
     );

@@ -8,7 +8,7 @@ export default function Guest({ children }) {
             <div className='flex flex-col items-center gap-4 sm:max-w-[307px] md:max-w-[415px]'>
                 <LoginLogo  />
                 <div className='text-base text-gray-50 text-center font-sf-pro flex justify-center'>
-                    <div className='w-4/5'>
+                    <div className='w-4/5 md:w-full'>
                         e-Invoice & business management made easy 
                     </div>
                 </div>

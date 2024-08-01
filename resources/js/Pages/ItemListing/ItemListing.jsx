@@ -9,6 +9,9 @@ import { Tab } from '@headlessui/react'
 import Button from "@/Components/Button";
 import AddItem from "@/Pages/ItemListing/Partials/AddItem";
 import ManageCategory from "./Partials/ManageCategory";
+import ConfirmDialogMessage from "@/Components/ConfirmDialogMessage";
+import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
+import ItemListingTable from "./Partials/ItemListingTable";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -16,9 +19,13 @@ function classNames(...classes) {
 
 export default function ItemListing({ categories }) {
 
+    const [selectedTab, setSelectedTab] = useState('all');
+
     const { data, setData, post, processing, errors, reset } = useForm({
         search: '',
     });
+
+    const searchVal = data.search;
 
     return (
         <Authenticated header="Item Listing">
@@ -81,7 +88,13 @@ export default function ItemListing({ categories }) {
                 </div>
                 
                 <div className="w-full">
-                    <Tab.Group>
+                    <Tab.Group
+                        onChange={(index) => {
+                            // Map index to category name
+                            const category = index === 0 ? 'all' : categories[index - 1]?.name;
+                            setSelectedTab(category);
+                        }}
+                    >
                         <Tab.List className="flex">
 
                             <Tab
@@ -123,6 +136,11 @@ export default function ItemListing({ categories }) {
                             }
                             
                         </Tab.List>
+                        <Tab.Panels className="mt-2">
+                            <Tab.Panel>
+                                <ItemListingTable type={selectedTab} searchVal={searchVal}/>
+                            </Tab.Panel>
+                        </Tab.Panels>
                     </Tab.Group>
                 </div>
             </div>
