@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
 
-export default function AddItem() {
+export default function AddItem({ fetchDataCallBack }) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +42,7 @@ export default function AddItem() {
             onSuccess: () => {
                 closeModal();
                 setIsLoading(false);
+                fetchDataCallBack()
                 reset();
                 toast.success('Item added successfully.', {
                     title: 'Item added successfully.',
@@ -96,7 +97,7 @@ export default function AddItem() {
                         </div>
                     }
                 >
-                    <div className="max-h-[83vh] md:max-w-none lg:max-h-[600px] overflow-auto">
+                    <div className="max-h-[70vh] md:max-w-none lg:max-h-[600px] overflow-auto">
                         <div className="flex flex-col gap-5">
                             <div className="p-5 w-full flex justify-center">
                                 <div className="max-w-[705px] w-full flex flex-col gap-5">

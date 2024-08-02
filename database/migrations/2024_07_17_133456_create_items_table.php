@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('merchant_id');
             $table->string('name');
-            $table->double('price');
+            $table->decimal('price', 13, 2)->default('0.00');
             $table->unsignedBigInteger('classification_id');
             $table->string('sku');
             $table->unsignedMediumInteger('category_id');
-            $table->double('cost');
+            $table->double('cost', 13, 2)->default('0.00');
             $table->string('stock');
             $table->string('barcode');
+            $table->string('status');
             $table->softDeletes();
             $table->timestamps();
         });
