@@ -7,9 +7,6 @@ import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
-import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 
 export default function EditCategory({ category, colors }) {
     

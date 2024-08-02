@@ -68,3 +68,41 @@
 /* Modal */
 
 /* Modal */
+
+/* table */
+
+.p-datatable .p-datatable-thead > tr > th {
+  padding: 12px;
+  background-color: #F8FAFA;
+}
+
+.p-column-title {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  color: #131B25;
+  text-transform: uppercase;
+  font-family: 'SF Pro', Arial, sans-serif;
+}
+
+.p-icon {
+  display: flex;
+  width: 10px;
+  height: 10px;
+}
+
+.p-paginator {
+  padding: 12px;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 8px 12px 8px 12px;
+}
+
+.p-inputswitch .p-inputswitch-slider {
+  background-color: #E6ECEE;
+}
+
+.p-inputswitch.p-highlight .p-inputswitch-slider {
+  background-color: #00E62B;
+}

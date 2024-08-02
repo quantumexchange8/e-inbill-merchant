@@ -47,9 +47,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('dashboard')} className={`${
                                         url === '/dashboard' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
-                                        <div className={`${url === '/dashboard' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <div className={`${url === '/dashboard' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <DashboardIcon color='currentColor' />
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 Dashboard
                                             </div>
                                         </div>
@@ -71,9 +71,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('invoice.e-invoice')} className={`${
                                         url === '/invoice/e-invoice' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
-                                        <div className={`${url === '/invoice/e-invoice' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <div className={`${url === '/invoice/e-invoice' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <EinvoiceIcon color='currentColor' />
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 E-invoice
                                             </div>
                                         </div>
@@ -96,9 +96,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('item.item-listing')} className={`${
                                         url === '/item/item-listing' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
                                     }`}>
-                                        <div className={`${url === '/item/item-listing' ? "bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
+                                        <div className={`${url === '/item/item-listing' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
                                             <ItemListingIcon color='currentColor' className={`${url === '/item/item-listing' ? 'text-primary-700' : 'text-gray-800'}`}/>
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 Item Listing
                                             </div>
                                         </div>
@@ -120,9 +120,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('sales.sales-report')} className={`${
                                         url === '/sales/sales-report' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
-                                        <div className={`${url === '/sales/sales-report' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <div className={`${url === '/sales/sales-report' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <SaleReportIcon color='currentColor' />
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 Sales Report
                                             </div>
                                         </div>
@@ -145,9 +145,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('admin.my-admin')} className={`${
                                         url === '/admin/my-admin' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
-                                        <div className={`${url === '/admin/my-admin' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <div className={`${url === '/admin/my-admin' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <AdminUserIcon color='currentColor'/>
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 Admin User
                                             </div>
                                         </div>
@@ -170,9 +170,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('billing.my-billing')} className={`${
                                         url === '/billing/my-billing' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
-                                        <div className={`${url === '/billing/my-billing' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <div className={`${url === '/billing/my-billing' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <MyBillingIcon color='currentColor' />
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 My Billing
                                             </div>
                                         </div>
@@ -195,9 +195,9 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     <Link href={route('configuration.configuration')} className={`${
                                         url === '/configuration/configuration' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
-                                        <div className={`${url === '/configuration/configuration' ? 'text-primary-700 bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                        <div className={`${url === '/configuration/configuration' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <ConfigIcon color='currentColor' />
-                                            <div className="text-sm font-medium">
+                                            <div className="text-sm">
                                                 Configuration
                                             </div>
                                         </div>

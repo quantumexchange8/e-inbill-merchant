@@ -13,9 +13,6 @@ import ConfirmDialogMessage from "@/Components/ConfirmDialogMessage";
 import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
 import ItemListingTable from "./Partials/ItemListingTable";
 import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
-import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
