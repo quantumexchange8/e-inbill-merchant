@@ -7,6 +7,9 @@ import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export default function AddItem({ fetchDataCallBack }) {
 

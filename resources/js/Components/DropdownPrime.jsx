@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Dropdown } from 'primereact/dropdown'
 import { CheckIcon } from "./Icon/outline";
 
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 export default function DropdownPrime() {
     const [selectedCity, setSelectedCity] = useState(null);
     const cities = [

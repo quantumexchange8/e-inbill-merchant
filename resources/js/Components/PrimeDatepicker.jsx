@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Calendar } from 'primereact/calendar';
 
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 const PrimeDatepicker = ({ selectionMode }) => {
 
     const [dates, setDates] = useState(null);

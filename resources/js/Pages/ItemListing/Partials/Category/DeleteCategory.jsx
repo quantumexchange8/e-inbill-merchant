@@ -6,6 +6,9 @@ import { ConfirmLogoutIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
 import Button from "@/Components/Button";
 import { useForm } from "@inertiajs/react";
 import toast from 'react-hot-toast';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export default function DeleteCategory({ category }) {
  

@@ -6,6 +6,10 @@ import { LogoutIcon } from './Icon/outline';
 import { ConfirmLogoutIcon } from './Icon/Brand';
 import { Description } from '@headlessui/react';
 
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 export default function ConfirmDialogMessage({ headerIcon, action }) {
 
     const toast = useRef(null);

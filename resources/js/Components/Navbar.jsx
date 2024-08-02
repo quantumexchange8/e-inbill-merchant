@@ -9,6 +9,10 @@ import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
 import Button from './Button';
 import toast from 'react-hot-toast';
 
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 export default function Navbar({ user, header, toggleSidebar }) {
 
     const { auth } = usePage().props;

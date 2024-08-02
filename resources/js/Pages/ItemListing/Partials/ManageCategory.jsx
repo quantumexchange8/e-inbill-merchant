@@ -12,6 +12,9 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { ConfirmLogoutIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
 import toast from 'react-hot-toast';
 import InputError from "@/Components/InputError";
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export default function ManageCategory({ categories }) {
     

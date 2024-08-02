@@ -8,6 +8,9 @@ import { DotMenuIcon } from "@/Components/Icon/outline";
 import { Menu } from 'primereact/menu';
 import { formatAmount } from "@/Composables";
 import { InputSwitch } from "primereact/inputswitch";
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export default function ItemListingTable({ type, searchVal }) {
 
