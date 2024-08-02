@@ -10,4 +10,12 @@ export default defineConfig({
         }),
         react(),
     ],
+    css: {
+        postcss: {
+            plugins: [
+                require('tailwindcss'), // Tailwind CSS support
+                require('autoprefixer') // Autoprefixer for better cross-browser compatibility
+            ],
+        },
+    },
 });
