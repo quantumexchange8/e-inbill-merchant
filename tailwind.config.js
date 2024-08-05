@@ -9,7 +9,6 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
         "./src/**/*.{js,jsx,ts,tsx,mdx}",
-        "./node_modules/primereact/**/*.{js,ts,jsx,tsx}",
     ],
 
     theme: {

@@ -16,6 +16,9 @@
         @viteReactRefresh
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
+
+        <link href={{asset('/themes/lara-light-blue/theme.css')}} rel="stylesheet"></link>
+
     </head>
     <body class="font-sans antialiased bg-gradient-116 from-[#001948] from-[6.93%] to-[#137BFF] to-[168.64%]">
         @inertia
