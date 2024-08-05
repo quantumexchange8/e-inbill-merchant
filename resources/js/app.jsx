@@ -1,13 +1,16 @@
 import './bootstrap';
 import '../css/app.css';
-import '../css/theme.css';
-import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/lara-light-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
+
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+
+import '../css/layout.css'
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import {LayoutProvider} from "@/Layouts/layout/context/layoutcontext.jsx";
 import {PrimeReactProvider} from "primereact/api";
 
 const appName = import.meta.env.VITE_APP_NAME || 'E-inbill';
@@ -20,7 +23,9 @@ createInertiaApp({
 
         root.render(
             <PrimeReactProvider>
-                <App {...props} />
+                <LayoutProvider>
+                    <App {...props} />
+                </LayoutProvider>
             </PrimeReactProvider>
         );
     },
