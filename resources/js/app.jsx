@@ -1,7 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 
 import { createRoot } from 'react-dom/client';
@@ -18,7 +18,7 @@ createInertiaApp({
 
         root.render(<App {...props} />);
     },
-    // progress: {
-    //     color: '#4B5563',
-    // },
+    progress: {
+        color: '#4B5563',
+    },
 });

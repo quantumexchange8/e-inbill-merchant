@@ -7,11 +7,13 @@ import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
+import { InputSwitch } from "primereact/inputswitch";
 
 export default function AddItem({ fetchDataCallBack }) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
+    const [checked, setChecked] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
@@ -156,6 +158,7 @@ export default function AddItem({ fetchDataCallBack }) {
                                                 mode="currency" 
                                                 currency="MYR" locale="en-MY"
                                             />
+                                            <InputSwitch checked={checked} onChange={(e) => setChecked(e.value)} />
                                             <InputError message={errors.price} className="mt-2" />
                                         </div>
                                     </div>
