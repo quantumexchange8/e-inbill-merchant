@@ -103,10 +103,6 @@ export default function ManageCategory({ categories }) {
         setData('color', colorCode);
     };
 
-    const delteCategory = (id) => {
-        console.log(id)
-    }
-
     return (
         <>
             <Button

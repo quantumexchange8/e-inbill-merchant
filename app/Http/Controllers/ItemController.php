@@ -84,10 +84,17 @@ class ItemController extends Controller
     public function updateStatus(Request $request)
     {
         $item = Item::find($request->id);
-
-        $item->update([
-            'status' => $request->status,
-        ]);
+        
+        if ($item->status === "active") {
+            $item->update([
+                'status' => 'inactive',
+            ]);
+        } else {
+            $item->update([
+                'status' => 'active',
+            ]);
+        }
+        
 
         return redirect()->back()->with('success', 'success created!');
     }

@@ -79,8 +79,9 @@
 }
 
 .p-icon {
-  width: 1rem;
-  height: 1rem;
+  width: 12px;
+  height: 12px;
+  display: flex !important;
 }
 
 .p-link {
@@ -1084,12 +1085,12 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 1rem;
   color: #495057;
-  background: #ffffff;
+  background: #F8FAFA !important;
   padding: 0.75rem 0.75rem;
-  border: 1px solid #ced4da;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   appearance: none;
-  border-radius: 6px;
+  border-radius: 4px !important;
+  border: none;
 }
 .p-inputtext:enabled:hover {
   border-color: #3B82F6;
@@ -2658,9 +2659,7 @@
 }
 .p-datatable .p-datatable-thead > tr > th {
   text-align: left;
-  padding: 1rem 1rem;
-  border: 1px solid #dee2e6;
-  border-width: 0 0 1px 0;
+  padding: 10px 12px 10px 12px;
   font-weight: 700;
   color: #343a40;
   background: #f8f9fa;
@@ -2723,6 +2722,8 @@
   border: 1px solid #dee2e6;
   border-width: 0 0 1px 0;
   padding: 1rem 1rem;
+  font-size: 14px;
+  font-weight: 500;
 }
 .p-datatable .p-datatable-tbody > tr > td .p-row-toggler,
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-init,
@@ -3529,9 +3530,8 @@
   background-color: transparent;
   border: 0 none;
   color: #6c757d;
-  min-width: 3rem;
-  height: 3rem;
-  margin: 0.143rem;
+  min-width: 32px;
+  height: 32px;
   transition: box-shadow 0.2s;
   border-radius: 50%;
 }
@@ -3578,16 +3578,15 @@
   background-color: transparent;
   border: 0 none;
   color: #6c757d;
-  min-width: 3rem;
-  height: 3rem;
-  margin: 0.143rem;
+  min-width: 32px;
+  height: 32px;
   transition: box-shadow 0.2s;
-  border-radius: 50%;
+  border-radius: 8px;
 }
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background: #EFF6FF;
-  border-color: #EFF6FF;
-  color: #3B82F6;
+  background: #0060FF;
+  border: none;
+  color: #FFFFFF;
 }
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
   background: #e9ecef;
@@ -5511,17 +5510,18 @@
   color: #495057;
   border: 1px solid #dee2e6;
   border-radius: 6px;
-  width: 12.5rem;
+  width: 144px;
 }
 .p-tieredmenu .p-menuitem-link {
-  padding: 0.75rem 1.25rem;
   color: #495057;
   border-radius: 0;
   transition: box-shadow 0.2s;
   user-select: none;
 }
 .p-tieredmenu .p-menuitem-link .p-menuitem-text {
-  color: #495057;
+  color: #131B25;
+  font-size: 14px;
+  font-weight: 500;
 }
 .p-tieredmenu .p-menuitem-link .p-menuitem-icon {
   color: #6c757d;
@@ -6258,4 +6258,33 @@
 }
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-bottom > td {
   box-shadow: inset 0 -2px 0 0 #3B82F6;
+}
+/* .p-tieredmenu .p-menuitem-link {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+} */
+
+.p-column-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.delete-menu-item {
+  color: #E71B25;
+}
+
+.inactive-row {
+  color: #b7c6ce !important;
+}
+
+.p-paginator {
+  justify-content: flex-end !important;
+  padding: 12px;
+}
+
+.p-paginator-pages {
+  display: flex;
+  gap: 4px;
 }

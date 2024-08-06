@@ -22,7 +22,6 @@ export default function EditCategory({ category, colors }) {
 
     const editCategory = (id) => {
         setIsEditCategoryOpen(true)
-        console.log('edit', id)
     }
 
     const closeCategory = () => {

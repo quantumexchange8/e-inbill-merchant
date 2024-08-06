@@ -156,5 +156,30 @@ export default {
         }
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        function ({addUtilities}) {
+            const newUtilities = {
+                ".scrollnar-thin" : {
+                    scrollbarWidth : "thin", 
+                    scrollbarColor: "rgba(0, 0, 0, 1) black",
+                }, 
+                ".scrollbar-webkit": {
+                    "&::-webkit-scrollbar" : {
+                        width: "4px"
+                    },
+                    "&::-webkit-scrollbar-track" : {
+                        background: "rgba(107, 114, 128, 0.4)"
+                    },
+                    "&::-webkit-scrollbar-thumb" : {
+                        backgroundColor: "#b7c6ce",
+                        borderRadius: "20px",
+                        border: "1px solid rgba(241, 245, 246, 1)",
+                    }
+                }
+            }
+            
+            addUtilities(newUtilities, ["responsive", "hover"])
+        }
+    ],
 };

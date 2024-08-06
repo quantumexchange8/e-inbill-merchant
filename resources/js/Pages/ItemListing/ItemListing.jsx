@@ -20,7 +20,7 @@ function classNames(...classes) {
 
 export default function ItemListing({ categories }) {
 
-    const [selectedTab, setSelectedTab] = useState('all');
+    const [selectedTab, setSelectedTab] = useState(0);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         search: '',
@@ -94,9 +94,11 @@ export default function ItemListing({ categories }) {
                             <Tab.Group
                                 onChange={(index) => {
                                     // Map index to category name
-                                    const category = index === 0 ? 'all' : categories[index - 1]?.name;
+                                    const category = index === 0 ? 0 : categories[index - 1]?.id;
                                     setSelectedTab(category);
                                 }}
+
+                                className='flex flex-col gap-5'
                             >
                                 <Tab.List className="flex">
 
@@ -139,8 +141,8 @@ export default function ItemListing({ categories }) {
                                     }
                                     
                                 </Tab.List>
-                                <Tab.Panels className="mt-2">
-                                    <ItemListingTable type={selectedTab} searchVal={searchVal}/>
+                                <Tab.Panels>
+                                    <ItemListingTable type={selectedTab} searchVal={searchVal} />
                                 </Tab.Panels>
                             </Tab.Group>
                         </div>

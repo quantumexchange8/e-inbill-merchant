@@ -9,11 +9,10 @@ import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputSwitch } from "primereact/inputswitch";
 
-export default function AddItem({ fetchDataCallBack }) {
+export default function AddItem({  }) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
-    const [checked, setChecked] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
@@ -44,7 +43,6 @@ export default function AddItem({ fetchDataCallBack }) {
             onSuccess: () => {
                 closeModal();
                 setIsLoading(false);
-                fetchDataCallBack()
                 reset();
                 toast.success('Item added successfully.', {
                     title: 'Item added successfully.',
@@ -99,7 +97,7 @@ export default function AddItem({ fetchDataCallBack }) {
                         </div>
                     }
                 >
-                    <div className="max-h-[70vh] md:max-w-none lg:max-h-[600px] overflow-auto">
+                    <div className="max-h-[70vh] md:max-w-none lg:max-h-[600px] overflow-auto scrollbar-thin scrollbar-webkit">
                         <div className="flex flex-col gap-5">
                             <div className="p-5 w-full flex justify-center">
                                 <div className="max-w-[705px] w-full flex flex-col gap-5">
@@ -157,8 +155,10 @@ export default function AddItem({ fetchDataCallBack }) {
                                                 onValueChange={(e) => setData('price', e.value)} 
                                                 mode="currency" 
                                                 currency="MYR" locale="en-MY"
+                                                pt={{
+                                                    root: 'bg-gray-50 border-none hover:border-none rounded focus:outline-none focus:ring-0'
+                                                }}
                                             />
-                                            <InputSwitch checked={checked} onChange={(e) => setChecked(e.value)} />
                                             <InputError message={errors.price} className="mt-2" />
                                         </div>
                                     </div>
