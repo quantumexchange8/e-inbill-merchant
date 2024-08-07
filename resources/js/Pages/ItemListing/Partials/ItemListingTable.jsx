@@ -204,7 +204,7 @@ export default function ItemListingTable({ type, searchVal }) {
         return (
             <a 
                 key={item.label}
-                className="flex justify-between align-items-center p-menuitem-link py-2 px-3" 
+                className="flex justify-between align-items-center p-menuitem-link py-2 px-3 hover:rounded-md" 
                 onClick={handleClick}
             >
                 <span className={item.label === 'Delete' ? "text-sm font-bold text-error-600" : "text-sm font-bold text-neutral-950"}>
