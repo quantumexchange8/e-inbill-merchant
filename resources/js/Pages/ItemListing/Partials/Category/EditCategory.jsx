@@ -8,7 +8,7 @@ import { useForm } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 
-export default function EditCategory({ category, colors }) {
+export default function EditCategory({ category, colors, closeModal }) {
     
     const [isEditCategoryOpen, setIsEditCategoryOpen] = useState(false)
     const [selected, setSelected] = useState(category.color);
@@ -50,6 +50,7 @@ export default function EditCategory({ category, colors }) {
             preserveScroll: true,
             onSuccess: () => {
                 setIsEditCategoryOpen(false)
+                closeModal()
                 setIsLoading(false);
                 toast.success('Category updated successfully.', {
                     title: 'Category updated successfully.',

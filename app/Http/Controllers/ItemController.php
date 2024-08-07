@@ -38,7 +38,12 @@ class ItemController extends Controller
     public function editCategory(EditCategoryRequest $request)
     {
 
-        dd($request->all());
+        $category = Category::find($request->id);
+
+        $category->update([
+            'name' => $request->name,
+            'color' => $request->color,
+        ]);
 
         return redirect()->back()->with('success', 'success updated!');
     }
@@ -95,6 +100,34 @@ class ItemController extends Controller
             ]);
         }
         
+
+        return redirect()->back()->with('success', 'success created!');
+    }
+
+    public function editItem(Request $request)
+    {
+        $item = Item::find($request->id);
+        $item->update([
+            'merchant_id' => Auth::user()->id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'classification_id' => $request->classification_id,
+            'sku' => $request->sku,
+            'category_id' => $request->category,
+            'cost' => $request->cost,
+            'stock' => $request->stock,
+            'barcode' => $request->barcode,
+            'status' => 'active',
+        ]);
+
+        return redirect()->back()->with('success', 'success created!');
+    }
+
+    public function deleteItem(Request $request)
+    {
+        $item = Item::find($request->id);
+
+        $item->delete();
 
         return redirect()->back()->with('success', 'success created!');
     }

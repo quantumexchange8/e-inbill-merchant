@@ -12,9 +12,9 @@ const CustomToaster = ({ t }) => {
           appear
           show={t.visible}
           className={getClassNames(t)}
-          enter="transition-all duration-150"
+          enter="transition-all duration-200"
           enterFrom="opacity-0 scale-50"
-          enterTo="opacity-100 scale-100"
+          enterTo="opacity-100 scale-200"
           leave="transition-all duration-150"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-75"
@@ -33,7 +33,7 @@ const CustomToaster = ({ t }) => {
                 ) : (
                   <div className="flex flex-col gap-3 w-full">
                     <div className="flex flex-col gap-1">
-                      <p className="font-bold">{resolveValue(t.title)}</p>
+                      <span className="font-bold">{resolveValue(t.title)}</span>
                       {t.variant !== 'variant3' && <p className="w-full text-gray-900 text-sm">{resolveValue(t.description)}</p>}
                     </div>
                     <div className={`${t.variant === 'variant1' ? 'hidden' : 'block'}`}>

@@ -155,7 +155,7 @@ export default function ManageCategory({ categories }) {
                                         </div>
 
                                         <div className="flex items-center gap-3">
-                                            <EditCategory category={category} colors={colors} />
+                                            <EditCategory category={category} colors={colors} closeModal={closeModal}/>
                                             <DeleteCategory category={category}/>
 
                                             {/* <div className="cursor-pointer" onClick={() => confirm1(category.id)}>
@@ -241,7 +241,7 @@ export default function ManageCategory({ categories }) {
                                     Category Color
                                 </div>
                                 <div className="flex flex-col space-y-2">
-                                    <div className="flex flex-row items-center justify-between">
+                                    <div className="grid grid-cols-4 grid-rows-2 gap-4 justify-items-center md:flex md:flex-row md:items-center md:justify-between">
                                         {colors.map((color) => (
                                             <div
                                                 key={color.name}

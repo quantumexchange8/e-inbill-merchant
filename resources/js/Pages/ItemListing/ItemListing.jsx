@@ -21,6 +21,11 @@ function classNames(...classes) {
 export default function ItemListing({ categories }) {
 
     const [selectedTab, setSelectedTab] = useState(0);
+    const [refreshTable, setRefreshTable] = useState(false);
+
+    const handleItemAdded = () => {
+        setRefreshTable(prevState => !prevState);
+    }
 
     const { data, setData, post, processing, errors, reset } = useForm({
         search: '',
@@ -82,7 +87,7 @@ export default function ItemListing({ categories }) {
                         </div>
                         <div className="w-full md:w-auto">
                             
-                            <AddItem />
+                            <AddItem itemAdded={handleItemAdded}/>
 
                         </div>
                     </div>
@@ -142,7 +147,7 @@ export default function ItemListing({ categories }) {
                                     
                                 </Tab.List>
                                 <Tab.Panels>
-                                    <ItemListingTable type={selectedTab} searchVal={searchVal} />
+                                    <ItemListingTable key={refreshTable.toString()} type={selectedTab} searchVal={searchVal} />
                                 </Tab.Panels>
                             </Tab.Group>
                         </div>

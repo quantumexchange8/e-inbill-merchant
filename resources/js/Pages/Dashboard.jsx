@@ -95,12 +95,12 @@ export default function Dashboard({ auth }) {
                             </div>
                         </div>
 
-                        <div className='relative min-h-[165px] overflow-hidden md:max-w-[233px] w-full flex flex-col justify-between p-5 shadow-container border border-neutral-100 rounded-lg bg-[#0674FF]'>
+                        <div className='relative min-h-[165px] overflow-hidden md:max-w-[233px] xl:min-w-[493px] xl:max-h-[170px] w-full flex flex-col justify-between p-5 shadow-container border border-neutral-100 rounded-lg bg-[#0674FF]'>
                             <div className='relative z-10 max-w-[142px] w-full flex flex-col justify-between gap-4 md:max-h-[133px]'>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex flex-col gap-1'>
                                         <div className='text-white text-xs font-sf-pro'>Welcome Back,</div>
-                                        <div className='text-white text-base md:text-lg font-bold font-sf-pro'>{auth.user.name}</div>
+                                        <div className='text-white text-base md:text-lg font-bold font-sf-pro leading-none'>{auth.user.name}</div>
                                     </div>
                                     <div className='text-primary-100 text-xs font-sf-pro'>
                                         Get started with your invoicing tasks right away.
@@ -124,17 +124,37 @@ export default function Dashboard({ auth }) {
                     </div>
 
                     <div className='flex flex-col md:flex-row gap-5'>
-                        <div className='w-full'></div>
-                        <div className='w-full'></div>
+                        <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 bg-white shadow-container rounded-lg'>
+                            <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
+                                Recent Transaction
+                            </div>
+                            <div></div>
+                        </div>
+                        <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg'>
+                            <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
+                                Top Selling Item
+                            </div>
+                            <div>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div className='flex flex-col md:flex-row items-center gap-5'>
-                    <div className='p-5 w-full'>
-
-                    </div>
-                    <div className='py-5 w-full'>
-
+                    <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 bg-white shadow-container rounded-lg'>
+                        <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
+                            Weekly Sales
+                        </div>
+                        <div></div>
+                        </div>
+                    <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 bg-gradient-to-b from-[#F4F7FB] from-11.99% to-[#FFF] to-71.71% shadow-container rounded-lg'>
+                        <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
+                            E-Invoice Summary
+                        </div>
+                        <div>
+                            
+                        </div>
                     </div>
                 </div>
 

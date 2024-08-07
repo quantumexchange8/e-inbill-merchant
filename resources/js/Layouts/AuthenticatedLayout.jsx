@@ -32,6 +32,7 @@ export default function Authenticated({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-[#FCFCFD]">
+            <CustomToaster />
             <SideBar expanded={isSidebarExpanded} user={user} showingNavigationDropdown={showingNavigationDropdown} toggleSidebar={toggleSidebar} />
 
             <div className={`min-h-screen flex flex-col ${isSidebarExpanded ? 'md:ml-60' : 'translate-x-0 md:ml-[74px]'}`}>
@@ -41,8 +42,6 @@ export default function Authenticated({ user, header, children }) {
                     <div className='max-w-[1440px] w-full md:p-5 rounded-lg md:border md:border-neutral-100 bg-gray-25 md:shadow-container'>
                         {children}
                     </div>
-
-                    <CustomToaster />
                 </main>
             </div>
         </div>

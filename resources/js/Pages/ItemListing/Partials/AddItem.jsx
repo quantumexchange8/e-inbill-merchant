@@ -8,8 +8,9 @@ import React, { useState } from "react";
 import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputSwitch } from "primereact/inputswitch";
+import toast from "react-hot-toast";
 
-export default function AddItem({  }) {
+export default function AddItem({ itemAdded }) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -32,18 +33,22 @@ export default function AddItem({  }) {
 
     const closeModal = () => {
         setIsOpen(false)
+        reset()
     }
 
     const submit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-
+        
         post('/item/new-item', {
             preserveScroll: true,
             onSuccess: () => {
                 closeModal();
                 setIsLoading(false);
                 reset();
+                if (itemAdded) {
+                    itemAdded();
+                }
                 toast.success('Item added successfully.', {
                     title: 'Item added successfully.',
                     description: 'This item has been added to your item listing.',
@@ -53,6 +58,25 @@ export default function AddItem({  }) {
             }
         })
     }
+
+    const imagePaths = [
+        '/assets/items_images/1.svg',
+        '/assets/items_images/2.svg',
+        '/assets/items_images/3.svg',
+        '/assets/items_images/4.svg',
+        '/assets/items_images/5.svg',
+        '/assets/items_images/6.svg',
+        '/assets/items_images/7.svg',
+        '/assets/items_images/8.svg',
+        '/assets/items_images/9.svg',
+        '/assets/items_images/10.svg',
+        '/assets/items_images/11.svg',
+        '/assets/items_images/12.svg',
+        '/assets/items_images/13.svg',
+        '/assets/items_images/14.svg',
+        '/assets/items_images/15.svg',
+        '/assets/items_images/16.svg',
+    ];
 
     return (
         <>
@@ -116,8 +140,12 @@ export default function AddItem({  }) {
                                             </div>
                                         </div>
                                         <div className="uppercase text-sm font-medium font-sf-pro text-gray-400">or</div>
-                                        <div className="grid grid-cols-8 grid-rows-2">
-
+                                        <div className="flex items-center md:grid md:grid-cols-8 md:grid-rows-2 gap-4 md:gap-5 overflow-auto">
+                                            {
+                                                imagePaths.map((image, index) => (
+                                                    <img key={index} src={image} alt={`Image ${index + 1}`} />
+                                                ))
+                                            }
                                         </div>
                                     </div>
                                 </div>

@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notices', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('merchant_id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('type');
-            $table->string('title');
+            $table->string('name');
+            $table->string('quota');
             $table->longText('description');
+            $table->unsignedBigInteger('subscription_term_id');
+            $table->unsignedBigInteger('billing_interval_id');
+            $table->string('discount_type');
+            $table->string('renewal_type');
+            $table->string('late_payment_charges');
             $table->string('status');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notices');
+        Schema::dropIfExists('subscriptions');
     }
 };

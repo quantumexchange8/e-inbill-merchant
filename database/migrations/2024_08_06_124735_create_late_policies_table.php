@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('late_policies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('merchant_id');
-            $table->string('name');
-            $table->string('color');
-            $table->softDeletes();
+            $table->string('due_in');
+            $table->string('grace_period');
+            $table->longText('description');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('late_policies');
     }
 };

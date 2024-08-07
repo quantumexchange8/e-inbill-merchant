@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('my_invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('merchant_id');
-            $table->string('name');
-            $table->string('color');
-            $table->softDeletes();
+            $table->string('tin');
+            $table->string('tourism_no');
+            $table->string('irbm_client_id');
+            $table->string('irbm_client_secret');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('my_invoices');
     }
 };

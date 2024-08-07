@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('billing_intervals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('merchant_id');
             $table->string('name');
-            $table->string('color');
-            $table->softDeletes();
+            $table->string('interval_type');
+            $table->string('value');
+            $table->string('subscription_id');
+            $table->string('merchant_id');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('billing_intervals');
     }
 };
