@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('merchants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('merchant_role_id');
+            $table->string('merchant_role_id');
             $table->string('merchant_name');
             $table->string('merchant_email');
             $table->string('password');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('registration_no');
             $table->string('classification_id');
             $table->string('address');
-            $table->string('address_2');
+            $table->string('address_2')->nullable();
             $table->string('postcode');
             $table->string('area');
             $table->string('state');
@@ -34,6 +34,9 @@ return new class extends Migration
             $table->string('term_id')->nullable();
             $table->string('billing_start_date')->nullable();
             $table->string('billing_end_date')->nullable();
+            $table->decimal('quota_balance', 13, 2)->nullable();
+            $table->decimal('total_quota', 13, 2)->nullable();
+            $table->string('remember_token', 13, 2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

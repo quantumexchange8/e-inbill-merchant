@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { LogoutIcon, MenuIcon, NotificationIcon } from './Icon/outline';
+import { LogoutIcon, MenuIcon, NotificationIcon, XIcon } from './Icon/outline';
 import { useForm, usePage } from '@inertiajs/react';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import PrimeModal from './PrimeModal';
@@ -131,13 +131,15 @@ export default function Navbar({ user, header, toggleSidebar }) {
                     test
                 </div>
             </PrimeModal> */}
-            <Modal title='Profile' maxWidth='sm' maxHeight='sm' isOpen={isOpen} close={closeModal}>
-                <div>
-                    testing
-                </div>
-                <div>
-                    
-                </div>
+            <Modal 
+                title='Profile' 
+                maxWidth='md' 
+                maxHeight='md' 
+                isOpen={isOpen} 
+                close={closeModal}
+                closeIcon={<XIcon />}
+            >
+                
             </Modal>
 
             <ConfirmDialog

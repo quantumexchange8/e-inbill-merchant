@@ -16,7 +16,7 @@ export default function Login({ status, canResetPassword }) {
     const [showPassword, setShowPassword ] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
+        merchant_role_id: '',
         password: '',
         remember: false,
     });
@@ -43,22 +43,22 @@ export default function Login({ status, canResetPassword }) {
                 <div className='flex flex-col items-center gap-[52px]'>
                     <div className='w-full flex flex-col gap-[42px]'>
                         <div className='flex flex-col space-y-1.5'>
-                            <InputLabel htmlFor="email" value="Email" />
+                            <InputLabel htmlFor="merchant_role_id" value="Client ID" />
 
                             <TextInput
-                                id="email"
-                                type="email"
-                                name="email"
-                                value={data.email}
+                                id="merchant_role_id"
+                                type="text"
+                                name="merchant_role_id"
+                                value={data.merchant_role_id}
                                 className="mt-1 block w-full"
                                 autoComplete="username"
                                 isFocused={true}
-                                onChange={(e) => setData('email', e.target.value)}
-                                hasError={!!errors.email}
+                                onChange={(e) => setData('merchant_role_id', e.target.value)}
+                                hasError={!!errors.merchant_role_id}
                                 placeholder='Enter here'
                             />
 
-                            <InputError message={errors.email} className="mt-2" />
+                            <InputError message={errors.merchant_role_id} className="mt-2" />
                         </div>
 
                         <div className='flex flex-col gap-2'>

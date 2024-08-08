@@ -4,7 +4,7 @@ import InputError from "@/Components/InputError";
 import InputIconWrapper from "@/Components/InputIconWrapper";
 import Modal from "@/Components/Modal";
 import { useForm } from "@inertiajs/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputSwitch } from "primereact/inputswitch";
@@ -14,6 +14,25 @@ export default function AddItem({ itemAdded }) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
+    const [classVal, setClassification] = useState([]);
+
+    const fetchData = async () => {
+        try {
+
+            const response = await axios.get('/item/getItem');
+            
+            setClassification(response.data);
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
