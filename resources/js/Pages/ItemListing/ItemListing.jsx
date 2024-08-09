@@ -87,7 +87,7 @@ export default function ItemListing({ categories }) {
                         </div>
                         <div className="w-full md:w-auto">
                             
-                            <AddItem itemAdded={handleItemAdded}/>
+                            <AddItem itemAdded={handleItemAdded} categories={categories}/>
 
                         </div>
                     </div>

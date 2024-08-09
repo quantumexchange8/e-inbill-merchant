@@ -28,4 +28,8 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+    public function classification(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Classification::class, 'classification_id', 'id');
+    }
 }

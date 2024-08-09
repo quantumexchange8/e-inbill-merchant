@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/edit-item', [ItemController::class, 'editItem'])->name('item.edit-item');
         Route::post('/delete-item', [ItemController::class, 'deleteItem'])->name('item.delete-item');
 
+        Route::get('/getClassification', [ItemController::class, 'getClassification'])->name('item.getClassification');
      });
 
      /**

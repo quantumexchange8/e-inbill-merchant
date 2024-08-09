@@ -41,24 +41,25 @@ export default function Navbar({ user, header, toggleSidebar }) {
         setIsOpen(false)
     }
 
-    const accept = () => {
+    const acceptNavbar = () => {
         submit();
     };
 
-    const reject = () => {
+    const rejectNavbar = () => {
         
     };
 
-    const confirm1 = () => {
+    const confirmNavbar = () => {
+        
         confirmDialog({
-            group: 'headless',
+            group: 'navbar',
             message: 'Are you sure you want to log out from e-inbill?',
             header: 'Log Out',
             icon: 'pi pi-exclamation-triangle',
             defaultFocus: 'accept',
-            accept,
-            reject,
-            onSubmit
+            accept: acceptNavbar,
+            reject: rejectNavbar,
+            
         });
     };
     const onSubmit = () => {
@@ -108,14 +109,14 @@ export default function Navbar({ user, header, toggleSidebar }) {
 
                         
 
-                        <div className='w-6 h-6 hover:rounded hover:bg-gray-25 hover:shadow flex items-center justify-center cursor-pointer' onClick={confirm1}>
+                        <div className='w-6 h-6 hover:rounded hover:bg-gray-25 hover:shadow flex items-center justify-center cursor-pointer' onClick={confirmNavbar}>
                             <LogoutIcon />
                         </div>
                     </div>
                     <div className='hidden md:flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-25 rounded drop-shadow hover:drop-shadow-md' onClick={toggleProfile}>
                         <div className='flex flex-col items-end gap-1'>
                             <div className='text-neutral-950 font-semibold text-sm'>
-                                {auth.user.name}
+                                {auth.user.merchant_name}
                             </div>
                             <div className='text-gray-600 text-xss font-medium'>
                                 ID: 12345{/* {auth.user.role_id} */}
@@ -143,7 +144,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
             </Modal>
 
             <ConfirmDialog
-                group="headless"
+                group="navbar"
                 content={({ headerRef, contentRef, footerRef, hide, message }) => (
                     <div className="relative flex flex-col gap-6 items-center p-5 rounded-lg border border-primary-200 max-w-[300px] bg-white">
                         <div className="w-full flex justify-center h-3 pt-4">
@@ -163,7 +164,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
                             <Button
                                 onClick={(event) => {
                                     hide(event);
-                                    reject();
+                                    rejectNavbar();
                                 }}
                                 size='lg'
                                 variant='secondary'
@@ -172,7 +173,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
                             <Button
                                 onClick={(event) => {
                                     hide(event);
-                                    accept();
+                                    acceptNavbar();
                                     onSubmit();
                                 }}
                                 size='lg'

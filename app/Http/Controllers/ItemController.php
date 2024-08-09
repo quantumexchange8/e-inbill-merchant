@@ -6,6 +6,7 @@ use App\Http\Requests\AddItemRequest;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
 use App\Models\Category;
+use App\Models\Classification;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +26,10 @@ class ItemController extends Controller
 
     public function newCategory(CategoryRequest $request)
     {
+        $user = Auth::user();
 
         $category = Category::create([
-            'merchant_id' => '1',
+            'merchant_id' => $user->id,
             'name' => $request->name,
             'color' => $request->color,
         ]);
@@ -60,7 +62,7 @@ class ItemController extends Controller
     public function getItem(Request $request)
     {
 
-        $item = Item::query()->with(['category']);
+        $item = Item::query()->with(['category', 'classification']);
 
         $datas = $item->get();
 
@@ -73,9 +75,9 @@ class ItemController extends Controller
             'merchant_id' => Auth::user()->id,
             'name' => $request->name,
             'price' => $request->price,
-            'classification_id' => $request->classification_id,
+            'classification_id' => $request->classification_id['id'],
             'sku' => $request->sku,
-            'category_id' => $request->category,
+            'category_id' => $request->category['id'],
             'cost' => $request->cost,
             'stock' => $request->stock,
             'barcode' => $request->barcode,
@@ -130,5 +132,15 @@ class ItemController extends Controller
         $item->delete();
 
         return redirect()->back()->with('success', 'success created!');
+    }
+
+    public function getClassification(Request $request)
+    {
+        $classification = Classification::query();
+
+        $datas = $classification->get();
+
+        return response()->json($datas);
+
     }
 }

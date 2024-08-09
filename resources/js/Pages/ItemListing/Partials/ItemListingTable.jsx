@@ -124,20 +124,7 @@ export default function ItemListingTable({ type, searchVal }) {
     }, [filteredData]);
 
     const items = [
-        {
-            label: 'Options',
-            items: [
-                {
-                    icon: 'pi pi-refresh',
-                    label: 'Refresh',
-                    
-                },
-                {
-                    label: 'Export',
-                    icon: 'pi pi-upload'
-                }
-            ]
-        }
+        
     ];
 
     const [currentRowData, setCurrentRowData] = React.useState(null);
@@ -356,7 +343,7 @@ export default function ItemListingTable({ type, searchVal }) {
                                     <Column field="name" body={itemName} header="Item Name" frozen sortable style={{ minWidth: '343px' }}></Column>
 
                                     <Column field="price" header="Price (RM)" sortable style={{ minWidth: '150px' }}></Column>
-                                    <Column field="classification_code" header="Classsification Code" sortable style={{ minWidth: '210px' }}></Column>
+                                    <Column field="classification.code" header="Classsification Code" sortable style={{ minWidth: '210px' }}></Column>
                                     <Column field="sku" header="sku" sortable style={{ minWidth: '150px' }}></Column>
                                     <Column field="cost" header="cost" sortable style={{ minWidth: '150px' }}></Column>
                                     <Column field="stock" header="stock" sortable style={{ minWidth: '150px' }}></Column>
@@ -387,9 +374,8 @@ export default function ItemListingTable({ type, searchVal }) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div onClick={(event) => menuRight.current.toggle(event)}>
+                                                <div label="Show" onClick={(e) => menu.current.toggle(e)}>
                                                     <DotMenuIcon />
-                                                    <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
                                                 </div>
                                             </div>
                                             <div className="flex flex-col gap-2 px-3">

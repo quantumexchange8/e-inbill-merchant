@@ -1,7 +1,7 @@
 import Button from '@/Components/Button';
 import { Epc, InvoiceToday, ItemSoldToday, OrderToday, SalesToday } from '@/Components/Icon/Brand';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
 import Transaction from "@/Components/NoContent/Transaction.svg"
 
@@ -128,14 +128,16 @@ export default function Dashboard({ auth }) {
                                         </div>
                                     </div>
                                     <div>
-                                        <Button 
-                                            variant='success'
-                                            size='sm'
-                                            className=''
+                                        <Link href={route('invoice.e-invoice')}>
+                                            <Button 
+                                                variant='success'
+                                                size='sm'
+                                                className=''
 
-                                        >
-                                            Go to my e-Invoice
-                                        </Button>
+                                            >
+                                                Go to my e-Invoice
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className='absolute right-0 md:-bottom-8 md:right-0 md:z-0'>

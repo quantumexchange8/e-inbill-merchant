@@ -3,23 +3,33 @@ import { PlusIcon, UploadIcon, XIcon } from "@/Components/Icon/outline";
 import InputError from "@/Components/InputError";
 import InputIconWrapper from "@/Components/InputIconWrapper";
 import Modal from "@/Components/Modal";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputSwitch } from "primereact/inputswitch";
 import toast from "react-hot-toast";
+import { Dropdown } from 'primereact/dropdown';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { WarningLogoIcon } from "@/Components/Icon/Brand";
 
-export default function AddItem({ itemAdded }) {
+export default function AddItem({ itemAdded, categories }) {
+
+    const { auth } = usePage().props;
 
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [classVal, setClassification] = useState([]);
+    const [selectedClass, setSelectedClass] = useState(null);
 
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    // console.log(auth.user.classification_id)
+    
     const fetchData = async () => {
         try {
 
-            const response = await axios.get('/item/getItem');
+            const response = await axios.get('/item/getClassification');
             
             setClassification(response.data);
             
@@ -37,23 +47,55 @@ export default function AddItem({ itemAdded }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         price: '',
-        classification_id: '',
+        classification_id: selectedClass,
         sku: '',
-        category: '',
+        category: selectedCategory,
         cost: '',
         stock: '',
         barcode: '',
         item_image: '',
     });
 
+    useEffect(() => {
+        setData('classification_id', selectedClass);
+        setData('category', selectedCategory);
+      }, [selectedClass, selectedCategory]);
+
     const toggleAddItem = () => {
         setIsOpen(true)
     }
 
-    const closeModal = () => {
+    const acceptPage = () => {
         setIsOpen(false)
         reset()
+    };
+
+    const rejectPage = () => {
+        
+    };
+
+    const closeModal = () => {
+        
+        if (data.name === '' && data.sku === '' && data.stock === '' && data.barcode === '') {
+            setIsOpen(false)
+            reset()
+        } else {
+            confirmPage()
+        }
+        
     }
+
+    const confirmPage = () => {
+        confirmDialog({
+            group: 'page',
+            message: 'Are you sure you want to leave without saving the changes?',
+            header: 'You’ve unsaved changes',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept: acceptPage,
+            reject: rejectPage
+        });
+    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -215,15 +257,14 @@ export default function AddItem({ itemAdded }) {
                                             <div>Classification Code</div>
                                         </div>
                                         <div className="flex flex-col space-y-2 w-full">
-                                            <TextInput 
-                                                id="classification_id"
-                                                type='text'
-                                                name="classification_id"
-                                                value={data.classification_id}
-                                                onChange={(e) => setData('classification_id', e.target.value)}
-                                                hasError={!!errors.classification_id}
-                                                placeholder='e.g. Fried Rice'
-                                                className=' w-full'
+                                            <Dropdown 
+                                                value={selectedClass} 
+                                                onChange={(e) => setSelectedClass(e.value)} 
+                                                options={classVal} 
+                                                optionLabel="code" 
+                                                placeholder="Select Classification" 
+                                                filter 
+                                                className="w-full md:w-14rem" 
                                             />
                                             <InputError message={errors.classification_id} className="mt-2" />
                                         </div>
@@ -240,7 +281,7 @@ export default function AddItem({ itemAdded }) {
                                                 value={data.sku}
                                                 onChange={(e) => setData('sku', e.target.value)}
                                                 hasError={!!errors.sku}
-                                                placeholder='e.g. e.g. 00001'
+                                                placeholder='e.g. 00001'
                                                 className=' w-full'
                                             />
                                             <InputError message={errors.sku} className="mt-2" />
@@ -251,15 +292,14 @@ export default function AddItem({ itemAdded }) {
                                             <div>Category</div>
                                         </div>
                                         <div className="flex flex-col space-y-2 w-full">
-                                            <TextInput 
-                                                id="category"
-                                                type='number'
-                                                name="category"
-                                                value={data.category}
-                                                onChange={(e) => setData('category', e.target.value)}
-                                                hasError={!!errors.category}
-                                                placeholder='e.g. category'
-                                                className=' w-full'
+                                            <Dropdown 
+                                                value={selectedCategory} 
+                                                onChange={(e) => setSelectedCategory(e.value)} 
+                                                options={categories.length > 0 ? categories : 'no category created yet'} 
+                                                optionLabel="name" 
+                                                placeholder="Select Category" 
+                                                filter 
+                                                className="w-full md:w-14rem" 
                                             />
                                             <InputError message={errors.category} className="mt-2" />
                                         </div>
@@ -321,6 +361,48 @@ export default function AddItem({ itemAdded }) {
                     </div>
                 </Modal>
             </form>
+
+            
+                <ConfirmDialog
+                    group="page"
+                    content={({ headerRef, contentRef, footerRef, hide, message }) => (
+                        <div className="relative flex flex-col gap-6 items-center p-5 rounded-lg border border-primary-200 max-w-[300px] bg-white">
+                            <div className="w-full flex justify-center h-3 pt-4">
+                                <div className="absolute top-[-42px]">
+                                    <WarningLogoIcon />
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-3 items-center'>
+                                <div className="font-bold text-lg text-neutral-950 font-sf-pro" ref={headerRef}>
+                                    {message.header}
+                                </div>
+                                <div className='text-neutral-950 text-base font-sf-pro text-center' ref={contentRef}>
+                                    {message.message}
+                                </div>
+                            </div>
+                            <div className="w-full flex items-center gap-2 " ref={footerRef}>
+                                <Button
+                                    onClick={(event) => {
+                                        hide(event);
+                                        rejectPage();
+                                    }}
+                                    size='lg'
+                                    variant='secondary'
+                                    className="w-full flex justify-center font-sf-pro"
+                                >Stay</Button>
+                                <Button
+                                    onClick={(event) => {
+                                        hide(event);
+                                        acceptPage();
+                                    }}
+                                    size='lg'
+                                    className="w-full flex justify-center font-sf-pro bg-[#E71B25]"
+                                >Leave</Button>
+                                
+                            </div>
+                        </div>
+                    )}
+                />
         </>
     )
 }
