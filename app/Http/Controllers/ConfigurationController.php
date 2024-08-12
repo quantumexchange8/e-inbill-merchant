@@ -10,8 +10,9 @@ use Inertia\Inertia;
 
 class ConfigurationController extends Controller
 {
-    public function configuration()
+    public function configuration(Request $request)
     {
+        dd($request->all());
         $authMerchant = Auth::user();
 
         $merchant = Merchant::where('id', $authMerchant->id)->with(['classification'])->first();
