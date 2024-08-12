@@ -136,7 +136,6 @@ class ItemController extends Controller
 
     public function getClassification(Request $request)
     {
-        dd($request->all());
         $classification = Classification::query();
 
         $datas = $classification->get();
