@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('configuration')->group(function () {
         Route::get('/configuration', [ConfigurationController::class, 'configuration'])->name('configuration.configuration');
+        Route::post('/updateMerchant', [ConfigurationController::class, 'updateMerchant'])->name('configuration.updateMerchant');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

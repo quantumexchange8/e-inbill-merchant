@@ -7,13 +7,14 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
     const maxWidthClass = {
         sm: 'sm:w-[300px] ',
         md: 'max-w-[500px]',
-        lg: 'sm:max-w-lg',
+        lg: 'sm:max-w-[800px]',
         xl: 'sm:w-full md:min-w-full lg:min-w-[1024px] xl:min-w-[1140px]',
     }[maxWidth] ;
 
     const maxHeightClass = {
         sm: 'sm:h-[500px] xl:h-[700px]',
-        md: 'h-full',
+        md: 'h-full md:max-h-[500px]',
+        lg: 'max-h-full md:max-h-600px',
         xl: 'sm:h-full max-h-screen md:h-full lg:min-h-auto xl:min-h-[700px]',
     }[maxHeight];
 
@@ -36,7 +37,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
                         className={`w-full max-w-md rounded-xl bg-white border shadow-md backdrop-blur-2xl duration-150 ease-out data-[closed]:transform-[scale(90%)] data-[closed]:opacity-0 data-[closed]:ease-in ${maxWidthClass} ${maxHeightClass}`}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <DialogTitle className="text-lg font-bold text-neutral-950 flex justify-between p-5">
+                        <DialogTitle className="m-0 text-lg font-bold text-neutral-950 flex justify-between p-5 bg-white border-b border-gray-100 rounded-t-lg">
                             <div className='w-full'>
                                 {title}
                             </div>
@@ -46,7 +47,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
                             </CloseButton>
                         </DialogTitle>
                         {children}
-                        <div className="w-full p-5 bg-white rounded-b-lg">
+                        <div className="w-full p-5 bg-white rounded-b-lg shadow-modal">
                             {footer}
                         </div>
                     </DialogPanel>

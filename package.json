@@ -20,6 +20,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@heroicons/react": "^2.1.5",
         "primeicons": "^7.0.0",
         "primereact": "^10.8.0",
         "react-hot-toast": "^2.4.1"

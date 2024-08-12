@@ -14,6 +14,8 @@ class Merchant extends Authenticatable
         'merchant_name',
         'merchant_role_id',
         'password',
+        'registration_no',
+        'classification_id',
     ];
 
     protected $hidden = [
@@ -26,5 +28,10 @@ class Merchant extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function classification(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Classification::class, 'classification_id', 'id');
     }
 }
