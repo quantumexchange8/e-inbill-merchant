@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\App;
+use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,17 +24,31 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-            if (!app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
-                return Inertia::render('Error', ['status' => $response->getStatusCode()])
-                    ->toResponse($request)
-                    ->setStatusCode($response->getStatusCode());
-            } elseif ($response->getStatusCode() === 419) {
-                return back()->with([
-                    'message' => 'The page expired, please try again.',
-                ]);
+        $exceptions->render(function (NotFoundHttpException $exception, Request $request) {
+            
+            if ($exception->getStatusCode() == 400) {
+                return response()->view("admin.errors.400", [], 400);
             }
+
+            if ($exception->getStatusCode() == 403) {
+                return response()->view("admin.errors.403", [], 403);
+            }
+
+            if ($exception->getStatusCode() == 404) {
+                return response()->view("admin.errors.404", [], 404);
+            }
+
+            if ($exception->getStatusCode() == 500) {
+                return response()->view("Errors.error500", [], 500);
+            }
+
+            if ($exception->getStatusCode() == 503) {
+                return response()->view("admin.errors.503", [], 503);
+            }
+            
     
-            return $response;
+            // if ($exception->getStatusCode() == 404) {
+            //     return response()->view("customer.errors.404", [], 404);
+            // }
         });
     })->create();
