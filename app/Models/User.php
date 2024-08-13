@@ -30,6 +30,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'name',
+        'email',
+        'role',
+        'role_id',
+        'merchant_id',
     ];
 
     /**
@@ -43,5 +48,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function merchant(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Merchant::class, 'merchant_id', 'id');
     }
 }

@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'merchants',
+            'provider' => 'users',
         ],
         // 'merchant' => [
         //     'driver' => 'eloquent',
@@ -64,14 +64,11 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => env('AUTH_MODEL', App\Models\User::class),
-        // ],
-        'merchants' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Merchant::class,
+            'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+        
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

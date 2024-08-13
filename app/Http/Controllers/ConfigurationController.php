@@ -14,7 +14,7 @@ class ConfigurationController extends Controller
     {
         $authMerchant = Auth::user();
 
-        $merchant = Merchant::where('id', $authMerchant->id)->with(['classification'])->first();
+        $merchant = Merchant::where('id', $authMerchant->merchant_id)->with(['classification'])->first();
         $classification = Classification::get();
 
         return Inertia::render('Configuration/Configuration', [
@@ -32,7 +32,7 @@ class ConfigurationController extends Controller
 
         $merchant = Auth::user();
 
-        $merchantDetails = Merchant::find($merchant->id);
+        $merchantDetails = Merchant::find($merchant->merchant_id);
 
         $merchantDetails->update([
             'merchant_name' => $request->merchant_name,

@@ -1,0 +1,14 @@
+<div className="min-h-screen flex flex-col justify-center items-center">
+    <div className="flex flex-col gap-[87px]">
+        <div className="flex flex-col gap-6">
+            <div className="text-neutral-950 font-sf-pro font-bold text-[48px]">System under maintenance</div>
+            <div className="flex flex-col text-neutral-950 text-base font-sf-pro">
+                <span>Our developers are working hard to elevate your experience with e-inbill.</span>
+                <span>Please check back soon.</span>
+            </div>
+        </div>
+        <div>
+            <img src="/assets/500.svg" alt="" />
+        </div>
+    </div>
+</div>

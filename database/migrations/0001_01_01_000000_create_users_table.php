@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role');
             $table->string('role_id');
+            $table->unsignedBigInteger('merchant_id');
             $table->string('title');
             $table->rememberToken();
             $table->softDeletes();

@@ -116,7 +116,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
                     <div className='hidden md:flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-25 rounded drop-shadow hover:drop-shadow-md' onClick={toggleProfile}>
                         <div className='flex flex-col items-end gap-1'>
                             <div className='text-neutral-950 font-semibold text-sm'>
-                                {auth.user.merchant_name}
+                                {auth.user.name}
                             </div>
                             <div className='text-gray-600 text-xss font-medium'>
                                 ID: 12345{/* {auth.user.role_id} */}

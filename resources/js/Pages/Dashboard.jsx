@@ -117,7 +117,7 @@ export default function Dashboard({ auth }) {
                                         
                         <div className='flex flex-col gap-5 w-full'>
                             <div className='relative min-h-[165px] overflow-hidden md:max-w-[233px] xl:min-w-[485px] xl:max-w-full xl:max-h-[170px] w-full flex flex-col justify-between p-5 shadow-container border border-neutral-100 rounded-lg bg-[#0674FF]'>
-                                <div className='relative z-10 max-w-[142px] w-full flex flex-col justify-between gap-4 md:max-h-[133px]'>
+                                <div className='relative z-10 min-w-[142px] w-full flex flex-col justify-between gap-4 md:max-h-[133px]'>
                                     <div className='flex flex-col gap-2'>
                                         <div className='flex flex-col gap-1'>
                                             <div className='text-white text-xs font-sf-pro'>Welcome Back,</div>

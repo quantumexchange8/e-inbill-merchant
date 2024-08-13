@@ -35,11 +35,11 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if ($exception->getStatusCode() == 404) {
-                return response()->view("admin.errors.404", [], 404);
+                return response()->view("errors.error404", [], 404);
             }
 
             if ($exception->getStatusCode() == 500) {
-                return response()->view("Errors.error500", [], 500);
+                return response()->view("errors.error500", [], 500);
             }
 
             if ($exception->getStatusCode() == 503) {

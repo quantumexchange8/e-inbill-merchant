@@ -13,13 +13,9 @@ return new class extends Migration
     {
         Schema::create('merchants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('merchant_id');
-            $table->unsignedMediumInteger('merchant_role_id');
+            $table->string('merchant_id');
             $table->string('merchant_name');
             $table->string('merchant_email');
-            $table->string('password');
-            $table->string('merchant_role');
-            $table->string('account_name');
             $table->string('tin_no');
             $table->string('irbm_client_id');
             $table->string('irbm_client_key');

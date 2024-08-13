@@ -1,5 +1,5 @@
 import Button from "@/Components/Button";
-import { EditIcon, XIcon } from "@/Components/Icon/outline";
+import { ChevronDown, ChevronUp, EditIcon, XIcon } from "@/Components/Icon/outline";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
@@ -172,7 +172,7 @@ export default function MerchantDetails({ merchant, classification }) {
                             </div>
                         }
                     >
-                        <div className="px-5 flex gap-5">
+                        <div className="p-5 flex gap-5">
                             <div className="w-[340px] h-[340px] bg-slate-600"></div>
                             <div className="flex flex-col gap-5 max-w-[400px] w-full">
                                 <div className="flex flex-col space-y-1">
@@ -217,14 +217,19 @@ export default function MerchantDetails({ merchant, classification }) {
                                     <Listbox value={selectedClass} onChange={setSelectedClass}>
                                         {({ open }) => (
                                             <div className="relative">
-                                                <Listbox.Button className="w-full bg-gray-50 py-3.5 px-4 text-left rounded">
-                                                    {selectedClass ? (
-                                                        selectedClass.code // or `code` based on your preference
-                                                    ) : (
-                                                        'Select'
-                                                    )}
+                                                <Listbox.Button className="w-full bg-gray-50 py-3.5 px-4 text-left rounded flex items-center justify-between">
+                                                    <div>
+                                                        {selectedClass ? (
+                                                            selectedClass.code // or `code` based on your preference
+                                                        ) : (
+                                                            'Select'
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        {open ? <ChevronUp /> : <ChevronDown />}
+                                                    </div>
                                                 </Listbox.Button>
-                                                <Listbox.Options className="absolute top-10 max-h-60 overflow-auto mt-2 w-full bg-white border border-gray-300 rounded-lg">
+                                                <Listbox.Options className="absolute top-10 max-h-80 overflow-auto mt-2 w-full bg-white border border-gray-300 rounded-lg">
                                                     {classification.map((cls) => (
                                                         <Listbox.Option key={cls.code} value={cls}>
                                                             {({ active }) => (

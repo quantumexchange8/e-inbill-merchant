@@ -24,12 +24,12 @@ class ItemController extends Controller
         ]);
     }
 
-    public function newCategory(CategoryRequest $request)
+    public function newCategory(Request $request)
     {
         $user = Auth::user();
 
         $category = Category::create([
-            'merchant_id' => $user->id,
+            'merchant_id' => $user->merchant_id,
             'name' => $request->name,
             'color' => $request->color,
         ]);
@@ -72,7 +72,7 @@ class ItemController extends Controller
     public function newItem(AddItemRequest $request)
     {
         $item = Item::create([
-            'merchant_id' => Auth::user()->id,
+            'merchant_id' => Auth::user()->merchant_id,
             'name' => $request->name,
             'price' => $request->price,
             'classification_id' => $request->classification_id['id'],
@@ -110,7 +110,7 @@ class ItemController extends Controller
     {
         $item = Item::find($request->id);
         $item->update([
-            'merchant_id' => Auth::user()->id,
+            'merchant_id' => Auth::user()->merchant_id,
             'name' => $request->name,
             'price' => $request->price,
             'classification_id' => $request->classification_id,
