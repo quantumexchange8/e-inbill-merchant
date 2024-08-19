@@ -9,7 +9,7 @@ import InputError from "@/Components/InputError";
 import toast from 'react-hot-toast';
 
 export default function EditItem({ editModal, setEditModal, editRow, closeEditRow, currentRowVal, fetchData }) {
-      
+      console.log(currentRowVal)
     const [isLoading, setIsLoading] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -127,7 +127,7 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center w-full py-5">
                         <div className="px-5 md:px-0 max-w-[705px] w-full flex flex-col gap-4">
                             <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
                                 <div className="flex gap-1 max-w-[166px] w-full">

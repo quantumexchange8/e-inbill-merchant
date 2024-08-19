@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ClassificationSeeder::class,
             RunningNumber::class,
+            ItemImageSeeder::class,
         ]);
 
         // User::factory()->create([

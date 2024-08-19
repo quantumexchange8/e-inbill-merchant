@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('shift_transaction_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('receipt_no');
             $table->decimal('total_amount', 13, 2)->default('0.00');
+            $table->string('payment_type');
+            $table->decimal('paid_in', 13, 2)->default('0.00');
+            $table->decimal('paid_out', 13, 2)->default('0.00');
             $table->string('transaction_type');
-            $table->decimal('cash_in', 13, 2)->default('0.00');
-            $table->decimal('cash_out', 13, 2)->default('0.00');
             $table->dateTime('transaction_date');
             $table->softDeletes();
             $table->timestamps();

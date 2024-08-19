@@ -42,4 +42,46 @@ class ConfigurationController extends Controller
 
         return redirect()->back()->with('update successfull');
     }
+
+    public function updateInvoice(Request $request)
+    {
+        $request->validate([
+            'tin_no' => ['required'],
+            'irbm_client_id' => ['required'],
+            'irbm_client_key' => ['required'],
+        ]);
+
+        $user = Auth::user();
+        $merchant = Merchant::find($user->merchant_id);
+
+        $merchant->update([
+            'tin_no' => $request->tin_no,
+            'irbm_client_id' => $request->irbm_client_id,
+            'irbm_client_key' => $request->irbm_client_key,
+        ]);
+        
+        return redirect()->back()->with('update successfull');
+    }
+
+    public function updateTax(Request $request)
+    {
+        $date = $request->sst_effective_data;
+        dd($date->format('d-m-y'));
+        $request->validate([
+            'sales_tax' => ['required'],
+            'service_tax' => ['required'],
+            'sst_effective_data' => ['required'],
+        ]);
+
+        $user = Auth::user();
+        $merchant = Merchant::find($user->merchant_id);
+
+        $merchant->update([
+            'sales_tax' => $request->sales_tax,
+            'service_tax' => $request->service_tax,
+            'sst_effective_data' => $request->sst_effective_data,
+        ]);
+
+        return redirect()->back()->with('update successfull');
+    }
 }

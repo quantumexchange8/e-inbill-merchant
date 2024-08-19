@@ -211,7 +211,7 @@ export default function AddItem({ itemAdded, categories }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex justify-center w-full">
+                            <div className="flex justify-center w-full py-5">
                                 <div className="px-5 md:px-0 max-w-[705px] w-full flex flex-col gap-4">
                                     <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
                                         <div className="flex gap-1 max-w-[166px] w-full">

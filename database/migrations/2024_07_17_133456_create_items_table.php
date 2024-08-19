@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('stock');
             $table->string('barcode');
             $table->string('status');
+            $table->string('image_code')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

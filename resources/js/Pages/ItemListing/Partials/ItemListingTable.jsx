@@ -15,6 +15,7 @@ import EditItem from "./EditItem";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { ConfirmLogoutIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
 import toast from "react-hot-toast";
+import { hourglass } from 'ldrs';
 
 export default function ItemListingTable({ type, searchVal }) {
 
@@ -31,6 +32,7 @@ export default function ItemListingTable({ type, searchVal }) {
     const [switchStates, setSwitchStates] = useState({});
     const [dialogVisible, setDialogVisible] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
+    hourglass.register()
 
     const fetchData = async () => {
         try {
@@ -145,7 +147,7 @@ export default function ItemListingTable({ type, searchVal }) {
     }
     
     const deleteRow = (rowId) => {
-
+        
         setDialogVisible(true)
         setSelectedId(rowId);
     };
@@ -374,7 +376,7 @@ export default function ItemListingTable({ type, searchVal }) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div label="Show" onClick={(e) => menu.current.toggle(e)}>
+                                                <div label="Show" onClick={(e) => handleMenuToggle(e, item)}>
                                                     <DotMenuIcon />
                                                 </div>
                                             </div>
@@ -480,14 +482,29 @@ export default function ItemListingTable({ type, searchVal }) {
                             />
                         </>
                     ) : (
-                        <div className="w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
-                            <div>
-                                <img src={ManageCategoryImgNoCont} alt="manage_category" />
-                            </div>
-                            <div className="text-gray-400 text-sm font-medium">
-                                You haven't added any item yet
-                            </div>
-                        </div>
+                        <>
+                        {
+                            isLoading ? (
+                                <div className="bg-neutral-50 rounded-lg w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                    <l-hourglass
+                                        size="60"
+                                        bg-opacity="0.2"
+                                        speed="0.75" 
+                                        color="#0060ff" 
+                                    ></l-hourglass>
+                                </div>
+                            ) : (
+                                <div className="w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                    <div>
+                                        <img src={ManageCategoryImgNoCont} alt="manage_category" />
+                                    </div>
+                                    <div className="text-gray-400 text-sm font-medium">
+                                        You haven't added any item yet
+                                    </div>
+                                </div>
+                            )
+                        }
+                        </>
                     )
                 }
             </div>

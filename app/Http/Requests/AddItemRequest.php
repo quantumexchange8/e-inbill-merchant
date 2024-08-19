@@ -26,7 +26,8 @@ class AddItemRequest extends FormRequest
         return [
             'name' => ['required', Rule::unique(Item::class)],
             'price' => ['required'],
-            'classification_id' => ['required'],
+            'sku' => ['required', Rule::unique(Item::class)],
+            'barcode' => [Rule::unique(Item::class)],
         ];
     }
 
@@ -36,6 +37,8 @@ class AddItemRequest extends FormRequest
             'name' => 'Name',
             'price' => 'Price',
             'classification_id' => 'Classification ID',
+            'sku' => 'sku',
+            'barcode' => 'barcode',
         ];
     }
 }

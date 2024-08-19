@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('merchant_id');
             $table->string('merchant_name');
-            $table->string('merchant_email');
+            $table->string('merchant_email')->nullable();
             $table->string('tin_no');
-            $table->string('irbm_client_id');
-            $table->string('irbm_client_key');
+            $table->string('irbm_client_id')->nullable();
+            $table->string('irbm_client_key')->nullable();
             $table->string('registration_no');
             $table->string('classification_id');
             $table->string('address');
@@ -34,6 +34,9 @@ return new class extends Migration
             $table->string('billing_end_date')->nullable();
             $table->decimal('quota_balance', 13, 2)->nullable();
             $table->decimal('total_quota', 13, 2)->nullable();
+            $table->string('sales_tax')->nullable();
+            $table->string('service_tax')->nullable();
+            $table->date('sst_effective_data')->nullable();
             $table->string('remember_token', 13, 2)->nullable();
             $table->softDeletes();
             $table->timestamps();

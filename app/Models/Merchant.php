@@ -14,6 +14,12 @@ class Merchant extends Model
         'merchant_name',
         'registration_no',
         'classification_id',
+        'tin_no',
+        'irbm_client_id',
+        'irbm_client_key',
+        'sales_tax',
+        'service_tax',
+        'sst_effective_data'
     ];
 
     public function classification(): \Illuminate\Database\Eloquent\Relations\BelongsTo

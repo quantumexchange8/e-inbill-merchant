@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->string('prefix');
-            $table->integer('digit');
+            $table->integer('digits');
             $table->integer('last_number');
             $table->softDeletes();
             $table->timestamps();

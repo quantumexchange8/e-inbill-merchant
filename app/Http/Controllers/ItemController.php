@@ -65,7 +65,7 @@ class ItemController extends Controller
         $item = Item::query()->with(['category', 'classification']);
 
         $datas = $item->get();
-
+        
         return response()->json($datas);
     }
 

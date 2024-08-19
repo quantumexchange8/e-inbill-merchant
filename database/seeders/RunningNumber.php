@@ -16,14 +16,12 @@ class RunningNumber extends Seeder
         DB::table('running_numbers')->insert([
             'type' => 'merchant',
             'prefix' => 'MID',
-            'digit' => '6',
+            'digits' => '6',
             'last_number' => '0',
         ]);
 
         DB::table('running_numbers')->insert([
             'type' => 'shift',
-            'prefix' => 'shift',
-            'digit' => '8',
             'last_number' => '0',
         ]);
     }

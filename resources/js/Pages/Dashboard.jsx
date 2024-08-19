@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
 import Transaction from "@/Components/NoContent/Transaction.svg"
+import CountUp from 'react-countup';
 
 export default function Dashboard({ auth }) {
     return (
@@ -25,7 +26,7 @@ export default function Dashboard({ auth }) {
                                             <div className='text-xs text-gray-950 font-sf-pro'>
                                                 Invoice Sent Today
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4}/></div>
                                         </div>
                                         <div>
                                             <InvoiceToday />
@@ -45,7 +46,7 @@ export default function Dashboard({ auth }) {
                                             <div className='text-xs text-gray-950 font-sf-pro'>
                                                 Sales Today (RM)
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} decimals={2}/></div>
                                         </div>
                                         <div>
                                             <SalesToday />
@@ -65,7 +66,7 @@ export default function Dashboard({ auth }) {
                                             <div className='text-xs text-gray-950 font-sf-pro'>
                                                 Order Today
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
                                         </div>
                                         <div>
                                             <OrderToday />
@@ -83,9 +84,9 @@ export default function Dashboard({ auth }) {
                                     <div className='border-l-4 rounded-l border-primary-700  flex flex-row justify-between w-full py-1 pl-4'>
                                         <div className='flex flex-col gap-[3px]'>
                                             <div className='text-xs text-gray-950 font-sf-pro'>
-                                                Invoice Sent Today
+                                                Item Sold Today
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
                                         </div>
                                         <div>
                                             <ItemSoldToday />
@@ -170,7 +171,7 @@ export default function Dashboard({ auth }) {
                                         <div className='text-xs text-gray-950 font-sf-pro'>
                                             Invoice Sent Today
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
                                     </div>
                                     <div>
                                         <InvoiceToday />
@@ -190,7 +191,7 @@ export default function Dashboard({ auth }) {
                                         <div className='text-xs text-gray-950 font-sf-pro'>
                                             Sales Today (RM)
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} decimals={2}/></div>
                                     </div>
                                     <div>
                                         <SalesToday />
@@ -210,7 +211,7 @@ export default function Dashboard({ auth }) {
                                         <div className='text-xs text-gray-950 font-sf-pro'>
                                             Order Today
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
                                     </div>
                                     <div>
                                         <OrderToday />
@@ -228,9 +229,9 @@ export default function Dashboard({ auth }) {
                                 <div className='border-l-4 rounded-l border-primary-700  flex flex-row justify-between w-full py-1 pl-4'>
                                     <div className='flex flex-col gap-[3px]'>
                                         <div className='text-xs text-gray-950 font-sf-pro'>
-                                            Invoice Sent Today
+                                            Item Sold Today
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'>0</div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
                                     </div>
                                     <div>
                                         <ItemSoldToday />

@@ -17,9 +17,9 @@ export default function MyInvois({ merchant }) {
     const [showPassword, setShowPassword] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        tin_no: merchant.tin_no,
-        irbm_client_id: merchant.irbm_client_id,
-        irbm_client_key: merchant.irbm_client_key,
+        tin_no: merchant.tin_no ?? '',
+        irbm_client_id: merchant.irbm_client_id ?? '',
+        irbm_client_key: merchant.irbm_client_key ?? '',
     });
 
     const editMerchantDetails = () => {
@@ -31,8 +31,8 @@ export default function MyInvois({ merchant }) {
         reset()
     }
 
-    const maskLength = merchant.irbm_client_key.length;
-    const maskedPart = '•'.repeat(maskLength);
+    const maskLength = merchant.irbm_client_key ? merchant.irbm_client_key.length : null;
+    const maskedPart = '• '.repeat(maskLength);
 
     const handleToggle = () => {
         setShowPassword(!showPassword);
@@ -41,20 +41,19 @@ export default function MyInvois({ merchant }) {
     const submit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        // post('/configuration/updateMerchant', {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         setEditMerchant(false);
-        //         setEditBilling(false);
-        //         setIsLoading(false);
-        //         fetchData();
-        //         toast.success('Profile Detail updated successfully.', {
-        //             title: 'Profile Detail updated successfully.',
-        //             duration: 3000,
-        //             variant: 'variant3',
-        //         });
-        //     }
-        // })
+        post('/configuration/updateInvoice', {
+            preserveScroll: true,
+            onSuccess: () => {
+                setEditMerchant(false);
+                setIsLoading(false);
+                fetchData();
+                toast.success('MyInvois details updated successfully.', {
+                    title: 'MyInvois details updated successfully.',
+                    duration: 3000,
+                    variant: 'variant3',
+                });
+            }
+        })
     }
 
     return (
@@ -121,7 +120,7 @@ export default function MyInvois({ merchant }) {
                     </div>
                 }
             >
-                <div className="px-5 flex flex-col gap-5">
+                <div className="p-5 flex flex-col gap-5">
                     <div className="flex flex-col gap-5 max-w-[400px] w-full">
                         <div></div>
                         <div className="flex flex-col space-y-1">

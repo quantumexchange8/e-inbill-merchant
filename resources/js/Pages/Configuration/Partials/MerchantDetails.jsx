@@ -73,19 +73,19 @@ export default function MerchantDetails({ merchant, classification }) {
                             <EditIcon />
                         </div>
                     </div>
-                    <div className="flex items-center gap-6">
+                    <div className="flex flex-col md:flex-row md:items-center gap-6">
                         <div className="w-16 h-16 bg-gray-400"></div>
                         <div className="flex flex-col gap-2">
-                            <div className="flex items-center">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Merchant Name: </div>
+                            <div className="flex flex-col md:flex-row md:items-center">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Merchant Name </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.merchant_name}</div>
                             </div>
-                            <div className="flex items-center">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Reg. No: </div>
+                            <div className="flex flex-col md:flex-row md:items-center">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Reg. No </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.registration_no}</div>
                             </div>
-                            <div className="flex items-center">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Classification code: </div>
+                            <div className="flex flex-col md:flex-row md:items-center">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Classification code </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.classification.code}</div>
                             </div>
                         </div>
@@ -101,32 +101,32 @@ export default function MerchantDetails({ merchant, classification }) {
                     </div>
                     <div className="flex items-center gap-6">
                         <div className="flex flex-col gap-2">
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Attention: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Attention </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.merchant_name}</div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Address: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Address </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.address}</div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Postcode: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Postcode </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.postcode}</div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">City: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">City </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.area}</div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">State: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">State </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.state}</div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Phone No.: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Phone No. </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.phone}</div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Email: </div>
+                            <div className="flex flex-col md:flex-row md:items-center gap-1">
+                                <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Email </div>
                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{merchant.merchant_email}</div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@ export default function MerchantDetails({ merchant, classification }) {
                             </div>
                         }
                     >
-                        <div className="p-5 flex gap-5">
+                        <div className="p-5 flex flex-col md:flex-row gap-5 max-h-[70vh] md:max-h-80">
                             <div className="w-[340px] h-[340px] bg-slate-600"></div>
                             <div className="flex flex-col gap-5 max-w-[400px] w-full">
                                 <div className="flex flex-col space-y-1">
@@ -294,7 +294,7 @@ export default function MerchantDetails({ merchant, classification }) {
                             </div>
                         }
                     >
-                        <div className="flex flex-col gap-5 p-5">
+                        <div className="flex flex-col gap-5 p-5 max-h-[70vh] md:max-h-[500px] overflow-auto">
                             <div className="flex flex-col space-y-1">
                                 <InputLabel  value='Attention' />
                                 <TextInput 
@@ -337,7 +337,7 @@ export default function MerchantDetails({ merchant, classification }) {
                                 />
                                 <InputError message={errors.attention} className="mt-2" />
                             </div>
-                            <div className="grid grid-cols-3 gap-5">
+                            <div className="flex flex-col md:grid grid-cols-3 gap-5">
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel  value='Postcode' />
                                     <TextInput 
@@ -378,7 +378,7 @@ export default function MerchantDetails({ merchant, classification }) {
                                 />
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-5">
+                            <div className="flex flex-col md:grid grid-cols-2 gap-5">
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel value='Phone No.' />
                                     <TextInput 

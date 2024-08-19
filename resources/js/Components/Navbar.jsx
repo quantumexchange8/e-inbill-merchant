@@ -13,6 +13,8 @@ export default function Navbar({ user, header, toggleSidebar }) {
 
     const { auth } = usePage().props;
 
+    console.log(auth)
+
     const [isOpen, setIsOpen] = useState(false)
     const [scroll, setScroll] = useState(true)
 
