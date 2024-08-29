@@ -41,7 +41,11 @@ class ItemController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:categories|max:255',
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('categories')->whereNull('deleted_at'), // Ensure uniqueness only for non-deleted rows
+            ],
             'color' => 'required',
         ]);
 
@@ -49,8 +53,8 @@ class ItemController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Validation failed',
-                'errors' => $validator->errors() // Return validation errors
-            ], 422); // 422 Unprocessable Entity status code
+                'errors' => $validator->errors()
+            ], 422);
         } else {
             $category = Category::create([
                 'merchant_id' => $user->merchant_id,
