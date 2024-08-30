@@ -18,12 +18,14 @@ return new class extends Migration
             $table->decimal('price', 13, 2)->default('0.00');
             $table->unsignedBigInteger('classification_id');
             $table->string('sku');
-            $table->unsignedMediumInteger('category_id');
+            $table->unsignedMediumInteger('category_id')->nullable();
             $table->double('cost', 13, 2)->default('0.00');
             $table->string('stock');
             $table->string('barcode');
-            $table->string('status');
             $table->string('image_code')->nullable();
+            $table->string('image_color')->nullable();
+            $table->string('image_shape')->nullable();
+            $table->string('status');
             $table->softDeletes();
             $table->timestamps();
         });

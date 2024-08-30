@@ -1,5 +1,5 @@
 import Button from "@/Components/Button";
-import { PlusIcon, UploadIcon, XIcon } from "@/Components/Icon/outline";
+import { CheckIcon, CircleShape, PlusIcon, PolygonShape, SquareShape, StarShape, UploadIcon, XIcon } from "@/Components/Icon/outline";
 import InputError from "@/Components/InputError";
 import InputIconWrapper from "@/Components/InputIconWrapper";
 import Modal from "@/Components/Modal";
@@ -21,6 +21,8 @@ export default function AddItem({ itemAdded, categories }) {
     const [isLoading, setIsLoading] = useState(false);
     const [classVal, setClassification] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
+    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedShape, setSelectedShape] = useState('');
 
     const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -47,18 +49,26 @@ export default function AddItem({ itemAdded, categories }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         price: '',
-        classification_id: selectedClass,
+        classification_id: '',
         sku: '',
         category: selectedCategory,
         cost: '',
         stock: '',
         barcode: '',
         item_image: '',
+        color: '',
+        shape: '',
     });
 
     useEffect(() => {
-        setData('classification_id', selectedClass);
-        setData('category', selectedCategory);
+        if(selectedClass) {
+            setData('classification_id', selectedClass);
+        }
+
+        if(selectedCategory) {
+            setData('category', selectedCategory);
+        }
+        
       }, [selectedClass, selectedCategory]);
 
     const toggleAddItem = () => {
@@ -100,7 +110,7 @@ export default function AddItem({ itemAdded, categories }) {
     const submit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        
+        console.log(data)
         post('/item/new-item', {
             preserveScroll: true,
             onSuccess: () => {
@@ -120,24 +130,33 @@ export default function AddItem({ itemAdded, categories }) {
         })
     }
 
-    const imagePaths = [
-        '/assets/items_images/1.svg',
-        '/assets/items_images/2.svg',
-        '/assets/items_images/3.svg',
-        '/assets/items_images/4.svg',
-        '/assets/items_images/5.svg',
-        '/assets/items_images/6.svg',
-        '/assets/items_images/7.svg',
-        '/assets/items_images/8.svg',
-        '/assets/items_images/9.svg',
-        '/assets/items_images/10.svg',
-        '/assets/items_images/11.svg',
-        '/assets/items_images/12.svg',
-        '/assets/items_images/13.svg',
-        '/assets/items_images/14.svg',
-        '/assets/items_images/15.svg',
-        '/assets/items_images/16.svg',
+    const colors = [
+        {name: 'bg-item-gray', colorCode: '#e0e0e0'},
+        {name: 'bg-item-red', colorCode: '#ff2626'},
+        {name: 'bg-item-pink', colorCode: '#ff0094'},
+        {name: 'bg-item-orange', colorCode: '#ffa146'},
+        {name: 'bg-item-yellow', colorCode: '#efdd60'},
+        {name: 'bg-item-green', colorCode: '#71d200'},
+        {name: 'bg-item-blue', colorCode: '#4e9bff'},
+        {name: 'bg-item-purple', colorCode: '#c11bff'},
     ];
+
+    const shapes = [
+        {name: 'square', icon: <SquareShape />},
+        {name: 'circle', icon: <CircleShape />},
+        {name: 'polygon', icon: <PolygonShape />},
+        {name: 'star', icon: <StarShape />},
+    ];
+
+    const handleColorSelect = (colorName, colorCode) => {
+        setSelectedColor(colorName);
+        setData('color', colorCode);
+    };
+
+    const handleShapeSelect = (shapeName) => {
+        setSelectedShape(shapeName);
+        setData('shape', shapeName);
+    }
 
     return (
         <>
@@ -201,12 +220,38 @@ export default function AddItem({ itemAdded, categories }) {
                                             </div>
                                         </div>
                                         <div className="uppercase text-sm font-medium font-sf-pro text-gray-400">or</div>
-                                        <div className="flex items-center md:grid md:grid-cols-8 md:grid-rows-2 gap-4 md:gap-5 overflow-auto">
-                                            {
-                                                imagePaths.map((image, index) => (
-                                                    <img key={index} src={image} alt={`Image ${index + 1}`} />
-                                                ))
-                                            }
+                                        <div className="flex flex-col gap-5 w-full">
+                                            <div className="flex items-center md:grid md:grid-cols-8 md:grid-rows-1 gap-4 md:gap-5">
+                                                {
+                                                    colors.map((color) => (
+                                                        <div 
+                                                            key={color.name} 
+                                                            className={`w-12 h-12 ${color.name} ${selectedColor === color.name ? 'flex justify-center items-center' : 'hover:border-2 hover:border-primary-50'}`}
+                                                            onClick={() => handleColorSelect(color.name, color.colorCode)}
+                                                        >
+                                                            {selectedColor === color.name ? <CheckIcon className='text-white w-7 h-7' /> : ''}
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                            <div className="grid grid-cols-8 items-center gap-5">
+                                                {shapes.map((shape, index) => (
+                                                    <div 
+                                                        key={index} 
+                                                        className={`relative`}
+                                                        onClick={() => handleShapeSelect(shape.name)}
+                                                    >
+                                                        {
+                                                            shape.icon
+                                                        }
+                                                        {selectedShape === shape.name ? (
+                                                            <div className=" absolute w-full h-full flex justify-center items-center">
+                                                                <CheckIcon className='text-black w-7 h-7' />
+                                                            </div>
+                                                        ) : ''}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

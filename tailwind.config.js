@@ -114,6 +114,16 @@ export default {
                     blue: '#0059cf',
                     purple: '#6f00ff',
                     pink: '#ff004f',
+                },
+                item: {
+                    gray: '#e0e0e0',
+                    red: '#ff2626',
+                    pink: '#ff0094',
+                    orange: '#ffa146',
+                    yellow: '#efdd60',
+                    green: '#71d200',
+                    blue: '#4e9bff',
+                    purple: '#c11bff',
                 }
             },
             boxShadow: {

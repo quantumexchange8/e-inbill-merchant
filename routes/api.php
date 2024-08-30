@@ -38,5 +38,9 @@ Route::group(["middleware" => ["auth:sanctum"]], function() {
 
     Route::post('addTransaction', [TransactionController::class, 'addTransaction']);
 
+    // cash management
+    Route::post('payIn', [TransactionController::class, 'payIn']);
+    Route::post('payOut', [TransactionController::class, 'payOut']);
+
 
 });

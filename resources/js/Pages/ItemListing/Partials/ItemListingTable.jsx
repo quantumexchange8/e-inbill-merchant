@@ -16,6 +16,7 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import { ConfirmLogoutIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
 import toast from "react-hot-toast";
 import { hourglass } from 'ldrs';
+import { useMemo } from "react";
 
 export default function ItemListingTable({ type, searchVal }) {
 
@@ -59,12 +60,18 @@ export default function ItemListingTable({ type, searchVal }) {
                 setFilteredData(data);
             } else {
                 // Filter items by category_id if type is not 0
-                const filteredData = data.filter(item => item.category.id === type);
+                const filteredData = data.filter(item => item.category != null && (item.category.id === type));
                 setFilteredData(filteredData);
-
             }
         }
     }, [isLoading, data, type]);
+
+    const filteredSearchData = useMemo(() => {
+        if (!searchVal) return filteredData;
+        return filteredData.filter(item =>
+            item.name.toLowerCase().includes(searchVal.toLowerCase()) // Adjust filter logic as needed
+        );
+    }, [filteredData, searchVal]);
 
     const columns = [
         {
@@ -271,10 +278,14 @@ export default function ItemListingTable({ type, searchVal }) {
                         <div className={rowData.status === 'inactive' ? 'text-neutral-200 font-semibold' : "text-sm text-neutral-950 font-sf-pro font-semibold"}>
                             {value.name}
                         </div>
-                        <div className="flex items-center gap-1.5">
-                            <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: value.category.color }}></div>
-                            <div className={rowData.status === 'inactive' ? 'text-neutral-200 font-semibold text-xs' : "text-gray-800 text-xs font-sf-pro"}>{value.category.name}</div>
-                        </div>
+                        {
+                            value.category !== null && (
+                                <div className="flex items-center gap-1.5">
+                                    <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: value.category.color }}></div>
+                                    <div className={rowData.status === 'inactive' ? 'text-neutral-200 font-semibold text-xs' : "text-gray-800 text-xs font-sf-pro"}>{value.category.name}</div>
+                                </div>
+                            )
+                        }
                     </div>
 
                 </div>
@@ -368,12 +379,16 @@ export default function ItemListingTable({ type, searchVal }) {
                                                         <div className={item.status === 'inactive' ? 'text-sm text-gray-400 font-sf-pro font-semibold' : "text-sm text-neutral-950 font-sf-pro font-semibold"}>
                                                             {item.name}
                                                         </div>
-                                                        <div className="flex items-center gap-1.5">
-                                                            <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: item.category.color }}></div>
-                                                            <div className={item.status === 'inactive' ? 'text-gray-400 text-xs font-sf-pro' : "text-gray-800 text-xs font-sf-pro"}>
-                                                                {item.category.name}
-                                                            </div>
-                                                        </div>
+                                                        {
+                                                            item.category !== null && (
+                                                                <div className="flex items-center gap-1.5">
+                                                                    <div className={`w-2.5 h-2.5 rounded-full`} style={{ backgroundColor: item.category.color }}></div>
+                                                                    <div className={item.status === 'inactive' ? 'text-gray-400 text-xs font-sf-pro' : "text-gray-800 text-xs font-sf-pro"}>
+                                                                        {item.category.name}
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div label="Show" onClick={(e) => handleMenuToggle(e, item)}>

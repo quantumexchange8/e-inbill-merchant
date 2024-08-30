@@ -169,9 +169,9 @@ class ItemController extends Controller
                 'merchant_id' => $user->merchant_id,
                 'name' => $request->name,
                 'price' => $request->price,
-                'classification_id' => $request->classification_id['id'],
+                'classification_id' => $request->classification_id,
                 'sku' => $request->sku,
-                'category_id' => $request->category['id'],
+                'category_id' => $request->category_id,
                 'cost' => $request->cost,
                 'stock' => $request->stock,
                 'barcode' => $request->barcode,
@@ -181,6 +181,11 @@ class ItemController extends Controller
 
             if ($request->hasFile('item_image')) {
                 $item->addMedia($request->item_image)->toMediaCollection('item_image');
+            } else {
+                $item->update([
+                    'image_color' => $request->color,
+                    'image_shape' => $request->shape,
+                ]);
             }
 
             return response()->json([
@@ -214,6 +219,8 @@ class ItemController extends Controller
             'barcode' => $request->barcode,
             'status' => 'active',
             'image_code' => $request->image_code ?? null,
+            'image_color' => $request->image_color ?? null,
+            'image_shape' => $request->image_shape ?? null,
         ]);
 
         return response()->json([

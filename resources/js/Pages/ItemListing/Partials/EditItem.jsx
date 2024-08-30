@@ -9,7 +9,7 @@ import InputError from "@/Components/InputError";
 import toast from 'react-hot-toast';
 
 export default function EditItem({ editModal, setEditModal, editRow, closeEditRow, currentRowVal, fetchData }) {
-      console.log(currentRowVal)
+    
     const [isLoading, setIsLoading] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
