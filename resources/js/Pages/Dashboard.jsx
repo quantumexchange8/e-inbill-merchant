@@ -20,7 +20,7 @@ export default function Dashboard({ auth }) {
                     <div className='flex flex-col-reverse md:flex-row gap-5'>
                         <div className='flex flex-col gap-5 w-full'>
                             <div className='w-full flex flex-nowrap gap-5 items-center md:grid grid-cols-2 md:gap-5 overflow-auto'>
-                                <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                     <div className='border-l-4 rounded-l border-category-purple  flex flex-row justify-between w-full py-1 pl-4'>
                                         <div className='flex flex-col gap-[3px]'>
                                             <div className='text-xs text-gray-950 font-sf-pro'>
@@ -40,7 +40,7 @@ export default function Dashboard({ auth }) {
                                         <span className='text-gray-900 text-xs font-sf-pro'>No data yet</span>
                                     </div>
                                 </div>
-                                <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                     <div className='border-l-4 rounded-l border-category-orange  flex flex-row justify-between w-full py-1 pl-4'>
                                         <div className='flex flex-col gap-[3px]'>
                                             <div className='text-xs text-gray-950 font-sf-pro'>
@@ -60,7 +60,7 @@ export default function Dashboard({ auth }) {
                                         <span className='text-gray-900 text-xs font-sf-pro'>No data yet</span>
                                     </div>
                                 </div>
-                                <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                     <div className='border-l-4 rounded-l border-category-pink  flex flex-row justify-between w-full py-1 pl-4'>
                                         <div className='flex flex-col gap-[3px]'>
                                             <div className='text-xs text-gray-950 font-sf-pro'>
@@ -80,7 +80,7 @@ export default function Dashboard({ auth }) {
                                        <span className='text-gray-900 text-xs font-sf-pro'>No data yet</span>
                                     </div>
                                 </div>
-                                <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                                <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                     <div className='border-l-4 rounded-l border-primary-700  flex flex-row justify-between w-full py-1 pl-4'>
                                         <div className='flex flex-col gap-[3px]'>
                                             <div className='text-xs text-gray-950 font-sf-pro'>
@@ -145,7 +145,7 @@ export default function Dashboard({ auth }) {
                                     <Epc />
                                 </div>
                             </div>
-                            <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg'>
+                            <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg bg-white'>
                                 <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
                                     Top Selling Item
                                 </div>
@@ -165,7 +165,7 @@ export default function Dashboard({ auth }) {
                 <div className='flex flex-col gap-5 xl:hidden'>
                     <div className='flex flex-col-reverse md:flex-row gap-5'>
                         <div className='w-full flex flex-nowrap gap-5 items-center md:grid grid-cols-2 md:gap-5 overflow-auto'>
-                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                            <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                 <div className='border-l-4 rounded-l border-category-purple  flex flex-row justify-between w-full py-1 pl-4'>
                                     <div className='flex flex-col gap-[3px]'>
                                         <div className='text-xs text-gray-950 font-sf-pro'>
@@ -185,7 +185,7 @@ export default function Dashboard({ auth }) {
                                     <span className='text-gray-900 text-xs font-sf-pro'>No data yet</span>
                                 </div>
                             </div>
-                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                            <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                 <div className='border-l-4 rounded-l border-category-orange  flex flex-row justify-between w-full py-1 pl-4'>
                                     <div className='flex flex-col gap-[3px]'>
                                         <div className='text-xs text-gray-950 font-sf-pro'>
@@ -205,7 +205,7 @@ export default function Dashboard({ auth }) {
                                     <span className='text-gray-900 text-xs font-sf-pro'>No data yet</span>
                                 </div>
                             </div>
-                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                            <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                 <div className='border-l-4 rounded-l border-category-pink  flex flex-row justify-between w-full py-1 pl-4'>
                                     <div className='flex flex-col gap-[3px]'>
                                         <div className='text-xs text-gray-950 font-sf-pro'>
@@ -225,7 +225,7 @@ export default function Dashboard({ auth }) {
                                     <span className='text-gray-900 text-xs font-sf-pro'>No data yet</span>
                                 </div>
                             </div>
-                            <div className='border border-gray-100 rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
+                            <div className='border border-gray-100 bg-white rounded-lg shadow-container min-w-[230px] md:min-w-none md:w-full p-5 flex flex-col gap-4'>
                                 <div className='border-l-4 rounded-l border-primary-700  flex flex-row justify-between w-full py-1 pl-4'>
                                     <div className='flex flex-col gap-[3px]'>
                                         <div className='text-xs text-gray-950 font-sf-pro'>
@@ -289,7 +289,7 @@ export default function Dashboard({ auth }) {
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg'>
+                        <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg bg-white'>
                             <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
                                 Top Selling Item
                             </div>

@@ -81,7 +81,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
     };
 
     return (
-        <nav className={`sticky top-0 z-10 ease-in duration-500 w-full bg-gray-25 border-b border-gray-200 md:shadow-navbar py-2 px-3 md:px-4`}>
+        <nav className={`sticky top-0 z-20 ease-in duration-500 w-full bg-gray-25 border-b border-gray-200 md:shadow-navbar py-2 px-3 md:px-4`}>
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-6'>
                     <div className='p-2.5 cursor-pointer bg-neutral-100 hover:bg-neutral-300 rounded-[4px]' onClick={toggleSidebar}>

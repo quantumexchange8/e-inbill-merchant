@@ -46,7 +46,7 @@ export default function AddItem({ itemAdded, categories }) {
         fetchData();
     }, []);
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset, progress } = useForm({
         name: '',
         price: '',
         classification_id: '',
@@ -59,6 +59,20 @@ export default function AddItem({ itemAdded, categories }) {
         color: '',
         shape: '',
     });
+
+    const [previewImage, setPreviewImage] = useState(null);
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setData('item_image', file); // Update the form data with the selected file
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewImage(reader.result); // Set the preview image to display
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     useEffect(() => {
         if(selectedClass) {
@@ -207,17 +221,47 @@ export default function AddItem({ itemAdded, categories }) {
                                 <div className="max-w-[705px] w-full flex flex-col gap-5">
                                     <div className="hidden md:block text-neutral-950 text-sm font-bold font-sf-pro leading-tight">Item Image</div>
                                     <div className="flex flex-col md:flex-row items-center gap-5">
-                                        <div className="p-4 flex flex-col items-center justify-center gap-3 border border-dashed rounded-md border-gray-500 min-w-full min-h-[318px]  md:min-w-[120px] md:min-h-[120px]">
-                                            <div className="bg-primary-50 rounded-full w-10 h-10 flex items-center justify-center">
-                                                <UploadIcon />
-                                            </div>
-                                            <div>
-                                                <Button
-                                                    size="sm"
-                                                >
-                                                    Browse
-                                                </Button>
-                                            </div>
+                                        <div className="relative p-4 flex flex-col items-center justify-center gap-3 border border-dashed rounded-md border-gray-500 min-w-full min-h-[318px]  md:min-w-[120px] md:min-h-[120px]">
+                                            {previewImage === null ? (
+                                                <>
+                                                    <div className="bg-primary-50 rounded-full w-10 h-10 flex items-center justify-center">
+                                                        <UploadIcon />
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                            type="file"
+                                                            id="upload"
+                                                            className="hidden"
+                                                            accept="image/*"
+                                                            onChange={handleImageChange} // Call handleImageChange on file select
+                                                        />
+                                                        <Button
+                                                            size="sm"
+                                                            onClick={() => document.getElementById('upload').click()} // Trigger click on the hidden file input
+                                                        >
+                                                            Browse
+                                                        </Button>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <img src={previewImage} alt="Selected" className="w-20 h-20 rounded-full object-cover" />
+                                                    <div className="absolute top-1 right-1">
+                                                        <Button
+                                                            size="sm"
+                                                            variant="ghost"
+                                                            className="bg-transparent rounded-full p-0 hover:bg-neutral-100"
+                                                            iconOnly
+                                                            onClick={() => {
+                                                                setPreviewImage(null); // Clear the preview image
+                                                                setData('item_image', ''); // Reset the form data
+                                                            }}
+                                                        >
+                                                            <XIcon />
+                                                        </Button>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                         <div className="uppercase text-sm font-medium font-sf-pro text-gray-400">or</div>
                                         <div className="flex flex-col gap-5 w-full">

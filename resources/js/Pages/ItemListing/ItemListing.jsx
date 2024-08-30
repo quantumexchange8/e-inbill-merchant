@@ -37,7 +37,7 @@ export default function ItemListing({ categories }) {
         <Authenticated header="Item Listing">
             <Head title="Item Listing" />
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 p-5 border border-neutral-100 bg-white shadow-container rounded-lg">
                 <div className="text-neutral-950 text-lg font-bold">
                     List of Item
                 </div>

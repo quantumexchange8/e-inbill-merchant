@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\ShiftTransaction;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use App\Services\RunningNumberService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +62,7 @@ class TransactionController extends Controller
         $getShift->update([
             'shift_closed' => now(),
             'actual_cash' => $request->actual_cash ?? null,
-            'difference' => $request->difference ?? null,
+            'difference' => $request->actual_cash != null ? $getShift->expected_cash_amount - $request->actual_cash : null,
             'status' => 'closed'
         ]);
 
@@ -80,19 +81,67 @@ class TransactionController extends Controller
             ->where('status', 'opened')
             ->first();
 
-        $transaction = Transaction::create([
-            'shift_transaction_id' => $shift->id,
-            'user_id' => $user->id,
-            // 'receipt_no' => 
-        ]);
+        if ($request->payment_type === 'cash') {
+            $transaction = Transaction::create([
+                'shift_transaction_id' => $shift->id,
+                'user_id' => $user->id,
+                'receipt_no' => RunningNumberService::getID('order'),
+                'pay_in' => $request->pay_in, 
+                'pay_out' => $request->pay_out, 
+                'total_amount' => $request->total_amount,
+                'payment_type' => 'cash',
+                'transaction_type' => 'sales',
+                'transaction_date' => now(),
+            ]);
 
+            $shift->cash_amount += $request->total_amount;
+            $shift->expected_cash_amount += $request->total_amount;
+            $shift->gross_sales += $request->total_amount;
+            $shift->net_sales += $request->total_amount;
+            $shift->net_cash += $request->total_amount;
+            $shift->save();
+
+        } else {
+            $transaction = Transaction::create([
+                'shift_transaction_id' => $shift->id,
+                'user_id' => $user->id,
+                'receipt_no' => RunningNumberService::getID('order'),
+                'total_amount' => $request->total_amount,
+                'payment_type' => 'card',
+                'transaction_type' => 'sales',
+                'transaction_date' => now(),
+            ]);
+
+            $shift->gross_sales += $request->total_amount;
+            $shift->net_sales += $request->total_amount;
+            $shift->net_card += $request->total_amount;
+            $shift->save();
+        }
+
+        foreach($request->sale_items as $sale_item) {
+            $transaction_item = TransactionDetail::create([
+                'transaction_id' => $sale_item['id'],
+                'item_id' => $sale_item['item_id'],
+                'quantity' => $sale_item['quantity'],
+                'amount' => $sale_item['amount'],
+            ]);
+        }
 
         return response()->json([
             'status' => 'succesfull created transaction',
         ], 200);
     }
 
+    public function refundOrders(Request $request)
+    {
 
+        $transaction = Transaction::find($request->id);
+
+
+        return response()->json([
+            'status' => 'succesfull refund',
+        ], 200);
+    }
 
     // Pay IN/OUT
     public function payIn(Request $request)

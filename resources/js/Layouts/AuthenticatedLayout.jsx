@@ -39,7 +39,7 @@ export default function Authenticated({ user, header, children }) {
                 <Navbar header={header} toggleSidebar={toggleSidebar} expanded={isSidebarExpanded}/>
                 
                 <main className='w-full flex justify-center p-5'>
-                    <div className='max-w-[1440px] w-full md:p-5 rounded-lg md:border md:border-neutral-100 bg-gray-25 md:shadow-container'>
+                    <div className='max-w-[1440px] w-full rounded-lg'>
                         {children}
                     </div>
                 </main>

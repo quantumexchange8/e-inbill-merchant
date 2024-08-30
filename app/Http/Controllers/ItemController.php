@@ -71,6 +71,7 @@ class ItemController extends Controller
 
     public function newItem(AddItemRequest $request)
     {
+
         $item = Item::create([
             'merchant_id' => Auth::user()->merchant_id,
             'name' => $request->name,
@@ -84,6 +85,15 @@ class ItemController extends Controller
             'status' => 'active',
         ]);
 
+        if ($request->hasfile('item_image'))
+        {
+            $item->addMedia($request->item_image)->toMediaCollection('item_image');
+        } else {
+            $item->update([
+                'image_color' => $request->color,
+                'image_shape' => $request->shape,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'success created!');
     }

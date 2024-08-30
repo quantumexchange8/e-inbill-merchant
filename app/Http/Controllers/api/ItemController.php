@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemImage;
 use App\Models\Merchant;
+use App\Services\RunningNumberService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -170,7 +171,7 @@ class ItemController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'classification_id' => $request->classification_id,
-                'sku' => $request->sku,
+                'sku' => RunningNumberService::getID('sku'),
                 'category_id' => $request->category_id,
                 'cost' => $request->cost,
                 'stock' => $request->stock,
@@ -212,7 +213,6 @@ class ItemController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'classification_id' => $request->classification_id,
-            'sku' => $request->sku,
             'category_id' => $request->category,
             'cost' => $request->cost,
             'stock' => $request->stock,
