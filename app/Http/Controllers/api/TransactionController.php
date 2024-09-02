@@ -135,8 +135,27 @@ class TransactionController extends Controller
 
     public function refundOrders(Request $request)
     {
+        $user = Auth::user();
+        $shift =  ShiftTransaction::where('merchant_id', $user->merchant_id)
+            ->where('user_id', $user->id)
+            ->where('status', 'opened')
+            ->first();
 
         $transaction = Transaction::find($request->id);
+        $refundTransaction = Transaction::create([
+            'shift_transaction_id' => $shift->id,
+            'user_id' => $user->id,
+            'receipt_no' => RunningNumberService::getID('refund'),
+            'total_amount' => $request->total_amount,
+            'payment_type' => 'card',
+            'transaction_type' => 'sales',
+            'transaction_date' => now(),
+        ]);
+        
+        foreach($request->itemRefund as $item) {
+
+        }
+
 
 
         return response()->json([
@@ -219,6 +238,26 @@ class TransactionController extends Controller
 
         return response()->json([
             'status' => 'succesfull pay out',
+        ], 200);
+    }
+
+    public function getTransaction()
+    {
+
+        $user = Auth::user();
+        $shift =  ShiftTransaction::where('merchant_id', $user->merchant_id)
+            ->where('user_id', $user->id)
+            ->where('status', 'opened')
+            ->first();
+
+        $transaction = Transaction::where('shift_transaction_id', $shift->id)
+                ->whereNot('transaction_type', 'shift')
+                ->with(['transaction_details'])
+                ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'transaction_history' => $transaction,
         ], 200);
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('shift_transaction_id');
             $table->unsignedBigInteger('user_id');
             $table->string('receipt_no')->nullable();
+            $table->string('refund_no')->nullable();
             $table->decimal('total_amount', 13, 2)->default('0.00');
             $table->string('payment_type');
             $table->decimal('paid_in', 13, 2)->default('0.00');

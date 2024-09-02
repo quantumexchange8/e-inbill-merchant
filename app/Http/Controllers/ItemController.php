@@ -87,6 +87,7 @@ class ItemController extends Controller
 
         if ($request->hasfile('item_image'))
         {
+            $item->clearMediaCollection('item_image');
             $item->addMedia($request->item_image)->toMediaCollection('item_image');
         } else {
             $item->update([
@@ -131,6 +132,16 @@ class ItemController extends Controller
             'barcode' => $request->barcode,
             'status' => 'active',
         ]);
+
+        if ($request->hasfile('item_image'))
+        {
+            $item->addMedia($request->item_image)->toMediaCollection('item_image');
+        } else {
+            $item->update([
+                'image_color' => $request->color,
+                'image_shape' => $request->shape,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'success created!');
     }

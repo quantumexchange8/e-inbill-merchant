@@ -199,7 +199,9 @@ class ItemController extends Controller
     {
 
         $item = Item::find($request->item_id);
-
+        return response()->json([
+            'status' => $item,
+        ], 200);
         $validator = Validator::make($request->all(), [
             'name' => [
             'required',

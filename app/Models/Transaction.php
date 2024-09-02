@@ -21,4 +21,9 @@ class Transaction extends Model
         'transaction_date',
         'remark',
     ];
+
+    public function transaction_details(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(TransactionDetail::class, 'transaction_id', 'id');
+    }
 }
