@@ -22,6 +22,7 @@ class TransactionController extends Controller
             'user_id' => $user->id,
             'shift_no' => RunningNumberService::getID('shift'),
             'starting_cash' => $request->starting_cash,
+            'expected_cash_amount' => $request->starting_cash,
             'shift_opened' => now(),
             'status' => 'opened',
         ]);
@@ -86,8 +87,8 @@ class TransactionController extends Controller
                 'shift_transaction_id' => $shift->id,
                 'user_id' => $user->id,
                 'receipt_no' => RunningNumberService::getID('order'),
-                'pay_in' => $request->pay_in, 
-                'pay_out' => $request->pay_out, 
+                'paid_in' => $request->pay_in, 
+                'paid_out' => $request->pay_out, 
                 'total_amount' => $request->total_amount,
                 'payment_type' => 'cash',
                 'transaction_type' => 'sales',
@@ -120,7 +121,7 @@ class TransactionController extends Controller
 
         foreach($request->sale_items as $sale_item) {
             $transaction_item = TransactionDetail::create([
-                'transaction_id' => $sale_item['id'],
+                'transaction_id' => $transaction->id,
                 'item_id' => $sale_item['item_id'],
                 'quantity' => $sale_item['quantity'],
                 'amount' => $sale_item['amount'],
