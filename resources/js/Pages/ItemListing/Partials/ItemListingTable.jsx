@@ -4,7 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from 'axios';
 import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
-import { DeleteIcon, DotMenuIcon, EditIcon, TabMenuIcon, ChevronLeft } from "@/Components/Icon/outline";
+import { DeleteIcon, DotMenuIcon, EditIcon, TabMenuIcon, ChevronLeft, SquareShape, PolygonShape, CircleShape, StarShape } from "@/Components/Icon/outline";
 import { Menu } from 'primereact/menu';
 import { formatAmount } from "@/Composables";
 import { Switch } from '@headlessui/react'
@@ -270,10 +270,15 @@ export default function ItemListingTable({ type, searchVal }) {
                     </Switch>
                 </div>
                 <div className="flex items-center gap-5">
-                    {/* <img src={value.item_image ? value.item_image : ''} className=" w-14 h-14" /> */}
-                    <div className="w-14 h-14 bg-gray-50">
+                    {
+                        value.itemImgs ? (
+                            <img src={value.itemImgs} className=" w-14 h-14" />
+                        ) : (
+                            <div className="w-14 h-14 bg-gray-50">
 
-                    </div>
+                            </div>
+                        )
+                    }
                     <div className="flex flex-col gap-1">
                         <div className={rowData.status === 'inactive' ? 'text-neutral-200 font-semibold' : "text-sm text-neutral-950 font-sf-pro font-semibold"}>
                             {value.name}
@@ -325,6 +330,24 @@ export default function ItemListingTable({ type, searchVal }) {
             </div>
         )
     }
+
+    const colors = [
+        {name: 'bg-item-gray', colorCode: '#e0e0e0'},
+        {name: 'bg-item-red', colorCode: '#ff2626'},
+        {name: 'bg-item-pink', colorCode: '#ff0094'},
+        {name: 'bg-item-orange', colorCode: '#ffa146'},
+        {name: 'bg-item-yellow', colorCode: '#efdd60'},
+        {name: 'bg-item-green', colorCode: '#71d200'},
+        {name: 'bg-item-blue', colorCode: '#4e9bff'},
+        {name: 'bg-item-purple', colorCode: '#c11bff'},
+    ];
+
+    const shapes = [
+        {name: 'square', icon: <SquareShape />},
+        {name: 'circle', icon: <CircleShape />},
+        {name: 'polygon', icon: <PolygonShape />},
+        {name: 'star', icon: <StarShape />},
+    ];
 
     // const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
     // const paginatorRight = <Button type="button" icon="pi pi-download" text />;

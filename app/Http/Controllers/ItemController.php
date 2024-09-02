@@ -8,6 +8,7 @@ use App\Http\Requests\EditCategoryRequest;
 use App\Models\Category;
 use App\Models\Classification;
 use App\Models\Item;
+use App\Services\RunningNumberService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -65,6 +66,10 @@ class ItemController extends Controller
         $item = Item::query()->with(['category', 'classification']);
 
         $datas = $item->get();
+
+        $datas->each(function ($imgs) {
+            $imgs->itemImgs = $imgs->getFirstMediaUrl('item_image');
+        });
         
         return response()->json($datas);
     }
@@ -77,7 +82,7 @@ class ItemController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'classification_id' => $request->classification_id['id'],
-            'sku' => $request->sku,
+            'sku' => RunningNumberService::getID('sku'),
             'category_id' => $request->category['id'],
             'cost' => $request->cost,
             'stock' => $request->stock,

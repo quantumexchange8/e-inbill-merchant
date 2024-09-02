@@ -123,6 +123,11 @@ class ItemController extends Controller
         $item = Item::where('merchant_id', $user->merchant_id)->get();
 
         if (!empty($item)) {
+
+            $item->each(function ($imgs) {
+                $imgs->itemImgs = $imgs->getFirstMediaUrl('item_image');
+            });
+
             $data = [
                 'item' => $item,
                 'status' => 'success',
@@ -221,9 +226,17 @@ class ItemController extends Controller
             'barcode' => $request->barcode,
             'status' => 'active',
             'image_code' => $request->image_code ?? null,
-            'image_color' => $request->image_color ?? null,
-            'image_shape' => $request->image_shape ?? null,
         ]);
+
+        if ($request->hasFile('item_image')) {
+            $item->clearMediaCollection('item_image');
+            $item->addMedia($request->item_image)->toMediaCollection('item_image');
+        } else {
+            $item->update([
+                'image_color' => $request->color,
+                'image_shape' => $request->shape,
+            ]);
+        }
 
         return response()->json([
             'status' => 'succesfull updated item',
