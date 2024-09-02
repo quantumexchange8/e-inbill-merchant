@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Modal from "@/Components/Modal";
-import { XIcon, UploadIcon } from "@/Components/Icon/outline";
+import { XIcon, UploadIcon, CircleShape, PolygonShape, SquareShape, StarShape, CheckIcon } from "@/Components/Icon/outline";
 import Button from '@/Components/Button';
 import { useForm } from '@inertiajs/react';
 import TextInput from '@/Components/TextInput';
@@ -11,6 +11,9 @@ import toast from 'react-hot-toast';
 export default function EditItem({ editModal, setEditModal, editRow, closeEditRow, currentRowVal, fetchData }) {
     
     const [isLoading, setIsLoading] = useState(false);
+    const [previewImage, setPreviewImage] = useState(null);
+    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedShape, setSelectedShape] = useState('');
 
     const { data, setData, post, processing, errors, reset } = useForm({
         id: currentRowVal.id,
@@ -24,6 +27,18 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
         barcode: currentRowVal.barcode,
         item_image: '',
     });
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setData('item_image', file); // Update the form data with the selected file
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewImage(reader.result); // Set the preview image to display
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -43,25 +58,34 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
         })
     }
 
-    const imagePaths = [
-        '/assets/items_images/1.svg',
-        '/assets/items_images/2.svg',
-        '/assets/items_images/3.svg',
-        '/assets/items_images/4.svg',
-        '/assets/items_images/5.svg',
-        '/assets/items_images/6.svg',
-        '/assets/items_images/7.svg',
-        '/assets/items_images/8.svg',
-        '/assets/items_images/9.svg',
-        '/assets/items_images/10.svg',
-        '/assets/items_images/11.svg',
-        '/assets/items_images/12.svg',
-        '/assets/items_images/13.svg',
-        '/assets/items_images/14.svg',
-        '/assets/items_images/15.svg',
-        '/assets/items_images/16.svg',
+    const colors = [
+        {name: 'bg-item-gray', colorCode: '#e0e0e0'},
+        {name: 'bg-item-red', colorCode: '#ff2626'},
+        {name: 'bg-item-pink', colorCode: '#ff0094'},
+        {name: 'bg-item-orange', colorCode: '#ffa146'},
+        {name: 'bg-item-yellow', colorCode: '#efdd60'},
+        {name: 'bg-item-green', colorCode: '#71d200'},
+        {name: 'bg-item-blue', colorCode: '#4e9bff'},
+        {name: 'bg-item-purple', colorCode: '#c11bff'},
+    ];
+
+    const shapes = [
+        {name: 'square', icon: <SquareShape />},
+        {name: 'circle', icon: <CircleShape />},
+        {name: 'polygon', icon: <PolygonShape />},
+        {name: 'star', icon: <StarShape />},
     ];
     
+    const handleColorSelect = (colorName, colorCode) => {
+        setSelectedColor(colorName);
+        setData('color', colorCode);
+    };
+
+    const handleShapeSelect = (shapeName) => {
+        setSelectedShape(shapeName);
+        setData('shape', shapeName);
+    }
+
   return (
         <Modal
             title={
@@ -104,25 +128,81 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                         <div className="max-w-[705px] w-full flex flex-col gap-5">
                             <div className="hidden md:block text-neutral-950 text-sm font-bold font-sf-pro leading-tight">Item Image</div>
                             <div className="flex flex-col md:flex-row items-center gap-5">
-                                <div className="p-4 flex flex-col items-center justify-center gap-3 border border-dashed rounded-md border-gray-500 min-w-full min-h-[318px]  md:min-w-[120px] md:min-h-[120px]">
-                                    <div className="bg-primary-50 rounded-full w-10 h-10 flex items-center justify-center">
-                                        <UploadIcon />
-                                    </div>
-                                    <div>
-                                        <Button
-                                            size="sm"
-                                        >
-                                            Browse
-                                        </Button>
-                                    </div>
+                            <div className="relative p-4 flex flex-col items-center justify-center gap-3 border border-dashed rounded-md border-gray-500 min-w-full min-h-[318px]  md:min-w-[120px] md:min-h-[120px]">
+                                    {previewImage === null ? (
+                                        <>
+                                            <div className="bg-primary-50 rounded-full w-10 h-10 flex items-center justify-center">
+                                                <UploadIcon />
+                                            </div>
+                                            <div>
+                                                <input
+                                                    type="file"
+                                                    id="upload"
+                                                    className="hidden"
+                                                    accept="image/*"
+                                                    onChange={handleImageChange} // Call handleImageChange on file select
+                                                />
+                                                <Button
+                                                    size="sm"
+                                                    onClick={() => document.getElementById('upload').click()} // Trigger click on the hidden file input
+                                                >
+                                                    Browse
+                                                </Button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <img src={previewImage} alt="Selected" className="w-20 h-20 rounded-full object-cover" />
+                                            <div className="absolute top-1 right-1">
+                                                <Button
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    className="bg-transparent rounded-full p-0 hover:bg-neutral-100"
+                                                    iconOnly
+                                                    onClick={() => {
+                                                        setPreviewImage(null); // Clear the preview image
+                                                        setData('item_image', ''); // Reset the form data
+                                                    }}
+                                                >
+                                                    <XIcon />
+                                                </Button>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                                 <div className="uppercase text-sm font-medium font-sf-pro text-gray-400">or</div>
-                                <div className="grid grid-cols-8 grid-rows-2 gap-5">
-                                    {
-                                        imagePaths.map((image, index) => (
-                                            <img key={index} src={image} alt={`Image ${index + 1}`} />
-                                        ))
-                                    }
+                                <div className="flex flex-col gap-5 w-full">
+                                    <div className="flex items-center md:grid md:grid-cols-8 md:grid-rows-1 gap-4 md:gap-5">
+                                        {
+                                            colors.map((color) => (
+                                                <div 
+                                                    key={color.name} 
+                                                    className={`w-12 h-12 ${color.name} ${selectedColor === color.name ? 'flex justify-center items-center' : 'hover:border-2 hover:border-primary-50'}`}
+                                                    onClick={() => handleColorSelect(color.name, color.colorCode)}
+                                                >
+                                                    {selectedColor === color.name ? <CheckIcon className='text-white w-7 h-7' /> : ''}
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                    <div className="grid grid-cols-8 items-center gap-5">
+                                        {shapes.map((shape, index) => (
+                                            <div 
+                                                key={index} 
+                                                className={`relative`}
+                                                onClick={() => handleShapeSelect(shape.name)}
+                                            >
+                                                {
+                                                    shape.icon
+                                                }
+                                                {selectedShape === shape.name ? (
+                                                    <div className=" absolute w-full h-full flex justify-center items-center">
+                                                        <CheckIcon className='text-black w-7 h-7' />
+                                                    </div>
+                                                ) : ''}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>

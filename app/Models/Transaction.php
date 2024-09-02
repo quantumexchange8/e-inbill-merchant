@@ -20,6 +20,7 @@ class Transaction extends Model
         'transaction_type',
         'transaction_date',
         'remark',
+        'refund_amount',
     ];
 
     public function transaction_details(): \Illuminate\Database\Eloquent\Relations\hasMany

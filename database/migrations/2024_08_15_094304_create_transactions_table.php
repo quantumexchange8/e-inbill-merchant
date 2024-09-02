@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('receipt_no')->nullable();
             $table->string('refund_no')->nullable();
             $table->decimal('total_amount', 13, 2)->default('0.00');
+            $table->decimal('refund_amount', 13, 2)->nullable();
             $table->string('payment_type');
             $table->decimal('paid_in', 13, 2)->default('0.00');
             $table->decimal('paid_out', 13, 2)->default('0.00');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderRefund;
 use App\Models\ShiftTransaction;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
@@ -142,21 +143,22 @@ class TransactionController extends Controller
             ->first();
 
         $transaction = Transaction::find($request->id);
-        $refundTransaction = Transaction::create([
-            'shift_transaction_id' => $shift->id,
-            'user_id' => $user->id,
-            'receipt_no' => RunningNumberService::getID('refund'),
-            'total_amount' => $request->total_amount,
-            'payment_type' => 'card',
-            'transaction_type' => 'sales',
-            'transaction_date' => now(),
-        ]);
         
         foreach($request->itemRefund as $item) {
 
+            $item = OrderRefund::create([
+                'transaction_id' => $transaction->id,
+                'user_id' => $user->id,
+                'refund_no' => RunningNumberService::getID('refund'),
+                'item_id' => $item['item_id'],
+                'item_qty' => $item['qty'],
+                'amount' => $item['amount'], 
+            ]);
         }
 
-
+        $transaction->update([
+            'refund_amount' => $request->refund_amount,
+        ]);
 
         return response()->json([
             'status' => 'succesfull refund',

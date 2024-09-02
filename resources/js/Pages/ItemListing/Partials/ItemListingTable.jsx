@@ -275,7 +275,7 @@ export default function ItemListingTable({ type, searchVal }) {
                             <img src={value.itemImgs} className=" w-14 h-14" />
                         ) : (
                             <div className="w-14 h-14 bg-gray-50">
-
+                                
                             </div>
                         )
                     }

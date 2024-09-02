@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             ClassificationSeeder::class,
             RunningNumber::class,
             ItemImageSeeder::class,
+            CountrySeeder::class,
+            CurrencySeeder::class,
         ]);
 
         // User::factory()->create([
