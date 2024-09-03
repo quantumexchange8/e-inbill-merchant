@@ -14,5 +14,6 @@ class TransactionDetail extends Model
         'item_id',
         'quantity',
         'amount',
+        'refunded_qty',
     ];
 }

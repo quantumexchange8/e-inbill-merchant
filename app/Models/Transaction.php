@@ -21,10 +21,16 @@ class Transaction extends Model
         'transaction_date',
         'remark',
         'refund_amount',
+        'refund_status',
     ];
 
     public function transaction_details(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
         return $this->hasMany(TransactionDetail::class, 'transaction_id', 'id');
+    }
+
+    public function refund_details(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(OrderRefund::class, 'transaction_id', 'id');
     }
 }

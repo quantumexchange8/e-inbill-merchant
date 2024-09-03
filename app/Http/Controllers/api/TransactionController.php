@@ -146,19 +146,31 @@ class TransactionController extends Controller
         
         foreach($request->itemRefund as $item) {
 
-            $item = OrderRefund::create([
-                'transaction_id' => $transaction->id,
-                'user_id' => $user->id,
-                'refund_no' => RunningNumberService::getID('refund'),
-                'item_id' => $item['item_id'],
-                'item_qty' => $item['qty'],
-                'amount' => $item['amount'], 
-            ]);
+            $transactionDetails = TransactionDetail::where('transaction_id', $transaction->id)
+                    ->where('item_id', $item['item_id'])
+                    ->first();
+            if ($transactionDetails->quantity === $transactionDetails->refunded_qty) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'this item is fully refunded'
+                ], 200);
+            } else {
+                $refund = OrderRefund::create([
+                    'transaction_id' => $transaction->id,
+                    'user_id' => $user->id,
+                    'refund_no' => RunningNumberService::getID('refund'),
+                    'item_id' => $item['item_id'],
+                    'item_qty' => $item['qty'],
+                    'amount' => $item['amount'], 
+                ]);
+    
+                $transactionDetails->refunded_qty += $item['qty'];
+                $transactionDetails->save();
+            }
         }
 
-        $transaction->update([
-            'refund_amount' => $request->refund_amount,
-        ]);
+        $transaction->refund_amount += $request->refund_amount;
+        $transaction->save();
 
         return response()->json([
             'status' => 'succesfull refund',
@@ -254,7 +266,7 @@ class TransactionController extends Controller
 
         $transaction = Transaction::where('shift_transaction_id', $shift->id)
                 ->whereNot('transaction_type', 'shift')
-                ->with(['transaction_details'])
+                ->with(['transaction_details', 'refund_details'])
                 ->get();
 
         return response()->json([

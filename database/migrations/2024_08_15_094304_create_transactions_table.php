@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('paid_out', 13, 2)->default('0.00');
             $table->string('transaction_type');
             $table->dateTime('transaction_date');
+            $table->string('refund_status')->nullable();
             $table->string('remark');
             $table->softDeletes();
             $table->timestamps();

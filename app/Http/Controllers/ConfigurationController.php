@@ -66,7 +66,7 @@ class ConfigurationController extends Controller
     public function updateTax(Request $request)
     {
         $date = $request->sst_effective_data;
-        dd($date->format('d-m-y'));
+        
         $request->validate([
             'sales_tax' => ['required'],
             'service_tax' => ['required'],

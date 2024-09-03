@@ -17,7 +17,10 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->double('quantity');
             $table->double('amount')->default(0.00);
+            $table->double('before_tax')->default(0.00);
+            $table->double('after_tax')->default(0.00);
             $table->string('type')->nullable();
+            $table->string('refunded_qty')->nullable();
             $table->timestamps();
         });
     }
