@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('sales')->group(function () {
         Route::get('/sales-report', [SalesController::class, 'salesReport'])->name('sales.sales-report');
+        Route::get('/getSaleHistory', [SalesController::class, 'getSaleHistory'])->name('sales.getSaleHistory');
     });
 
      /**

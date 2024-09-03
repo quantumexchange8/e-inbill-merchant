@@ -129,7 +129,7 @@ export default function AddItem({ itemAdded, categories }) {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
-                closeModal();
+                setIsOpen(false)
                 setIsLoading(false);
                 if (itemAdded) {
                     itemAdded();

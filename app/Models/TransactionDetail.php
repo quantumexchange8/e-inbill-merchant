@@ -16,4 +16,9 @@ class TransactionDetail extends Model
         'amount',
         'refunded_qty',
     ];
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
+    }
 }

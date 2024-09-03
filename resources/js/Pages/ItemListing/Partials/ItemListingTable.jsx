@@ -274,9 +274,17 @@ export default function ItemListingTable({ type, searchVal }) {
                         value.itemImgs ? (
                             <img src={value.itemImgs} className=" w-14 h-14" />
                         ) : (
-                            <div className="w-14 h-14 bg-gray-50">
-                                
-                            </div>
+                            <>
+                                {value.image_shape === 'square' ? (
+                                    <SquareShape bgColor={value.image_color} />
+                                ) : value.image_shape === 'circle' ? (
+                                    <CircleShape bgColor={value.image_color}/>
+                                ) : value.image_shape === 'polygon' ? (
+                                    <PolygonShape bgColor={value.image_color}/>
+                                ) : (
+                                    <StarShape />
+                                )}
+                            </>
                         )
                     }
                     <div className="flex flex-col gap-1">
