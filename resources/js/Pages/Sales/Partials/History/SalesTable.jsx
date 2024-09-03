@@ -223,8 +223,10 @@ export default function SalesTable() {
                                                     <div className="text-neutral-950 text-base font-sf-pro">{item.item.name}</div>
                                                     <div className="text-neutral-950 text-base font-sf-pro font-bold">RM {item.item.price}</div>
                                                 </div>
-                                                <div className="w-11 h-11">
-
+                                                <div className="flex justify-center items-center">
+                                                    <div className="w-7 h-7 bg-gray-100 rounded flex justify-center items-center text-neutral-950 text-xss font-bold">
+                                                        x{item.quantity}
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))

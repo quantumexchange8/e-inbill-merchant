@@ -282,7 +282,7 @@ export default function ItemListingTable({ type, searchVal }) {
                                 ) : value.image_shape === 'polygon' ? (
                                     <PolygonShape bgColor={value.image_color}/>
                                 ) : (
-                                    <StarShape />
+                                    <StarShape bgColor={value.image_color}/>
                                 )}
                             </>
                         )
