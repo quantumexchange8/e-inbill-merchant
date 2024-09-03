@@ -128,9 +128,9 @@ export default function AddItem({ itemAdded, categories }) {
         post('/item/new-item', {
             preserveScroll: true,
             onSuccess: () => {
+                reset();
                 closeModal();
                 setIsLoading(false);
-                reset();
                 if (itemAdded) {
                     itemAdded();
                 }
