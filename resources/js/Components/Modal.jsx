@@ -2,7 +2,7 @@ import { Button, CloseButton, Dialog, DialogPanel, DialogTitle } from '@headless
 import { useCallback, useState } from 'react';
 import { XIcon } from './Icon/outline';
 
-export default function Modal({ children, show = false, maxWidth = 'md', maxHeight = 'md', isOpen, close, title, footer, closeIcon, preventCloseOnClickOutside = true }) {
+export default function Modal({ children, show = false, maxWidth = 'md', maxHeight = 'md', isOpen, close, title, footer, closeIcon, showFooter , preventCloseOnClickOutside = true }) {
 
     const maxWidthClass = {
         sm: 'sm:w-[300px] ',
@@ -28,7 +28,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
 
     return (
         <>
-            <Dialog open={isOpen} as="div" className="relative z-20 focus:outline-none" onClose={preventCloseOnClickOutside ? () => {} : close} >
+            <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={preventCloseOnClickOutside ? () => {} : close} >
 
                 <div className="fixed inset-0 z-20 w-screen overflow-y-auto" onClick={handleOverlayClick}>
                 <div className="flex min-h-full justify-center items-start p-1 md:p-4 bg-black/25">
@@ -47,7 +47,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
                             </CloseButton>
                         </DialogTitle>
                         {children}
-                        <div className="w-full p-5 bg-white rounded-b-lg shadow-modal">
+                        <div className={`"w-full p-5 bg-white rounded-b-lg shadow-modal" ${showFooter}`}>
                             {footer}
                         </div>
                     </DialogPanel>

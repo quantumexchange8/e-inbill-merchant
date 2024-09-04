@@ -13,8 +13,8 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
 
     return (
         <>
-            <div className={`${expanded ? 'fixed inset-0 z-20 bg-black/50 md:hidden' : ''} `} onClick={toggleSidebar}></div>
-            <aside className={`fixed inset-y-0 z-20 border-r border-transparent md:border-gray-200 overflow-auto p-4 max-w-60 bg-gray-25
+            <div className={`${expanded ? 'fixed inset-0 z-30 bg-black/50 md:hidden' : ''} `} onClick={toggleSidebar}></div>
+            <aside className={`fixed inset-y-0 z-30 border-r border-transparent md:border-gray-200 overflow-auto p-4 max-w-60 bg-gray-25
                 scrollbar-thin scrollbar-webkit ease-in-out duration-300
                 ${!expanded ? 'translate-x-[-100%] md:translate-x-0 md:w-[75px]' : 'translate-x-0 w-60'}
                 ease-in-out duration-300`}

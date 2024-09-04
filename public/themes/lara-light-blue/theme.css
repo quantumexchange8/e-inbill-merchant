@@ -6288,6 +6288,13 @@
   padding: 12px;
 }
 
+@media screen and (max-width: 769px) {
+  .p-paginator {
+    justify-content: center !important;
+    padding: 12px;
+  }
+}
+
 .p-paginator-pages {
   display: flex;
   gap: 4px;

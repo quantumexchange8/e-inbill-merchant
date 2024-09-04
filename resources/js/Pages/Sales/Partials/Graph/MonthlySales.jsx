@@ -18,7 +18,7 @@ export default function MonthlySales() {
                             className="flex gap-2 py-3 px-4"
                         >
                             <ExportIcon />
-                            <span className="text-[#0060FF] text-sm font-medium font-sf-pro">Export</span>
+                            <span className="text-[#0060FF] text-sm font-medium font-sf-pro hidden md:block">Export</span>
                         </Button>
                     </div>
                 </div>
