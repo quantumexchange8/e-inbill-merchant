@@ -220,11 +220,15 @@ class ItemController extends Controller
             'classification_id' => $request->classification_id,
             'category_id' => $request->category,
             'cost' => $request->cost,
-            'stock' => $request->stock,
             'barcode' => $request->barcode,
             'status' => 'active',
             'image_code' => $request->image_code ?? null,
         ]);
+
+        if($request->stock != null) {
+            $item->stock += $request->stock;
+            $item->save();
+        }
 
         if ($request->hasFile('item_image')) {
             $item->clearMediaCollection('item_image');
