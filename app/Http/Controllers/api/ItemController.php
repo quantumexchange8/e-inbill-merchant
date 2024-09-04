@@ -204,6 +204,8 @@ class ItemController extends Controller
     {
 
         $item = Item::find($request->item_id);
+
+        
         
         $validator = Validator::make($request->all(), [
             'name' => [
@@ -213,6 +215,10 @@ class ItemController extends Controller
             'price' => 'required',
             'classification_id' => 'required',
         ]);
+
+        return response()->json([
+            'status' => $item,
+        ], 200);
 
         $item->update([
             'name' => $request->name,
