@@ -213,11 +213,10 @@ class ItemController extends Controller
             Rule::unique('items')->ignore($item->id), // Ignore current category ID
         ],
             'price' => 'required',
-            'classification_id' => 'required',
         ]);
 
         return response()->json([
-            'status' => $item,
+            'status' => $request->all(),
         ], 200);
 
         $item->update([
