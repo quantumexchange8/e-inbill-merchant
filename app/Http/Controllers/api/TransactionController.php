@@ -210,6 +210,7 @@ class TransactionController extends Controller
             'transaction_type' => 'shift',
             'transaction_date' => now(),
             'remark' => $request->remark,
+            'cash_management' => 'pay_in',
         ]);
 
         return response()->json([
@@ -248,6 +249,7 @@ class TransactionController extends Controller
             'transaction_type' => 'shift',
             'transaction_date' => now(),
             'remark' => $request->remark,
+            'cash_management' => 'pay_out',
         ]);
 
         return response()->json([

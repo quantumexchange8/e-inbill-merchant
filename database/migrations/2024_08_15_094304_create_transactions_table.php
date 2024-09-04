@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('payment_type');
             $table->decimal('paid_in', 13, 2)->default('0.00');
             $table->decimal('paid_out', 13, 2)->default('0.00');
+            $table->string('cash_management')->nullable();
             $table->string('transaction_type');
             $table->dateTime('transaction_date');
             $table->string('refund_status')->nullable();

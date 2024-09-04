@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ShiftTransaction;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
@@ -41,6 +42,15 @@ class SalesController extends Controller
                 }
             });
         });
+
+        return response()->json($sales);
+    }
+
+    public function getShiftCashHistory()
+    {
+        $sales = ShiftTransaction::query()
+            ->with(['transaction'])
+            ->get();
 
         return response()->json($sales);
     }

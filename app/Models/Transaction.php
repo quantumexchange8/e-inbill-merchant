@@ -22,6 +22,7 @@ class Transaction extends Model
         'remark',
         'refund_amount',
         'refund_status',
+        'cash_management',
     ];
 
     public function transaction_details(): \Illuminate\Database\Eloquent\Relations\hasMany

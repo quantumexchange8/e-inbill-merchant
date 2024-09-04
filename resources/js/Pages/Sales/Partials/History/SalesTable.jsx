@@ -13,6 +13,7 @@ import { Calendar } from 'primereact/calendar';
 import { formatDateTime } from "@/Composables";
 import Modal from "@/Components/Modal";
 import { Paginator } from 'primereact/paginator';
+import Transaction from "@/Components/NoContent/Transaction.svg"
 
 export default function SalesTable() {
 
@@ -28,11 +29,23 @@ export default function SalesTable() {
     });
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(10);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const onPageChange = (event) => {
         setFirst(event.first);
         setRows(event.rows);
     };
+
+    const onSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        setFirst(0); // Reset pagination when search changes
+    };
+
+    const filteredData = data.filter((sale) =>
+        sale.receipt_no.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        sale.total_amount.toString().includes(searchTerm) ||
+        sale.payment_type.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const fetchData = async () => {
         try {
@@ -134,7 +147,7 @@ export default function SalesTable() {
         setIsOpen(false);
     }
 
-    const paginatedData = data.slice(first, first + rows);
+    const paginatedData = filteredData.slice(first, first + rows);
 
     const salesMobileDetails = (details) => {
         setIsOpen(true);
@@ -171,40 +184,93 @@ export default function SalesTable() {
                                     </DataTable>
                                 </div>
                                 <div className="flex flex-col gap-3 md:hidden">
+                                    <div className="flex flex-col gap-5">
+                                        <div>
+                                            <IconField iconPosition="left">
+                                                <InputIcon className="pi pi-search" />
+                                                <TextInput
+                                                    value={searchTerm}
+                                                    onChange={onSearchChange}
+                                                    placeholder="Keyword Search"
+                                                    withIcon
+                                                    className="font-medium w-full"
+                                                />
+                                            </IconField>
+                                        </div>
+                                        <div className="flex gap-5">
+                                            <div className="w-full">
+                                                <Calendar 
+                                                    value={dates} 
+                                                    onChange={(e) => setDates(e.value)} 
+                                                    selectionMode="range" 
+                                                    readOnlyInput 
+                                                    hideOnRangeSelection 
+                                                    showButtonBar
+                                                    className="w-full min-w-60"
+                                                    pt={{
+                                                        dayLabel: 'hover:bg-[#00ff44]',
+                                                        input: 'px-3 py-4 w-full'
+                                                    }}
+                                                />
+                                            </div>
+                                            <div>
+                                                <Button
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    iconOnly
+                                                    className="flex justify-center gap-2 py-3 px-4 w-full"
+                                                >
+                                                    <ExportIcon />
+                                                    <span className="text-[#0060FF] text-sm font-medium font-sf-pro hidden xl:block">Export</span>
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {
-                                        paginatedData.map((sale, index) => (
-                                            <div className="flex flex-col gap-4 pb-4 border border-gray-200 rounded shadow-sm bg-white" key={index} onClick={() => salesMobileDetails(sale)}>
-                                                <div className="p-2 text-gray-950 text-sm font-bold font-sf-pro border-b border-gray-100">
-                                                    {sale.receipt_no}
+                                        paginatedData.length > 0 ? (
+                                            paginatedData.map((sale, index) => (
+                                                <div className="flex flex-col gap-4 pb-4 border border-gray-200 rounded shadow-sm bg-white" key={index} onClick={() => salesMobileDetails(sale)}>
+                                                    <div className="p-2 text-gray-950 text-sm font-bold font-sf-pro border-b border-gray-100">
+                                                        {sale.receipt_no}
+                                                    </div>
+                                                    <div className="px-3 flex flex-col gap-2">
+                                                        <div className="flex gap-2">
+                                                            <div className="w-[86px] text-neutral-950 text-xs font-sf-pro uppercase">
+                                                                Date
+                                                            </div>
+                                                            <div className="text-neutral-950 text-xs font-bold font-sf-pro">
+                                                                {formatDateTime(sale.created_at)}
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <div className="w-[86px] text-neutral-950 text-xs font-sf-pro uppercase">
+                                                                Total (RM)
+                                                            </div>
+                                                            <div className="text-neutral-950 text-xs font-bold font-sf-pro">
+                                                                {sale.total_amount}
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <div className="w-[86px] text-neutral-950 text-xs font-sf-pro uppercase">
+                                                                Paid By
+                                                            </div>
+                                                            <div className="text-neutral-950 text-xs font-bold font-sf-pro">
+                                                                {sale.payment_type}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="px-3 flex flex-col gap-2">
-                                                    <div className="flex gap-2">
-                                                        <div className="w-[86px] text-neutral-950 text-xs font-sf-pro uppercase">
-                                                            Date
-                                                        </div>
-                                                        <div className="text-neutral-950 text-xs font-bold font-sf-pro">
-                                                            {formatDateTime(sale.created_at)}
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex gap-2">
-                                                        <div className="w-[86px] text-neutral-950 text-xs font-sf-pro uppercase">
-                                                            Total (RM)
-                                                        </div>
-                                                        <div className="text-neutral-950 text-xs font-bold font-sf-pro">
-                                                            {sale.total_amount}
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex gap-2">
-                                                        <div className="w-[86px] text-neutral-950 text-xs font-sf-pro uppercase">
-                                                            Paid By
-                                                        </div>
-                                                        <div className="text-neutral-950 text-xs font-bold font-sf-pro">
-                                                            {sale.payment_type}
-                                                        </div>
-                                                    </div>
+                                            ))
+                                        ) : (
+                                            <div className="flex flex-col justify-center items-center gap-5 p-6">
+                                                <div>
+                                                    <img src={Transaction} alt="" />
+                                                </div>
+                                                <div className="text-gray-400 text-sm font-medium font-sf-pro">
+                                                    No result found
                                                 </div>
                                             </div>
-                                        ))
+                                        )
                                     }
                                     <Paginator
                                         first={first}
@@ -233,7 +299,7 @@ export default function SalesTable() {
             >
                 {
                     selectedDataModal && (
-                        <div className="flex flex-col gap-5 pb-5">
+                        <div className="flex flex-col gap-5 pb-5 min-h-[75vh] md:h-auto">
                             <div className="p-5 flex flex-col gap-2">
                                 <div className="flex items-center gap-3">
                                     <div className="w-[150px] text-neutral-950 text-base font-sf-pro leading-none uppercase">DATE</div>

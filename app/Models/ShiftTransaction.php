@@ -31,4 +31,9 @@ class ShiftTransaction extends Model
         'actual_cash',
         'difference',
     ];
+
+    public function transaction(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Transaction::class, 'shift_transaction_id', 'id')->where('transaction_type', 'shift');
+    }
 }

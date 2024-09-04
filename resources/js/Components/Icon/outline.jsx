@@ -140,7 +140,7 @@ const Search = () => {
 const XIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M17 7L7 17M7 7L17 17" stroke="#92A7B5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M17 7L7 17M7 7L17 17" stroke="#131B25" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
     );
 }
@@ -289,6 +289,14 @@ const StarShape = ({ className, bgColor }) => {
     );
 }
 
+const SearchHistoryIcon = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M14 14L11.6667 11.6667M13.3333 7.66667C13.3333 10.7963 10.7963 13.3333 7.66667 13.3333C4.53705 13.3333 2 10.7963 2 7.66667C2 4.53705 4.53705 2 7.66667 2C10.7963 2 13.3333 4.53705 13.3333 7.66667Z" stroke="#0674FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+}
+
 export { 
     Circle,
     DashboardIcon,
@@ -322,4 +330,5 @@ export {
     CircleShape,
     PolygonShape,
     StarShape,
+    SearchHistoryIcon,
 };
