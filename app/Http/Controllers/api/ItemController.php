@@ -189,8 +189,8 @@ class ItemController extends Controller
                 $item->addMedia($request->item_image)->toMediaCollection('item_image');
             } else {
                 $item->update([
-                    'image_color' => $request->color,
-                    'image_shape' => $request->shape,
+                    'image_color' => $request->image_color,
+                    'image_shape' => $request->image_color,
                 ]);
             }
 

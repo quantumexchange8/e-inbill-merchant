@@ -110,15 +110,15 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                             {
                                 !expanded ? (
                                     <Link href={route('sales.sales-report')} className={`${
-                                        url === '/sales/sales-report' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/sales/sales-report' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/sales/sales-report' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                            <SaleReportIcon color='currentColor' className={`${url === '/sales/sales-report' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                            <SaleReportIcon color='currentColor' className={`${url === '/sales/sales-report' ? 'text-primary-600' : 'text-gray-800'}`}/>
                                         </div>
                                     </Link>
                                 ) : (
                                     <Link href={route('sales.sales-report')} className={`${
-                                        url === '/sales/sales-report' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/sales/sales-report' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/sales/sales-report' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <SaleReportIcon color='currentColor' />
@@ -135,15 +135,15 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                             {
                                 !expanded ? (
                                     <Link href={route('admin.my-admin')} className={`${
-                                        url === '/admin/my-admin' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/admin/my-admin' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/admin/my-admin' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                            <AdminUserIcon color='currentColor' className={`${url === '/admin/my-admin' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                            <AdminUserIcon color='currentColor' className={`${url === '/admin/my-admin' ? 'text-primary-600' : 'text-gray-800'}`}/>
                                         </div>
                                     </Link>
                                 ) : (
                                     <Link href={route('admin.my-admin')} className={`${
-                                        url === '/admin/my-admin' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/admin/my-admin' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/admin/my-admin' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <AdminUserIcon color='currentColor'/>
@@ -160,15 +160,15 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                             {
                                 !expanded ? (
                                     <Link href={route('billing.my-billing')} className={`${
-                                        url === '/billing/my-billing' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/billing/my-billing' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/billing/my-billing' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                            <MyBillingIcon color='currentColor' className={`${url === '/billing/my-billing' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                            <MyBillingIcon color='currentColor' className={`${url === '/billing/my-billing' ? 'text-primary-600' : 'text-gray-800'}`}/>
                                         </div>
                                     </Link>
                                 ) : (
                                     <Link href={route('billing.my-billing')} className={`${
-                                        url === '/billing/my-billing' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/billing/my-billing' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/billing/my-billing' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <MyBillingIcon color='currentColor' />
@@ -185,15 +185,15 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                             {
                                 !expanded ? (
                                     <Link href={route('configuration.configuration')} className={`${
-                                        url === '/configuration/configuration' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/configuration/configuration' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/configuration/configuration' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                            <ConfigIcon color='currentColor' className={`${url === '/configuration/configuration' ? 'text-secondary-600' : 'text-gray-800'}`}/>
+                                            <ConfigIcon color='currentColor' className={`${url === '/configuration/configuration' ? 'text-primary-600' : 'text-gray-800'}`}/>
                                         </div>
                                     </Link>
                                 ) : (
                                     <Link href={route('configuration.configuration')} className={`${
-                                        url === '/configuration/configuration' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
+                                        url === '/configuration/configuration' ? 'text-primary-700 font-semibold' : 'text-gray-950'
                                     }`}>
                                         <div className={`${url === '/configuration/configuration' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <ConfigIcon color='currentColor' />
