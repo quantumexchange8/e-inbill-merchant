@@ -14,22 +14,42 @@ import { formatDateTime } from "@/Composables";
 import Modal from "@/Components/Modal";
 import { Paginator } from 'primereact/paginator';
 import Transaction from "@/Components/NoContent/Transaction.svg"
+import { hourglass } from 'ldrs';
+import { format, isValid } from 'date-fns';
+
+const getCurrentMonthRange = () => {
+    const start = new Date();
+    start.setDate(1); // First day of the current month
+
+    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0); // Last day of the current month
+    return [start, end];
+};
+
+const formatToDBDate = (date) => {
+    if (!date || !isValid(date)) return null; // Check if date is valid before formatting
+    return format(date, 'yyyy-MM-dd HH:mm:ss');
+};
 
 export default function SalesTable() {
 
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    const [dates, setDates] = useState(null);
+    const [dates, setDates] = useState(getCurrentMonthRange());
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDataModal, setSelectedDataModal] = useState(null);
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        created_at: { 
+            value: dates ? dates.map(date => formatToDBDate(date)) : null, // Set the initial filter value or null
+            matchMode: FilterMatchMode.BETWEEN 
+        }
     });
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
+    hourglass.register()
 
     const onPageChange = (event) => {
         setFirst(event.first);
@@ -75,6 +95,21 @@ export default function SalesTable() {
         setGlobalFilterValue(value);
     };
 
+    const onDateChange = (e) => {
+        const selectedDates = e.value; // New selected dates
+        
+        setDates(selectedDates); // Update selected dates
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            created_at: {
+                value: selectedDates && selectedDates.length > 0 
+                ? selectedDates.map(date => formatToDBDate(date)).filter(date => date !== null) // Ensure valid dates are formatted
+                : null,
+                matchMode: FilterMatchMode.BETWEEN
+            },
+        }));
+    };
+
     const renderHeader = () => {
         return (
           <div className="w-full flex flex-col gap-5 md:flex-row justify-between">
@@ -94,7 +129,7 @@ export default function SalesTable() {
                 <div className="w-full">
                     <Calendar 
                         value={dates} 
-                        onChange={(e) => setDates(e.value)} 
+                        onChange={onDateChange} 
                         selectionMode="range" 
                         readOnlyInput 
                         hideOnRangeSelection 
@@ -120,7 +155,7 @@ export default function SalesTable() {
             </div>
           </div>
         );
-      };
+    };
 
     const rowClassName = (rowData) => {
         return rowData.status === 'inactive' ? 'inactive-row' : '';
@@ -282,7 +317,27 @@ export default function SalesTable() {
                             </>
                         ) : (
                             <>
-                            
+                                {
+                                    isLoading ? (
+                                        <div className="bg-neutral-50 rounded-lg w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                            <l-hourglass
+                                                size="60"
+                                                bg-opacity="0.2"
+                                                speed="0.75" 
+                                                color="#0060ff" 
+                                            ></l-hourglass>
+                                        </div>
+                                    ) : (
+                                        <div className="w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                            <div>
+                                                <img src={Transaction} alt="sales" />
+                                            </div>
+                                            <div className="text-gray-400 text-sm font-medium">
+                                                No result to show yet
+                                            </div>
+                                        </div>
+                                    )
+                                }
                             </>
                         )
                     }

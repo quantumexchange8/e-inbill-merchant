@@ -216,7 +216,7 @@ export default function ManageCategory({ categories }) {
                         </div>
                     }
                 >
-                    <div className="h-full md:max-h-[356px] overflow-auto">
+                    <div className="h-full md:max-h-[356px] py-4 overflow-auto">
                         <div className="flex flex-col gap-5">
                             <div className="px-5 flex flex-col gap-4">
                                 <div className="flex gap-1">

@@ -265,7 +265,7 @@ export default function AddItem({ itemAdded, categories }) {
                                         </div>
                                         <div className="uppercase text-sm font-medium font-sf-pro text-gray-400">or</div>
                                         <div className="flex flex-col gap-5 w-full">
-                                            <div className="flex items-center md:grid md:grid-cols-8 md:grid-rows-1 gap-4 md:gap-5">
+                                            <div className="flex flex-row flex-wrap items-center overflow-auto md:grid md:grid-cols-8 md:grid-rows-1 gap-5">
                                                 {
                                                     colors.map((color) => (
                                                         <div 
@@ -278,7 +278,7 @@ export default function AddItem({ itemAdded, categories }) {
                                                     ))
                                                 }
                                             </div>
-                                            <div className="grid grid-cols-8 items-center gap-5">
+                                            <div className="flex md:grid md:grid-cols-8 items-center gap-5">
                                                 {shapes.map((shape, index) => (
                                                     <div 
                                                         key={index} 

@@ -67,6 +67,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/sales-report', [SalesController::class, 'salesReport'])->name('sales.sales-report');
         Route::get('/getSaleHistory', [SalesController::class, 'getSaleHistory'])->name('sales.getSaleHistory');
         Route::get('/getShiftCashHistory', [SalesController::class, 'getShiftCashHistory'])->name('sales.getShiftCashHistory');
+
+        // graph
+        Route::get('/getMonthlySalesPerformance', [SalesController::class, 'getMonthlySalesPerformance'])->name('sales.getMonthlySalesPerformance');
+        Route::get('/getMonthlyPay', [SalesController::class, 'getMonthlyPay'])->name('sales.getMonthlyPay');
         
     });
 

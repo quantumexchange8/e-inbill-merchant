@@ -54,4 +54,46 @@ class SalesController extends Controller
 
         return response()->json($sales);
     }
+
+    public function getMonthlySalesPerformance(Request $request)
+    {
+
+        $year = $request->input('year', date('Y'));
+
+        $monthlySales = Transaction::query()
+            ->whereYear('created_at', $year)
+            ->where('transaction_type', 'sales')
+            ->selectRaw('MONTH(created_at) as month, SUM(total_amount) as total_amount')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        return response()->json($monthlySales);
+    }
+
+    public function getMonthlyPay(Request $request)
+    {
+        $year = $request->input('year', date('Y'));
+
+        $monthlyPayIn = Transaction::query()
+            ->whereYear('created_at', $year)
+            ->where('transaction_type', 'shift')
+            ->selectRaw('MONTH(created_at) as month, SUM(paid_in) as paid_in')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        $monthlyPayOut = Transaction::query()
+            ->whereYear('created_at', $year)
+            ->where('transaction_type', 'shift')
+            ->selectRaw('MONTH(created_at) as month, SUM(paid_out) as paid_out')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        return response()->json([
+            'monthlyPayIn' => $monthlyPayIn,
+            'monthlyPayOut' => $monthlyPayOut,
+        ]);
+    }
 }
