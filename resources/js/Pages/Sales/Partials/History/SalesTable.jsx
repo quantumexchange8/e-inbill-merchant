@@ -408,9 +408,9 @@ export default function SalesTable() {
                                                             <>
                                                                 {item.item.image_shape === 'square' ? (
                                                                     <SquareShape bgColor={item.item.image_color} />
-                                                                ) : value.image_shape === 'circle' ? (
+                                                                ) : item.item.image_shape === 'circle' ? (
                                                                     <CircleShape bgColor={item.item.image_color}/>
-                                                                ) : value.image_shape === 'polygon' ? (
+                                                                ) : item.item.image_shape === 'polygon' ? (
                                                                     <PolygonShape bgColor={item.item.image_color}/>
                                                                 ) : (
                                                                     <StarShape bgColor={item.item.image_color}/>

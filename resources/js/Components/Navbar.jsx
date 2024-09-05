@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { LogoutIcon, MenuIcon, NotificationIcon, XIcon } from './Icon/outline';
+import { EditIcon, LogoutIcon, MenuIcon, NotificationIcon, XIcon } from './Icon/outline';
 import { useForm, usePage } from '@inertiajs/react';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import PrimeModal from './PrimeModal';
@@ -133,13 +133,36 @@ export default function Navbar({ user, header, toggleSidebar }) {
                 </div>
             </PrimeModal> */}
             <Modal 
-                title='Profile' 
+                title='Profile Detail' 
                 maxWidth='md' 
                 maxHeight='md' 
                 isOpen={isOpen} 
                 close={closeModal}
                 closeIcon={<XIcon />}
+                showFooter='hidden'
             >
+
+                <div className='flex flex-col p-5 gap-5'>
+                    <div className='bg-gray-50 p-5 flex flex-col gap-4 items-center'>
+                        <div className='w-20 h-20'>
+                            <img src="https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001882.png" alt="" />
+                        </div>
+                        <div className='flex items-center gap-2'>
+                            <div className='text-neutral-950 text-base font-bold font-sf-pro'>{auth.user.name}</div>
+                            <div><EditIcon /></div>
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-3'>
+                        <div className='flex items-center '>
+                            <div className='text-neutral-950 text-sm font-sf-pro w-24'>Client ID</div>
+                            <div className='text-neutral-950 font-bold font-sf-pro w-full'>{auth.user.role_id}</div>
+                        </div>
+                        <div className='flex items-center '>
+                            <div className='text-neutral-950 text-sm font-sf-pro w-24'>Password</div>
+                            <div className='text-neutral-950 font-bold font-sf-pro w-full'></div>
+                        </div>
+                    </div>
+                </div>
                 
             </Modal>
 

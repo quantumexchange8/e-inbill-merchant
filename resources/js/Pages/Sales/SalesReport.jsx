@@ -14,6 +14,11 @@ export default function SalesReport({ totalItem, totalOrder, totalSales }) {
         >
             <Head title="Sales Report"/>
             <div className="flex flex-col gap-5 md:p-5">
+
+                {/* subscription */}
+                <div className="hidden">
+
+                </div>
                 {/* Statistic */}
                 <div className="flex flex-nowrap items-center overflow-auto w-full flex-row gap-5">
                     <div className="w-ful min-w-[230px] md:w-1/3 flex flex-col gap-4 bg-white p-5 border border-gray-100 shadow-container rounded-lg">
