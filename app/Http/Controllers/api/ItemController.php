@@ -190,7 +190,7 @@ class ItemController extends Controller
             } else {
                 $item->update([
                     'image_color' => $request->image_color,
-                    'image_shape' => $request->image_color,
+                    'image_shape' => $request->image_shape,
                 ]);
             }
 
