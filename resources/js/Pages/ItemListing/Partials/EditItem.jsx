@@ -7,13 +7,18 @@ import TextInput from '@/Components/TextInput';
 import { InputNumber } from 'primereact/inputnumber';
 import InputError from "@/Components/InputError";
 import toast from 'react-hot-toast';
+import { Dropdown } from 'primereact/dropdown';
+import { useEffect } from 'react';
 
-export default function EditItem({ editModal, setEditModal, editRow, closeEditRow, currentRowVal, fetchData }) {
+export default function EditItem({ editModal, setEditModal, editRow, closeEditRow, currentRowVal, fetchData, categories }) {
     
     const [isLoading, setIsLoading] = useState(false);
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(currentRowVal.itemImgs || null);
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedShape, setSelectedShape] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [classVal, setClassification] = useState([]);
+    const [selectedClass, setSelectedClass] = useState(null);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         id: currentRowVal.id,
@@ -25,20 +30,20 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
         cost: currentRowVal.cost,
         stock: currentRowVal.stock,
         barcode: currentRowVal.barcode,
-        item_image: '',
+        item_image: currentRowVal.itemImgs,
     });
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
         if (file) {
-            setData('item_image', file); // Update the form data with the selected file
-            const reader = new FileReader();
-            reader.onload = () => {
-                setPreviewImage(reader.result); // Set the preview image to display
-            };
-            reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.onload = () => {
+            setPreviewImage(reader.result); // Set preview image to the file's data URL
+            setData('item_image', file); // Set form data to the file object
+          };
+          reader.readAsDataURL(file); // Read the file as data URL for preview
         }
-    };
+      };
 
     const submit = (e) => {
         e.preventDefault();
@@ -86,6 +91,35 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
         setData('shape', shapeName);
     }
 
+    const fetchClassData = async () => {
+        try {
+
+            const response = await axios.get('/item/getClassification');
+            
+            setClassification(response.data);
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchClassData();
+    }, []);
+
+    useEffect(() => {
+        if(selectedClass) {
+            setData('classification_id', selectedClass);
+        }
+
+        if(selectedCategory) {
+            setData('category', selectedCategory);
+        }
+        
+    }, [selectedClass, selectedCategory]);
+
   return (
         <Modal
             title={
@@ -128,7 +162,7 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                         <div className="max-w-[705px] w-full flex flex-col gap-5">
                             <div className="hidden md:block text-neutral-950 text-sm font-bold font-sf-pro leading-tight">Item Image</div>
                             <div className="flex flex-col md:flex-row items-center gap-5">
-                            <div className="relative p-4 flex flex-col items-center justify-center gap-3 border border-dashed rounded-md border-gray-500 min-w-full min-h-[318px]  md:min-w-[120px] md:min-h-[120px]">
+                                <div className="relative p-4 flex flex-col items-center justify-center gap-3 border border-dashed rounded-md border-gray-500 min-w-full min-h-[318px]  md:min-w-[120px] md:min-h-[120px]">
                                     {previewImage === null ? (
                                         <>
                                             <div className="bg-primary-50 rounded-full w-10 h-10 flex items-center justify-center">
@@ -136,15 +170,15 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                             </div>
                                             <div>
                                                 <input
-                                                    type="file"
-                                                    id="upload"
-                                                    className="hidden"
-                                                    accept="image/*"
-                                                    onChange={handleImageChange} // Call handleImageChange on file select
+                                                type="file"
+                                                id="upload"
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={handleImageChange} // Call handleImageChange on file select
                                                 />
                                                 <Button
-                                                    size="sm"
-                                                    onClick={() => document.getElementById('upload').click()} // Trigger click on the hidden file input
+                                                size="sm"
+                                                onClick={() => document.getElementById('upload').click()} // Trigger click on the hidden file input
                                                 >
                                                     Browse
                                                 </Button>
@@ -155,22 +189,24 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                             <img src={previewImage} alt="Selected" className="w-20 h-20 rounded-full object-cover" />
                                             <div className="absolute top-1 right-1">
                                                 <Button
-                                                    size="sm"
-                                                    variant="ghost"
-                                                    className="bg-transparent rounded-full p-0 hover:bg-neutral-100"
-                                                    iconOnly
-                                                    onClick={() => {
-                                                        setPreviewImage(null); // Clear the preview image
-                                                        setData('item_image', ''); // Reset the form data
-                                                    }}
+                                                size="sm"
+                                                variant="ghost"
+                                                className="bg-transparent rounded-full p-0 hover:bg-neutral-100"
+                                                iconOnly
+                                                onClick={() => {
+                                                    setPreviewImage(null); // Clear the preview image
+                                                    setData('item_image', null); // Reset the form data to null
+                                                }}
                                                 >
-                                                    <XIcon />
+                                                <XIcon />
                                                 </Button>
                                             </div>
                                         </>
                                     )}
                                 </div>
+
                                 <div className="uppercase text-sm font-medium font-sf-pro text-gray-400">or</div>
+
                                 <div className="flex flex-col gap-5 w-full">
                                     <div className="flex flex-row flex-wrap items-center overflow-auto md:grid md:grid-cols-8 md:grid-rows-1 gap-5">
                                         {
@@ -253,6 +289,15 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                     <div>Classification Code</div>
                                 </div>
                                 <div className="flex flex-col space-y-2 w-full">
+                                    <Dropdown 
+                                        value={data.classification_id} 
+                                        onChange={(e) => setData('classification_id', e.target.value)}
+                                        options={classVal} 
+                                        optionLabel="code" 
+                                        placeholder="Select Classification" 
+                                        filter 
+                                        className="w-full md:w-14rem" 
+                                    />
                                     <TextInput 
                                         id="classification_id"
                                         type='text'
@@ -289,15 +334,14 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                     <div>Category</div>
                                 </div>
                                 <div className="flex flex-col space-y-2 w-full">
-                                    <TextInput 
-                                        id="category"
-                                        type='number'
-                                        name="category"
-                                        value={data.category}
-                                        onChange={(e) => setData('category', e.target.value)}
-                                        hasError={!!errors.category}
-                                        placeholder='e.g. category'
-                                        className=' w-full'
+                                    <Dropdown 
+                                        value={selectedCategory} 
+                                        onChange={(e) => setSelectedCategory(e.value)} 
+                                        options={categories.length > 0 ? categories : 'no category created yet'} 
+                                        optionLabel="name" 
+                                        placeholder="Select Category" 
+                                        filter 
+                                        className="w-full md:w-14rem" 
                                     />
                                     <InputError message={errors.category} className="mt-2" />
                                 </div>

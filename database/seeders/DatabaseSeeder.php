@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ItemImageSeeder::class,
             CountrySeeder::class,
             CurrencySeeder::class,
+            StateSeeder::class,
         ]);
 
         // User::factory()->create([

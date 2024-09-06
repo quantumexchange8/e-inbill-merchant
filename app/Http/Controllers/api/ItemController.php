@@ -120,7 +120,7 @@ class ItemController extends Controller
     {
         $user = Auth::user();
 
-        $item = Item::where('merchant_id', $user->merchant_id)->get();
+        $item = Item::where('merchant_id', $user->merchant_id)->where('status', 'active')->get();
 
         if (!empty($item)) {
 

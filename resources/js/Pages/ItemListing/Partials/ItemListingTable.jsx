@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 import { hourglass } from 'ldrs';
 import { useMemo } from "react";
 
-export default function ItemListingTable({ type, searchVal }) {
+export default function ItemListingTable({ type, searchVal, categories }) {
 
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -482,6 +482,7 @@ export default function ItemListingTable({ type, searchVal }) {
                                         closeEditRow={closeEditRow}
                                         currentRowVal={currentRowVal}
                                         fetchData={fetchData}
+                                        categories={categories}
                                     />
                                 )
                             }

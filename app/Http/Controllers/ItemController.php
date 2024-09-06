@@ -124,6 +124,7 @@ class ItemController extends Controller
 
     public function editItem(Request $request)
     {
+        dd($request->all());
         $item = Item::find($request->id);
         $item->update([
             'merchant_id' => Auth::user()->merchant_id,

@@ -5,9 +5,10 @@ import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
-// import { Dropdown } from "primereact/dropdown";
 import React, { useState, Fragment, useEffect } from "react";
 import { Listbox } from '@headlessui/react';
+import { Dropdown } from 'primereact/dropdown';
+import toast from "react-hot-toast";
 
 export default function MerchantDetails({ merchant, classification }) {
 
@@ -15,6 +16,31 @@ export default function MerchantDetails({ merchant, classification }) {
     const [editBilling, setEditBilling] = useState(false);
     const [selectedClass, setSelectedClass] = useState(merchant.classification);
     const [isLoading, setIsLoading] = useState(false);
+    const [stateOptions, setStateOptions] = useState([]);
+
+    const fetchData = async () => {
+        try {
+
+            const response = await axios.get('/configuration/getState');
+            
+            setStateOptions(response.data);
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setStateOptions([]);
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const handleStateChange = (e) => {
+        setData('state', e.value); // Update form data with selected state
+    };
 
     const editMerchantDetails = () => {
         setEditMerchant(true)
@@ -38,6 +64,13 @@ export default function MerchantDetails({ merchant, classification }) {
         merchant_name: merchant.merchant_name,
         registration_no: merchant.registration_no,
         classification_id: selectedClass?.code,
+        address: merchant.address,
+        address_2: merchant.address_2 ?? '',
+        postcode: merchant.postcode,
+        area: merchant.area,
+        state: merchant.state,
+        phone: merchant.phone,
+        merchant_email: merchant.merchant_email,
     });
 
     useEffect(() => {
@@ -63,10 +96,29 @@ export default function MerchantDetails({ merchant, classification }) {
         })
     }
 
+    const submitBilling = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        post('/configuration/updateMerchantBilling', {
+            preserveScroll: true,
+            onSuccess: () => {
+                setEditMerchant(false);
+                setEditBilling(false);
+                setIsLoading(false);
+                fetchData();
+                toast.success('Profile Detail updated successfully.', {
+                    title: 'Profile Detail updated successfully.',
+                    duration: 3000,
+                    variant: 'variant3',
+                });
+            }
+        })
+    }
+
     return (
         <>
             <div className="flex flex-col gap-5">
-                <div className="w-full border border-neutral-100 rounded-lg p-5 shadow-container flex flex-col gap-5">
+                <div className="w-full bg-white border border-neutral-100 rounded-lg p-5 shadow-container flex flex-col gap-5">
                     <div className="flex justify-between">
                         <div className="text-neutral-950 text-lg font-bold font-sf-pro leading-tight">Merchant Details</div>
                         <div className="cursor-pointer" onClick={editMerchantDetails}>
@@ -92,7 +144,7 @@ export default function MerchantDetails({ merchant, classification }) {
                     </div>
                 </div>
 
-                <div className="w-full border border-neutral-100 rounded-lg p-5 shadow-container flex flex-col gap-5">
+                <div className="w-full bg-white border border-neutral-100 rounded-lg p-5 shadow-container flex flex-col gap-5">
                     <div className="flex justify-between">
                         <div className="text-neutral-950 text-lg font-bold font-sf-pro leading-tight">Billing Details</div>
                         <div className="cursor-pointer" onClick={editMerchantBilling}>
@@ -286,7 +338,7 @@ export default function MerchantDetails({ merchant, classification }) {
                                     size="lg"
                                     className="md:min-w-[156px] flex justify-center"
                                     type="submit"
-                                    onClick={submit}
+                                    onClick={submitBilling}
                                     disabled={processing}
                                 >
                                     Save
@@ -298,110 +350,108 @@ export default function MerchantDetails({ merchant, classification }) {
                             <div className="flex flex-col space-y-1">
                                 <InputLabel  value='Attention' />
                                 <TextInput 
-                                    id="attention"
+                                    id="merchant_name"
                                     type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
+                                    name="merchant_name"
+                                    value={data.merchant_name}
+                                    onChange={(e) => setData('merchant_name', e.target.value)}
+                                    hasError={!!errors.merchant_name}
                                     placeholder='e.g. attention'
                                     className=' w-full'
                                 />
-                                <InputError message={errors.attention} className="mt-2" />
+                                <InputError message={errors.merchant_name} className="mt-2" />
                             </div>
                             <div className="flex flex-col space-y-1">
                                 <InputLabel  value='Address Line 1' />
                                 <TextInput 
-                                    id="attention"
+                                    id="address"
                                     type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
+                                    name="address"
+                                    value={data.address}
+                                    onChange={(e) => setData('address', e.target.value)}
+                                    hasError={!!errors.address}
+                                    placeholder='e.g. address'
                                     className=' w-full'
                                 />
-                                <InputError message={errors.attention} className="mt-2" />
+                                <InputError message={errors.address} className="mt-2" />
                             </div>
                             <div className="flex flex-col space-y-1">
                                 <InputLabel  value='Address Line 2' />
                                 <TextInput 
-                                    id="attention"
+                                    id="address_2"
                                     type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
+                                    name="address_2"
+                                    value={data.address_2}
+                                    onChange={(e) => setData('address_2', e.target.value)}
+                                    hasError={!!errors.address_2}
+                                    placeholder='e.g. address_2'
                                     className=' w-full'
                                 />
-                                <InputError message={errors.attention} className="mt-2" />
+                                <InputError message={errors.address_2} className="mt-2" />
                             </div>
                             <div className="flex flex-col md:grid grid-cols-3 gap-5">
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel  value='Postcode' />
                                     <TextInput 
-                                    id="attention"
+                                    id="postcode"
                                     type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
+                                    name="postcode"
+                                    value={data.postcode}
+                                    onChange={(e) => setData('postcode', e.target.value)}
+                                    hasError={!!errors.postcode}
+                                    placeholder='e.g. postcode'
                                     className=' w-full'
                                 />
                                 </div>
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel  value='City' />
                                     <TextInput 
-                                    id="attention"
+                                    id="area"
                                     type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
+                                    name="area"
+                                    value={data.area}
+                                    onChange={(e) => setData('area', e.target.value)}
+                                    hasError={!!errors.area}
+                                    placeholder='e.g. area'
                                     className=' w-full'
                                 />
                                 </div>
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel  value='State' />
-                                    <TextInput 
-                                    id="attention"
-                                    type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
-                                    className=' w-full'
-                                />
+                                    <Dropdown
+                                        value={data.state} 
+                                        onChange={handleStateChange}
+                                        options={stateOptions.map((state, index) => (state.State))}
+                                        optionLabel="state"
+                                        placeholder="Select state"
+                                        className="w-full md:w-14rem"
+                                    />
                                 </div>
                             </div>
                             <div className="flex flex-col md:grid grid-cols-2 gap-5">
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel value='Phone No.' />
                                     <TextInput 
-                                    id="attention"
-                                    type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
-                                    className=' w-full'
-                                />
+                                        id="phone"
+                                        type='text'
+                                        name="phone"
+                                        value={data.phone}
+                                        onChange={(e) => setData('phone', e.target.value)}
+                                        hasError={!!errors.phone}
+                                        placeholder='e.g. phone'
+                                        className=' w-full'
+                                    />
                                 </div>
                                 <div className="flex flex-col space-y-1">
                                     <InputLabel value='Email' />
                                     <TextInput 
-                                    id="attention"
+                                    id="merchant_email"
                                     type='text'
-                                    name="attention"
-                                    value={data.attention}
-                                    onChange={(e) => setData('attention', e.target.value)}
-                                    hasError={!!errors.attention}
-                                    placeholder='e.g. attention'
+                                    name="merchant_email"
+                                    value={data.merchant_email}
+                                    onChange={(e) => setData('merchant_email', e.target.value)}
+                                    hasError={!!errors.merchant_email}
+                                    placeholder='e.g. merchant_email'
                                     className=' w-full'
                                 />
                                 </div>

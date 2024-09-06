@@ -769,6 +769,7 @@
 .p-dropdown .p-dropdown-label {
   background: transparent;
   border: 0 none;
+  padding: 14px 16px;
 }
 .p-dropdown .p-dropdown-label.p-placeholder {
   color: #6c757d;
@@ -1089,21 +1090,28 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 14px;
   color: #4C5A66;
-  background: #ffffff !important;
+  background: #f8fafa !important;
   padding: 8px 12px;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   appearance: none;
   border-radius: 4px !important;
-  border: 1px solid #B7C6CE;
+  border: 1px #f8fafa solid;
+  width: 100%;
+  border-color: #f8fafa !important;
 }
 .p-inputtext:enabled:hover {
-  border-color: transparent;
+  border-color: #E6ECEE;
+  background: #FFFFFF !important;
+  border: 1px #E6ECEE solid;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
 }
 .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0px 1px 2.8px 0px rgba(134, 148, 159, 0.14);
   border-color: #f1f5f6;
+  background: #FFFFFF !important;
 }
 .p-inputtext.p-invalid.p-component {
   border-color: #e24c4c;

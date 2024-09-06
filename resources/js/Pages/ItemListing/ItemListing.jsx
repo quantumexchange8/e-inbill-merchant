@@ -147,7 +147,7 @@ export default function ItemListing({ categories }) {
                                     
                                 </Tab.List>
                                 <Tab.Panels>
-                                    <ItemListingTable key={refreshTable.toString()} type={selectedTab} searchVal={searchVal} />
+                                    <ItemListingTable key={refreshTable.toString()} type={selectedTab} searchVal={searchVal} categories={categories} />
                                 </Tab.Panels>
                             </Tab.Group>
                         </div>

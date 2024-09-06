@@ -19,7 +19,14 @@ class Merchant extends Model
         'irbm_client_key',
         'sales_tax',
         'service_tax',
-        'sst_effective_data'
+        'sst_effective_data',
+        'address',
+        'address_2',
+        'postcode',
+        'area',
+        'state',
+        'phone',
+        'merchant_email',
     ];
 
     public function classification(): \Illuminate\Database\Eloquent\Relations\BelongsTo

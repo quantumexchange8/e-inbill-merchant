@@ -333,8 +333,10 @@ export default function AddItem({ itemAdded, categories }) {
                                                 onValueChange={(e) => setData('price', e.value)} 
                                                 mode="currency" 
                                                 currency="MYR" locale="en-MY"
+                                                className="w-full"
                                                 pt={{
-                                                    root: 'bg-gray-50 border-none hover:border-none rounded focus:outline-none focus:ring-0'
+                                                    root: 'border-none hover:border-none rounded focus:outline-none focus:ring-0',
+                                                    input: 'w-full'
                                                 }}
                                             />
                                             <InputError message={errors.price} className="mt-2" />

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classification;
 use App\Models\Merchant;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -38,6 +39,38 @@ class ConfigurationController extends Controller
             'merchant_name' => $request->merchant_name,
             'registration_no' => $request->registration_no,
             'classification_id' => $request->classification_id['id'],
+        ]);
+
+        return redirect()->back()->with('update successfull');
+    }
+
+    public function updateMerchantBilling(Request $request)
+    {
+
+        $request->validate([
+            'merchant_name' => ['required'],
+            'address' => ['required'],
+            'postcode' => ['required'],
+            'area' => ['required'],
+            'state' => ['required'],
+            'phone' => ['required'],
+            'merchant_email' => ['required'],
+        ]);
+
+
+        $user = Auth::user();
+
+        $merchant = Merchant::find($user->merchant_id);
+
+        $merchant->update([
+            'merchant_name' => $request->merchant_name,
+            'address' => $request->address,
+            'address_2' => $request->address_2,
+            'postcode' => $request->postcode,
+            'area' => $request->area,
+            'state' => $request->state,
+            'phone' => $request->phone,
+            'merchant_email' => $request->merchant_email,
         ]);
 
         return redirect()->back()->with('update successfull');
@@ -83,5 +116,13 @@ class ConfigurationController extends Controller
         ]);
 
         return redirect()->back()->with('update successfull');
+    }
+
+    public function getState()
+    {
+
+        $states = State::all(); 
+
+        return response()->json($states);
     }
 }
