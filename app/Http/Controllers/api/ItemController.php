@@ -218,7 +218,7 @@ class ItemController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'classification_id' => $request->classification_id,
-            'category_id' => $request->category,
+            'category_id' => $request->category_id,
             'cost' => $request->cost,
             'barcode' => $request->barcode,
             'status' => 'active',
