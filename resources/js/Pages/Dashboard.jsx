@@ -5,8 +5,11 @@ import { Head, Link } from '@inertiajs/react';
 import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
 import Transaction from "@/Components/NoContent/Transaction.svg"
 import CountUp from 'react-countup';
+import RecentTransaction from './Dashboard/RecentTransaction';
+import TopSellingItem from './Dashboard/TopSellingItem';
+import WeeklySales from './Dashboard/WeeklySales';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, todaySale, todayOrder, todayItemSold }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -46,7 +49,7 @@ export default function Dashboard({ auth }) {
                                             <div className='text-xs text-gray-950 font-sf-pro'>
                                                 Sales Today (RM)
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} decimals={2}/></div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={todaySale} duration={4} decimals={2}/></div>
                                         </div>
                                         <div>
                                             <SalesToday />
@@ -66,7 +69,7 @@ export default function Dashboard({ auth }) {
                                             <div className='text-xs text-gray-950 font-sf-pro'>
                                                 Order Today
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={todayOrder} duration={4} /></div>
                                         </div>
                                         <div>
                                             <OrderToday />
@@ -86,7 +89,7 @@ export default function Dashboard({ auth }) {
                                             <div className='text-xs text-gray-950 font-sf-pro'>
                                                 Item Sold Today
                                             </div>
-                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
+                                            <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={todayItemSold} duration={4} /></div>
                                         </div>
                                         <div>
                                             <ItemSoldToday />
@@ -105,14 +108,7 @@ export default function Dashboard({ auth }) {
                                 <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
                                     Recent Transaction
                                 </div>
-                                <div className="w-full flex justify-between items-center gap-4 relative min-h-[135px]">
-                                    <div className="text-gray-400 text-sm font-medium">
-                                        No statistics available at this time
-                                    </div>
-                                    <div className='absolute right-0'>
-                                        <img src={Transaction} alt="manage_category" />
-                                    </div>
-                                </div>
+                                <RecentTransaction />
                             </div>
                         </div>
                                         
@@ -145,18 +141,13 @@ export default function Dashboard({ auth }) {
                                     <Epc />
                                 </div>
                             </div>
-                            <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg bg-white'>
-                                <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
+                            <div className='w-full py-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg bg-white'>
+                                <div className='text-neutral-950 text-lg font-bold font-sf-pro px-5'>
                                     Top Selling Item
                                 </div>
-                                <div className="w-full flex flex-col justify-center items-center gap-4 min-h-60">
-                                    <div>
-                                        <img src={ManageCategoryImgNoCont} alt="manage_category" />
-                                    </div>
-                                    <div className="text-gray-400 text-sm font-medium">
-                                        No item to be shown yet
-                                    </div>
-                                </div>
+
+                                <TopSellingItem />
+                                
                             </div>
                         </div>
                     </div>
@@ -191,7 +182,7 @@ export default function Dashboard({ auth }) {
                                         <div className='text-xs text-gray-950 font-sf-pro'>
                                             Sales Today (RM)
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} decimals={2}/></div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={todaySale} duration={4} decimals={2}/></div>
                                     </div>
                                     <div>
                                         <SalesToday />
@@ -211,7 +202,7 @@ export default function Dashboard({ auth }) {
                                         <div className='text-xs text-gray-950 font-sf-pro'>
                                             Order Today
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={todayOrder} duration={4} /></div>
                                     </div>
                                     <div>
                                         <OrderToday />
@@ -231,7 +222,7 @@ export default function Dashboard({ auth }) {
                                         <div className='text-xs text-gray-950 font-sf-pro'>
                                             Item Sold Today
                                         </div>
-                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={999} duration={4} /></div>
+                                        <div className='text-lg font-bold font-sf-pro text-neutral-950'><CountUp end={todayItemSold} duration={4} /></div>
                                     </div>
                                     <div>
                                         <ItemSoldToday />
@@ -280,27 +271,17 @@ export default function Dashboard({ auth }) {
                             <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
                                 Recent Transaction
                             </div>
-                            <div className="w-full flex flex-col-reverse md:flex-row justify-between items-center gap-4 relative min-h-[135px]">
-                                <div className="text-gray-400 text-sm font-medium">
-                                    No statistics available at this time
-                                </div>
-                                <div className='md:absolute md:right-0'>
-                                    <img src={Transaction} alt="manage_category" />
-                                </div>
-                            </div>
+                            
+                            <RecentTransaction />
+                            
                         </div>
-                        <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg bg-white'>
-                            <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
+                        <div className='w-full py-5 flex flex-col gap-5 border border-gray-100 shadow-container rounded-lg bg-white'>
+                            <div className='text-neutral-950 text-lg px-5 font-bold font-sf-pro'>
                                 Top Selling Item
                             </div>
-                            <div className="w-full flex flex-col justify-center items-center gap-4">
-                                <div>
-                                    <img src={ManageCategoryImgNoCont} alt="manage_category" />
-                                </div>
-                                <div className="text-gray-400 text-sm font-medium">
-                                    No item to be shown yet
-                                </div>
-                            </div>
+                            
+                            <TopSellingItem />
+                            
                         </div>
                     </div>
                 </div>
@@ -310,14 +291,9 @@ export default function Dashboard({ auth }) {
                         <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
                             Weekly Sales
                         </div>
-                        <div className="w-full flex flex-col items-center gap-4 min-h-[135px]">
-                            <div className=''>
-                                <img src={Transaction} alt="manage_category" />
-                            </div>
-                            <div className="text-gray-400 text-sm font-medium">
-                                No statistics available at this time
-                            </div>
-                        </div>
+
+                        <WeeklySales />
+
                     </div>
                     <div className='w-full p-5 flex flex-col gap-5 border border-gray-100 bg-gradient-to-b from-[#F4F7FB] from-11.99% to-[#FFF] to-71.71% shadow-container rounded-lg'>
                         <div className='text-neutral-950 text-lg font-bold font-sf-pro'>

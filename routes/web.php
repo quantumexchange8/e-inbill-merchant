@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
      */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/getRecentTransaction', [DashboardController::class, 'getRecentTransaction'])->name('getRecentTransaction');
+    Route::get('/getTopSellingItem', [DashboardController::class, 'getTopSellingItem'])->name('getTopSellingItem');
+    Route::get('/getWeeklySales', [DashboardController::class, 'getWeeklySales'])->name('getWeeklySales');
+
     /**
      * ==============================
      *           E-Invoice

@@ -75,7 +75,6 @@ export default function MonthlySales() {
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
                 borderRadius: 8, // Rounded corners at the top
-                borderSkipped: top, // Apply rounding to all corners
                 hoverBackgroundColor: '#00E62B'
             },
         ],
@@ -85,26 +84,19 @@ export default function MonthlySales() {
         responsive: true,
         plugins: {
             legend: {
-              position: 'top',
-              display: false,
+                position: 'top',
+                display: false,
             },
             title: {
-              display: false,
-              text: 'Chart.js Bar Chart'
+                display: false,
+                text: 'Sales Transactions Count for the Last 7 Days'
             },
-            Tooltip: {
-                // callbacks: {
-                //     label: function(tooltipItem) {
-                //         const month = tooltipItem.label; // Get the month label
-                //         const sales = tooltipItem.raw; // Get the sales data for that month
-                //         return `Month: ${month}, Sales: $${sales}`; // Custom text
-                //     }
-                // },
+            tooltip: {
                 backgroundColor: '#4C5A66',
                 titleAlign: 'center'
             }
-          }
-    }
+        }
+    };
     
 
     return (
