@@ -232,8 +232,8 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                                     shape.icon
                                                 }
                                                 {selectedShape === shape.name ? (
-                                                    <div className=" absolute w-full h-full flex justify-center items-center">
-                                                        <CheckIcon className='text-black w-7 h-7' />
+                                                    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10 bg-transparent">
+                                                        <CheckIcon className='text-primary-700 w-7 h-7' />
                                                     </div>
                                                 ) : ''}
                                             </div>
@@ -294,24 +294,15 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                         onChange={(e) => setData('classification_id', e.target.value)}
                                         options={classVal} 
                                         optionLabel="code" 
+                                        optionValue="id"
                                         placeholder="Select Classification" 
                                         filter 
                                         className="w-full md:w-14rem" 
                                     />
-                                    <TextInput 
-                                        id="classification_id"
-                                        type='text'
-                                        name="classification_id"
-                                        value={data.classification_id}
-                                        onChange={(e) => setData('classification_id', e.target.value)}
-                                        hasError={!!errors.classification_id}
-                                        placeholder='e.g. Fried Rice'
-                                        className=' w-full'
-                                    />
                                     <InputError message={errors.classification_id} className="mt-2" />
                                 </div>
                             </div>
-                            <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
+                            {/* <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
                                 <div className="max-w-[166px] w-full">
                                     <div>SKU</div>
                                 </div>
@@ -328,17 +319,18 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                     />
                                     <InputError message={errors.sku} className="mt-2" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
                                 <div className="max-w-[166px] w-full">
                                     <div>Category</div>
                                 </div>
                                 <div className="flex flex-col space-y-2 w-full">
                                     <Dropdown 
-                                        value={selectedCategory} 
-                                        onChange={(e) => setSelectedCategory(e.value)} 
+                                        value={data.category} 
+                                        onChange={(e) => setData('category', e.target.value)} 
                                         options={categories.length > 0 ? categories : 'no category created yet'} 
                                         optionLabel="name" 
+                                        optionValue="id"
                                         placeholder="Select Category" 
                                         filter 
                                         className="w-full md:w-14rem" 

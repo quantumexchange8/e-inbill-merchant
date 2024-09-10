@@ -118,7 +118,7 @@ export default function WeeklySales() {
                 hoverBackgroundColor: '#FFC300',
                 tension: 0.3,
                 fill: true,
-                pointStyle: false
+                pointStyle: false,
             },
         ],
     };

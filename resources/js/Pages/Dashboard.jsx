@@ -8,6 +8,7 @@ import CountUp from 'react-countup';
 import RecentTransaction from './Dashboard/RecentTransaction';
 import TopSellingItem from './Dashboard/TopSellingItem';
 import WeeklySales from './Dashboard/WeeklySales';
+import EInvoice from './Dashboard/EInvoice';
 
 export default function Dashboard({ auth, todaySale, todayOrder, todayItemSold }) {
     return (
@@ -299,14 +300,9 @@ export default function Dashboard({ auth, todaySale, todayOrder, todayItemSold }
                         <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
                             E-Invoice Summary
                         </div>
-                        <div className="w-full flex flex-col items-center gap-4 min-h-[135px]">
-                            <div className=''>
-                                <img src={Transaction} alt="manage_category" />
-                            </div>
-                            <div className="text-gray-400 text-sm font-medium">
-                                No statistics available at this time
-                            </div>
-                        </div>
+
+                        <EInvoice />
+                        
                     </div>
                 </div>
 

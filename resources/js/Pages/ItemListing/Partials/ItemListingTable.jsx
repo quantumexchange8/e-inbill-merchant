@@ -400,7 +400,7 @@ export default function ItemListingTable({ type, searchVal, categories }) {
                             <div className="flex flex-col gap-3 md:hidden">
                                 {
                                     filteredData.map((item, index) => (
-                                        <div key={index} className="flex flex-col gap-4 border border-gray-200 bg-white rounded">
+                                        <div key={index} className="flex flex-col gap-4 border border-gray-200 bg-white rounded shadow-sm">
                                             <div className="p-2 flex items-center border-b border-gray-100">
                                                 <div className="flex items-center gap-5 w-full">
                                                     <div className="w-14 h-14 bg-gray-50 border border-neutral-100 rounded-sm">

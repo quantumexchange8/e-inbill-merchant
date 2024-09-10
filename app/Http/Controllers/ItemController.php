@@ -20,8 +20,11 @@ class ItemController extends Controller
 
         $categories = Category::get();
 
+        $items = Item::get();
+
         return Inertia::render('ItemListing/ItemListing', [
             'categories' => $categories,
+            'items' => $items,
         ]);
     }
 

@@ -18,7 +18,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
-export default function ItemListing({ categories }) {
+export default function ItemListing({ categories, items }) {
 
     const [selectedTab, setSelectedTab] = useState(0);
     const [refreshTable, setRefreshTable] = useState(false);
@@ -33,12 +33,19 @@ export default function ItemListing({ categories }) {
 
     const searchVal = data.search;
 
+    const countItemsInCategory = (categoryId) => {
+        if (categoryId === 0) {
+            return items.filter(item => item.category_id !== null).length;
+        }
+        return items.filter(item => item.category_id === categoryId).length;
+    };
+
     return (
         <Authenticated header="Item Listing">
             <Head title="Item Listing" />
 
-            <div className="flex flex-col gap-5 p-5 border border-neutral-100 bg-white shadow-container rounded-lg">
-                <div className="text-neutral-950 text-lg font-bold">
+            <div className="flex flex-col gap-5 md:p-5 md:border md:border-neutral-100 md:bg-white md:shadow-container rounded-lg">
+                <div className="hidden md:block text-neutral-950 text-lg font-bold">
                     List of Item
                 </div>
                 <div className="flex flex-col md:flex-row justify-between gap-5">
@@ -99,29 +106,29 @@ export default function ItemListing({ categories }) {
                             <Tab.Group
                                 onChange={(index) => {
                                     // Map index to category name
-                                    const category = index === 0 ? 0 : categories[index - 1]?.id;
-                                    setSelectedTab(category);
+                                    const categoryId = index === 0 ? 0 : categories[index - 1]?.id;
+                                    setSelectedTab(categoryId);
                                 }}
 
                                 className='flex flex-col gap-5'
                             >
-                                <Tab.List className="flex">
+                                <Tab.List className="flex overflow-auto">
 
                                     <Tab
                                         className={({ selected }) =>
                                             classNames(
                                             'p-2 text-sm font-medium leading-5 flex items-end gap-2',
-                                            'focus:outline-none border-b border-gray-200 hover:border-gray-700',
+                                            'focus:outline-none border-b hover:border-gray-700 flex items-center gap-2',
                                             selected
-                                                ? 'bg-white text-primary-700 font-medium border-b-2 border-primary-700'
+                                                ? 'md:bg-white text-primary-700 font-medium border-b-2 border-primary-700'
                                                 : 'text-blue-100 hover:bg-white/[0.12] hover:text-gray-700 font-medium'
                                             )
                                         }
                                     >
-                                        <span>All</span>
-                                        {/* <span className="w-5 h-5 py-0.5 px-1 rounded bg-primary-700 text-primary-25 text-xss font-medium flex items-center justify-center">
-                                            18
-                                        </span> */}
+                                        <div className="px-0.5">All</div>
+                                        <div className={`${selectedTab === 0 ? 'bg-primary-700' : 'bg-gray-100'} " py-0.5 px-1 text-white text-xss rounded "`}>
+                                            {countItemsInCategory(0)}
+                                        </div>
                                     </Tab>
                                     {
                                         categories.map((category, index) => (
@@ -130,17 +137,17 @@ export default function ItemListing({ categories }) {
                                                 className={({ selected }) =>
                                                     classNames(
                                                     'p-2 text-sm font-medium leading-5 flex items-end gap-2',
-                                                    'focus:outline-none border-b border-gray-200 hover:border-gray-700',
+                                                    'focus:outline-none border-b hover:border-gray-700 flex items-center gap-2',
                                                     selected
-                                                        ? 'bg-white text-primary-700 font-medium border-b-2 border-primary-700'
+                                                        ? 'md:bg-white text-primary-700 font-medium border-b-2 border-primary-700'
                                                         : 'text-gray-200 hover:bg-white/[0.12] hover:text-gray-700 font-medium'
                                                     )
                                                 }
                                             >
-                                                <span>{category.name}</span>
-                                                {/* <span className="w-5 h-5 py-0.5 px-1 rounded bg-primary-700 text-primary-25 text-xss font-medium flex items-center justify-center">
-                                                    18
-                                                </span> */}
+                                                <div>{category.name}</div>
+                                                <div className={`${selectedTab === category.id ? 'bg-primary-700' : 'bg-gray-100' } " py-0.5 px-1 text-white text-xss rounded "`}>
+                                                    {countItemsInCategory(category.id)}
+                                                </div>
                                             </Tab>
                                         ))
                                     }

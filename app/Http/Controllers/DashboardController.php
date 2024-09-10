@@ -85,4 +85,12 @@ class DashboardController extends Controller
 
         return response()->json(['currentWeek' => $currentWeeklySales, 'lastWeek' => $lastWeeklySales]);
     }
+
+    public function getEinvoiceSummary(Request $request)
+    {
+
+        
+
+        return response()->json();
+    }
 }

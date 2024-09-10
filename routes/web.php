@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/getRecentTransaction', [DashboardController::class, 'getRecentTransaction'])->name('getRecentTransaction');
     Route::get('/getTopSellingItem', [DashboardController::class, 'getTopSellingItem'])->name('getTopSellingItem');
     Route::get('/getWeeklySales', [DashboardController::class, 'getWeeklySales'])->name('getWeeklySales');
+    Route::get('/getEinvoiceSummary', [DashboardController::class, 'getEinvoiceSummary'])->name('getEinvoiceSummary');
 
     /**
      * ==============================

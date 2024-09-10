@@ -50,7 +50,7 @@ export default function AddItem({ itemAdded, categories }) {
         name: '',
         price: '',
         classification_id: '',
-        sku: '',
+        // sku: '',
         category: selectedCategory,
         cost: '',
         stock: '',
@@ -100,7 +100,7 @@ export default function AddItem({ itemAdded, categories }) {
 
     const closeModal = () => {
         
-        if (data.name === '' && data.sku === '' && data.stock === '' && data.barcode === '') {
+        if (data.name === '' && data.stock === '' && data.barcode === '') {
             setIsOpen(false)
             reset()
         } else {
@@ -282,17 +282,15 @@ export default function AddItem({ itemAdded, categories }) {
                                                 {shapes.map((shape, index) => (
                                                     <div 
                                                         key={index} 
-                                                        className={`relative`}
+                                                        className="relative cursor-pointer"
                                                         onClick={() => handleShapeSelect(shape.name)}
                                                     >
-                                                        {
-                                                            shape.icon
-                                                        }
-                                                        {selectedShape === shape.name ? (
-                                                            <div className=" absolute w-full h-full flex justify-center items-center">
-                                                                <CheckIcon className='text-black w-7 h-7' />
+                                                        {shape.icon}
+                                                        {selectedShape === shape.name && (
+                                                            <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10 bg-transparent">
+                                                                <CheckIcon className='text-primary-700 w-7 h-7' />
                                                             </div>
-                                                        ) : ''}
+                                                        )}
                                                     </div>
                                                 ))}
                                             </div>
@@ -360,7 +358,7 @@ export default function AddItem({ itemAdded, categories }) {
                                             <InputError message={errors.classification_id} className="mt-2" />
                                         </div>
                                     </div>
-                                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
+                                    {/* <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
                                         <div className="max-w-[166px] w-full">
                                             <div>SKU</div>
                                         </div>
@@ -377,7 +375,7 @@ export default function AddItem({ itemAdded, categories }) {
                                             />
                                             <InputError message={errors.sku} className="mt-2" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-[34px]">
                                         <div className="max-w-[166px] w-full">
                                             <div>Category</div>
