@@ -17,21 +17,31 @@ class TransactionController extends Controller
     public function openShift(Request $request)
     {
         $user = Auth::user();
-       
-        $shift = ShiftTransaction::create([
-            'merchant_id' => $user->merchant_id,
-            'user_id' => $user->id,
-            'shift_no' => RunningNumberService::getID('shift'),
-            'starting_cash' => $request->starting_cash,
-            'expected_cash_amount' => $request->starting_cash,
-            'shift_opened' => now(),
-            'status' => 'opened',
-        ]);
 
-        return response()->json([
-            'status' => 'succesfull open shift',
-        ], 200);
+        $checkShift = ShiftTransaction::where('merchant_id', $user->merchant_id)
+            ->where('status', 'opened')
+            ->first();
 
+        if (empty($checkShift)) {
+            $shift = ShiftTransaction::create([
+                'merchant_id' => $user->merchant_id,
+                'user_id' => $user->id,
+                'shift_no' => RunningNumberService::getID('shift'),
+                'starting_cash' => $request->starting_cash,
+                'expected_cash_amount' => $request->starting_cash,
+                'shift_opened' => now(),
+                'status' => 'opened',
+            ]);
+
+            return response()->json([
+                'status' => 'succesfull open shift',
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'current shift opening',
+                'shift' => $checkShift,
+            ], 200);
+        }
     }
 
     public function getShiftDetails(Request $request)
