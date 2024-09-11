@@ -95,7 +95,6 @@ class ItemController extends Controller
 
         if ($request->hasfile('item_image'))
         {
-            $item->clearMediaCollection('item_image');
             $item->addMedia($request->item_image)->toMediaCollection('item_image');
         } else {
             $item->update([
@@ -143,6 +142,7 @@ class ItemController extends Controller
 
         if ($request->hasfile('item_image'))
         {
+            $item->clearMediaCollection('item_image');
             $item->addMedia($request->item_image)->toMediaCollection('item_image');
         } else {
             $item->update([

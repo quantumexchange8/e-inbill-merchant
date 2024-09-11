@@ -297,7 +297,34 @@ const SearchHistoryIcon = () => {
     );
 }
 
-
+const PlanIcon = () => {
+    return (
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_di_1904_34755)">
+            <rect x="7" y="6" width="28" height="28" rx="4" fill="white"/>
+            <rect x="7.5" y="6.5" width="27" height="27" rx="3.5" stroke="#D1DBE1"/>
+            <path d="M14 21.7877L20.5838 25.0796C20.6733 25.1244 20.7181 25.1468 20.7651 25.1556C20.8067 25.1634 20.8494 25.1634 20.891 25.1556C20.938 25.1468 20.9828 25.1244 21.0723 25.0796L27.6561 21.7877M14 18.3737L20.5838 15.0818C20.6733 15.0371 20.7181 15.0147 20.7651 15.0059C20.8067 14.998 20.8494 14.998 20.891 15.0059C20.938 15.0147 20.9828 15.0371 21.0723 15.0818L27.6561 18.3737L21.0723 21.6656C20.9828 21.7104 20.938 21.7328 20.891 21.7416C20.8494 21.7494 20.8067 21.7494 20.7651 21.7416C20.7181 21.7328 20.6733 21.7104 20.5838 21.6656L14 18.3737Z" stroke="#4C5A66" strokeWidth="1.36561" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+            <defs>
+            <filter id="filter0_di_1904_34755" x="0.2" y="0.2" width="41.6" height="41.6" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+            <feOffset dy="1"/>
+            <feGaussianBlur stdDeviation="3.4"/>
+            <feComposite in2="hardAlpha" operator="out"/>
+            <feColorMatrix type="matrix" values="0 0 0 0 0.421842 0 0 0 0 0.421842 0 0 0 0 0.421842 0 0 0 0.09 0"/>
+            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1904_34755"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1904_34755" result="shape"/>
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+            <feOffset dy="-3"/>
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+            <feColorMatrix type="matrix" values="0 0 0 0 0.901961 0 0 0 0 0.92549 0 0 0 0 0.933333 0 0 0 1 0"/>
+            <feBlend mode="normal" in2="shape" result="effect2_innerShadow_1904_34755"/>
+            </filter>
+            </defs>
+        </svg>
+    );
+}
 
 export { 
     Circle,
@@ -333,4 +360,5 @@ export {
     PolygonShape,
     StarShape,
     SearchHistoryIcon,
+    PlanIcon,
 };

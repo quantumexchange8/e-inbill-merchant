@@ -16,6 +16,8 @@ class ConfigurationController extends Controller
         $authMerchant = Auth::user();
 
         $merchant = Merchant::where('id', $authMerchant->merchant_id)->with(['classification'])->first();
+        $merchant->merchant_images = $merchant->getFirstMediaUrl('merchant_images');
+        
         $classification = Classification::get();
 
         return Inertia::render('Configuration/Configuration', [
@@ -31,6 +33,8 @@ class ConfigurationController extends Controller
             'registration_no' => ['required'],
         ]);
 
+        dd($request->all());
+
         $merchant = Auth::user();
 
         $merchantDetails = Merchant::find($merchant->merchant_id);
@@ -40,6 +44,11 @@ class ConfigurationController extends Controller
             'registration_no' => $request->registration_no,
             'classification_id' => $request->classification_id['id'],
         ]);
+
+        if ($request->hasFile('merchant_images')) {
+            $merchantDetails->clearMediaCollection('merchant_images');
+            $merchantDetails->addMedia($request->merchant_images)->toMediaCollection('merchant_images');
+        }
 
         return redirect()->back()->with('update successfull');
     }

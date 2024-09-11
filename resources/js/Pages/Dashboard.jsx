@@ -322,7 +322,7 @@ export default function Dashboard({ auth, todaySale, todayOrder, todayItemSold }
                     </div>
                     <div className='w-full md:w-2/3 p-5 flex flex-col gap-5 border border-gray-100 bg-white shadow-container rounded-lg'>
                         <div className='text-neutral-950 text-lg font-bold font-sf-pro'>
-                            Recent Total Pay In & Pay Out
+                            Sales by Payment Method
                         </div>
                         <div className="w-full flex flex-col items-center gap-4 min-h-[135px]">
                             <div className=''>

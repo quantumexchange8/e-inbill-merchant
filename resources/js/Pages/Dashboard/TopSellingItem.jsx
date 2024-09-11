@@ -77,8 +77,8 @@ export default function TopSellingItem() {
                                                     <span>{topItem.total_quantity}</span>
                                                     <span>sold</span>
 
-                                                    <div className="absolute -left-4">
-                                                        <HotFireIcon />
+                                                    <div className="absolute -left-3 -top-2">
+                                                        <img src="/assets/items_images/fireIcon.png" alt="" />
                                                     </div>
                                                 </div>
                                             </div>

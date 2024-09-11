@@ -1,5 +1,5 @@
 import Button from "@/Components/Button";
-import { ChevronDown, ChevronUp, EditIcon, XIcon } from "@/Components/Icon/outline";
+import { ChevronDown, ChevronUp, EditIcon, UploadIcon, XIcon } from "@/Components/Icon/outline";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
@@ -17,6 +17,7 @@ export default function MerchantDetails({ merchant, classification }) {
     const [selectedClass, setSelectedClass] = useState(merchant.classification);
     const [isLoading, setIsLoading] = useState(false);
     const [stateOptions, setStateOptions] = useState([]);
+    const [previewImage, setPreviewImage] = useState(merchant.merchant_images || null);
 
     const fetchData = async () => {
         try {
@@ -71,11 +72,24 @@ export default function MerchantDetails({ merchant, classification }) {
         state: merchant.state,
         phone: merchant.phone,
         merchant_email: merchant.merchant_email,
+        merchant_images: merchant.merchant_images
     });
 
     useEffect(() => {
         setData('classification_id', selectedClass); // Ensure `code` is used for form data
     }, [selectedClass]);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            setPreviewImage(reader.result); // Set preview image to the file's data URL
+            setData('merchant_images', file); // Set form data to the file object
+          };
+          reader.readAsDataURL(file); // Read the file as data URL for preview
+        }
+      };
 
     const submit = (e) => {
         e.preventDefault();
@@ -225,7 +239,50 @@ export default function MerchantDetails({ merchant, classification }) {
                         }
                     >
                         <div className="p-5 flex flex-col md:flex-row gap-5 max-h-[70vh] md:max-h-80">
-                            <div className="w-[340px] h-[340px] bg-slate-600"></div>
+                            <div className="relative w-[340px] h-[340px] flex flex-col items-center justify-center gap-5 border border-gray-100 rounded">
+                                {
+                                    previewImage === null ? (
+                                        <>
+                                            <div className="bg-primary-50 rounded-full w-10 h-10 flex items-center justify-center">
+                                                <UploadIcon />
+                                            </div>
+                                            <div>
+                                                <input
+                                                type="file"
+                                                id="upload"
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={handleImageChange} // Call handleImageChange on file select
+                                                />
+                                                <Button
+                                                size="sm"
+                                                onClick={() => document.getElementById('upload').click()} // Trigger click on the hidden file input
+                                                >
+                                                    Browse
+                                                </Button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <img src={previewImage} alt="Selected" className="rounded-full object-cover" />
+                                            <div className="absolute top-1 right-1">
+                                                <Button
+                                                size="sm"
+                                                variant="ghost"
+                                                className="bg-transparent rounded-full p-0 hover:bg-neutral-100"
+                                                iconOnly
+                                                onClick={() => {
+                                                    setPreviewImage(null); // Clear the preview image
+                                                    setData('merchant_images', null); // Reset the form data to null
+                                                }}
+                                                >
+                                                <XIcon />
+                                                </Button>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            </div>
                             <div className="flex flex-col gap-5 max-w-[400px] w-full">
                                 <div className="flex flex-col space-y-1">
                                 <div className="flex gap-1 max-w-[166px] w-full">
