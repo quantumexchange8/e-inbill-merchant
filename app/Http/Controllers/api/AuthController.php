@@ -13,17 +13,16 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('role_id', 'password');
+        $credentials = $request->only('email', 'password');
 
         // Validate the request data
         $validator = Validator::make($credentials, [
-            'role_id' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'user' => null,
                 'message' => 'Validation error',
                 'status' => 'failed',
                 'errors' => $validator->errors()
@@ -31,12 +30,11 @@ class AuthController extends Controller
         }
 
         // Find the merchant by role_id
-        $merchant = User::where('role_id', $credentials['role_id'])->first();
+        $merchant = User::where('email', $credentials['email'])->first();
 
         if (!$merchant || !Hash::check($credentials['password'], $merchant->password)) {
             
             return response()->json([
-                'user' => null,
                 'message' => 'Invalid login details',
                 'status' => 'failed',
             ], 200);
@@ -47,7 +45,7 @@ class AuthController extends Controller
 
         $user_loggedin = [
             'id' => $merchant->id,
-            'role_id' => $merchant->role_id,
+            'email' => $merchant->email,
             'status' => 'loggedin',
             'token' => $token,
         ];
