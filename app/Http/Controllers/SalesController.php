@@ -33,6 +33,7 @@ class SalesController extends Controller
         $sales = Transaction::query()
                 ->where('transaction_type', 'sales')
                 ->with(['transaction_details', 'transaction_details.item'])
+                ->latest()
                 ->get();
 
         $sales->each(function ($transaction) {
@@ -50,6 +51,7 @@ class SalesController extends Controller
     {
         $sales = ShiftTransaction::query()
             ->with(['transaction'])
+            ->latest()
             ->get();
 
         return response()->json($sales);

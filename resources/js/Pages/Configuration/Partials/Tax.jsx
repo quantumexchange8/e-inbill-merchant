@@ -38,7 +38,6 @@ export default function Tax({ merchant }) {
             onSuccess: () => {
                 setEditMerchant(false);
                 setIsLoading(false);
-                fetchData();
                 toast.success('MyInvois details updated successfully.', {
                     title: 'MyInvois details updated successfully.',
                     duration: 3000,

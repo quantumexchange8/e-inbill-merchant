@@ -86,6 +86,8 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('admin')->group(function () {
         Route::get('/admin', [AdminUserController::class, 'admin'])->name('admin.my-admin');
+        Route::post('/addSubAdmin', [AdminUserController::class, 'addSubAdmin'])->name('admin.addSubAdmin');
+        Route::get('/getSubAdmin', [AdminUserController::class, 'getSubAdmin'])->name('admin.getSubAdmin');
     });
 
 

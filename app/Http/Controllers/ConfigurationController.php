@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classification;
 use App\Models\Merchant;
 use App\Models\State;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -107,7 +108,11 @@ class ConfigurationController extends Controller
 
     public function updateTax(Request $request)
     {
-        $date = $request->sst_effective_data;
+        
+        $dateString = $request->sst_effective_data;
+
+        $date = Carbon::parse($dateString);
+        $formattedDate = $date->format('Y-m-d');
         
         $request->validate([
             'sales_tax' => ['required'],
@@ -121,7 +126,7 @@ class ConfigurationController extends Controller
         $merchant->update([
             'sales_tax' => $request->sales_tax,
             'service_tax' => $request->service_tax,
-            'sst_effective_data' => $request->sst_effective_data,
+            'sst_effective_data' => $formattedDate,
         ]);
 
         return redirect()->back()->with('update successfull');

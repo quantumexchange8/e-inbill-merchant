@@ -124,7 +124,6 @@ export default function AddItem({ itemAdded, categories }) {
     const submit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log(data)
         post('/item/new-item', {
             preserveScroll: true,
             onSuccess: () => {
