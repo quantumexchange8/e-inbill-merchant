@@ -80,6 +80,7 @@ class TransactionController extends Controller
 
         return response()->json([
             'status' => 'succesfull closed shift',
+            'shift_details' => $getShift,
         ], 200);
 
     }

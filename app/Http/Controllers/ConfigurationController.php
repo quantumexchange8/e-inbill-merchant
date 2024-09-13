@@ -34,8 +34,6 @@ class ConfigurationController extends Controller
             'registration_no' => ['required'],
         ]);
 
-        dd($request->all());
-
         $merchant = Auth::user();
 
         $merchantDetails = Merchant::find($merchant->merchant_id);

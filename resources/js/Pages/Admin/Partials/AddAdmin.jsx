@@ -9,7 +9,7 @@ import { useForm } from "@inertiajs/react";
 import { Switch } from '@headlessui/react'
 import toast from "react-hot-toast";
 
-export default function AddAdmin() {
+export default function AddAdmin({ fetctData }) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(1);
@@ -112,12 +112,12 @@ export default function AddAdmin() {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
-                setIsOpen(false)
-                toast.success('Item added successfully.', {
-                    title: 'Item added successfully.',
-                    description: 'This item has been added to your item listing.',
+                setIsOpen(false);
+                fetctData();
+                toast.success('You’ve successfully edited the detail.', {
+                    title: 'You’ve successfully edited the detail.',
                     duration: 3000,
-                    variant: 'variant1',
+                    variant: 'variant3',
                 });
             }
         })
@@ -151,7 +151,7 @@ export default function AddAdmin() {
                             step === 1 && (
                                 <Button
                                     size="lg"
-                                    className="md:min-w-[156px] flex justify-center"
+                                    className="w-full md:max-w-[156px] md:min-w-[156px] flex justify-center"
                                     onClick={nextPage}
                                 >
                                     Next
@@ -161,23 +161,23 @@ export default function AddAdmin() {
                         {
                             step === 2 && (
                                 <>
-                                <Button
-                                    size="lg"
-                                    className="md:min-w-[156px] flex justify-center"
-                                    onClick={prevPage}
-                                    variant="ghost"
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    size="lg"
-                                    className="md:min-w-[156px] flex justify-center"
-                                    type="submit"
-                                    onClick={submit}
-                                    disabled={processing}
-                                >
-                                    Saves
-                                </Button>
+                                    <Button
+                                        size="lg"
+                                        className="w-full md:max-w-[156px] md:min-w-[156px] flex justify-center"
+                                        onClick={prevPage}
+                                        variant="ghost"
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        size="lg"
+                                        className="w-full md:max-w-[156px] md:min-w-[156px] flex justify-center"
+                                        type="submit"
+                                        onClick={submit}
+                                        disabled={processing}
+                                    >
+                                        Saves
+                                    </Button>
                                 
                                 </>
                             )
@@ -187,7 +187,7 @@ export default function AddAdmin() {
                 }
             >
                 <div className="flex flex-col items-center gap-5 py-5">
-                    <div className="px-5 flex items-center gap-5 max-w-[650px] w-full">
+                    <div className="px-5 flex items-center justify-center md:justify-start gap-5 max-w-[650px] w-full">
                         <div className="flex items-center gap-2">
                             <div className="w-6 h-6 rounded-full bg-[#0060FF] text-primary-25 text-xs font-bold font-sf-pro flex items-center justify-center">
                                 1
@@ -207,8 +207,8 @@ export default function AddAdmin() {
                     </div>
                     {
                         step === 1 && (
-                            <div className="px-5 flex items-center gap-5 max-w-[650px] w-full">
-                                <div className="w-1/2 h-[318px] relative flex flex-col items-center justify-center gap-5 border border-dashed border-gray-500 rounded">
+                            <div className="px-5 flex flex-col md:flex-row items-center gap-5 max-w-[650px] w-full">
+                                <div className="w-full md:w-1/2 h-[318px] relative flex flex-col items-center justify-center gap-5 border border-dashed border-gray-500 rounded">
                                     {
                                         previewImage === null ? (
                                             <>
@@ -233,8 +233,8 @@ export default function AddAdmin() {
                                             </>
                                         ) : (
                                             <>
-                                                <img src={previewImage} alt="Selected" className="w-20 h-20 rounded-full object-cover" />
-                                                <div className="absolute top-1 right-1">
+                                                <img src={previewImage} alt="Selected" className="object-cover" />
+                                                <div className="bg-gray-200 rounded-full flex justify-center w-6 h-6 absolute top-1 right-1">
                                                     <Button
                                                         size="sm"
                                                         variant="ghost"
@@ -252,7 +252,7 @@ export default function AddAdmin() {
                                         )
                                     }
                                 </div>
-                                <div className="w-1/2 flex flex-col gap-5">
+                                <div className="w-full md:w-1/2 flex flex-col gap-5">
                                     <div className="flex flex-col space-y-1">
                                         <div><InputLabel value='Name' /></div>
                                         <div>

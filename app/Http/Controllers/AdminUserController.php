@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class AdminUserController extends Controller
@@ -78,6 +79,52 @@ class AdminUserController extends Controller
                 ->with('merchant')
                 ->get();
 
+        $subadmin->each(function ($sub) {
+            $sub->profile_image = $sub->getFirstMediaUrl('profile_image');
+        });
+
         return response()->json($subadmin);
+    }
+
+    public function editAdmin(Request $request)
+    {
+
+
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email', Rule::unique(User::class)->ignore($request->id),
+            'title' => 'required',
+        ]);
+
+        $subadmin = User::find($request->id);
+
+        $subadmin->update([
+            'name' => $request->name,
+            'title' => $request->title,
+            'email' => $request->email,
+        ]);
+
+        if ($request->password) {
+            $subadmin->password = Hash::make($request->password);
+            $subadmin->save();
+        }
+
+        if($request->hasFile('profile_image')) {
+            $subadmin->clearMediaCollection('profile_image');
+            $subadmin->addMedia($request->profile_image)->toMediaCollection('profile_image');
+        }
+
+
+        return redirect()->back();
+    }
+
+    public function deleteAdmin(Request $request)
+    {
+
+        $deleteAdmin = User::find($request->id);
+
+        $deleteAdmin->delete();
+
+        return redirect()->back();
     }
 }
