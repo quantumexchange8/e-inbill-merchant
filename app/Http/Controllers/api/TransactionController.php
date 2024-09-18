@@ -86,7 +86,7 @@ class TransactionController extends Controller
         } else {
             return response()->json([
                 'shift_details' => $getShift->id,
-                'message' => $getShift->id . ', has closed'
+                'message' => 'Shift ID' . $getShift->id . ', has closed'
             ], 200);
         }
 

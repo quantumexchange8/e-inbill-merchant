@@ -140,7 +140,9 @@ export default function MerchantDetails({ merchant, classification }) {
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row md:items-center gap-6">
-                        <div className="w-16 h-16 bg-gray-400"></div>
+                        <div className="w-16 h-16">
+                            <img src={merchant.merchant_images ? merchant.merchant_images : 'https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'} alt="" />
+                        </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex flex-col md:flex-row md:items-center">
                                 <div className="text-neutral-950 font-sf-pro text-sm uppercase min-w-[182px]">Merchant Name </div>

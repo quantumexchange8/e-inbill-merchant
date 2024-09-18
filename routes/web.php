@@ -91,6 +91,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/editAdmin', [AdminUserController::class, 'editAdmin'])->name('admin.editAdmin');
         Route::post('/delete-admin', [AdminUserController::class, 'deleteAdmin'])->name('admin.delete-admin');
 
+        Route::post('/accessControl', [AdminUserController::class, 'accessControl'])->name('admin.accessControl');
+
     });
 
 

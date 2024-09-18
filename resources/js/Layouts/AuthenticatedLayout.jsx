@@ -31,7 +31,7 @@ export default function Authenticated({ user, header, children }) {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#FCFCFD]">
+        <div className="min-h-screen bg-white">
             <CustomToaster />
             <SideBar expanded={isSidebarExpanded} user={user} showingNavigationDropdown={showingNavigationDropdown} toggleSidebar={toggleSidebar} />
 

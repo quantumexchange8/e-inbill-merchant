@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 class AdminUserController extends Controller
 {
@@ -72,18 +73,27 @@ class AdminUserController extends Controller
     }
 
     public function getSubAdmin()
-    {
-
-        $subadmin = User::where('role', 'subadmin')
+    {   
+        
+        $subadmins = User::where('role', 'subadmin')
                 ->where('merchant_id', Auth::user()->merchant_id)
-                ->with('merchant')
+                ->with(['merchant', 'permissions']) // Eager load the permissions relationship
                 ->get();
 
-        $subadmin->each(function ($sub) {
-            $sub->profile_image = $sub->getFirstMediaUrl('profile_image');
+        $subadmins->each(function ($subadmin) {
+            $subadmin->profile_image = $subadmin->getFirstMediaUrl('profile_image');
+            
+            // Format permissions to show which are enabled
+            $subadmin->permissions = $subadmin->permissions->pluck('name'); // Get a list of enabled permission names
+    
+            // Example: If you want to include all permissions with their enabled status:
+            $allPermissions = Permission::pluck('name'); // Get all available permissions
+            $subadmin->permissions_status = $allPermissions->mapWithKeys(function ($permission) use ($subadmin) {
+                return [$permission => $subadmin->permissions->contains($permission)]; // True if enabled, false if not
+            });
         });
 
-        return response()->json($subadmin);
+        return response()->json($subadmins);
     }
 
     public function editAdmin(Request $request)
@@ -124,6 +134,102 @@ class AdminUserController extends Controller
         $deleteAdmin = User::find($request->id);
 
         $deleteAdmin->delete();
+
+        return redirect()->back();
+    }
+
+
+    public function accessControl(Request $request)
+    {
+
+        $subadmin = User::find($request->id);
+
+        if ($request->has('dashboard')) {
+            // Assign or remove the permission based on the checked value
+            if ($request->dashboard) {
+                // Grant 'dashboard' permission if not already granted
+                if (!$subadmin->hasPermissionTo('dashboard')) {
+                    $subadmin->givePermissionTo('dashboard');
+                }
+            } else {
+                // Revoke 'dashboard' permission if granted
+                if ($subadmin->hasPermissionTo('dashboard')) {
+                    $subadmin->revokePermissionTo('dashboard');
+                }
+            }
+        }
+
+        if ($request->has('item')) {
+            if ($request->item) {
+                if (!$subadmin->hasPermissionTo('itemListing')) {
+                    $subadmin->givePermissionTo('itemListing');
+                }
+            } else {
+                if ($subadmin->hasPermissionTo('itemListing')) {
+                    $subadmin->revokePermissionTo('itemListing');
+                }
+            }
+        }
+
+        if ($request->has('sales')) {
+            if ($request->sales) {
+                if (!$subadmin->hasPermissionTo('salesReport')) {
+                    $subadmin->givePermissionTo('salesReport');
+                }
+            } else {
+                if ($subadmin->hasPermissionTo('salesReport')) {
+                    $subadmin->revokePermissionTo('salesReport');
+                }
+            }
+        }
+
+        if ($request->has('invoice')) {
+            if ($request->invoice) {
+                if (!$subadmin->hasPermissionTo('einvoice')) {
+                    $subadmin->givePermissionTo('einvoice');
+                }
+            } else {
+                if ($subadmin->hasPermissionTo('einvoice')) {
+                    $subadmin->revokePermissionTo('einvoice');
+                }
+            }
+        }
+
+        if ($request->has('admin')) {
+            if ($request->admin) {
+                if (!$subadmin->hasPermissionTo('AdminUser')) {
+                    $subadmin->givePermissionTo('AdminUser');
+                }
+            } else {
+                if ($subadmin->hasPermissionTo('AdminUser')) {
+                    $subadmin->revokePermissionTo('AdminUser');
+                }
+            }
+        }
+
+        if ($request->has('billing')) {
+            if ($request->billing) {
+                if (!$subadmin->hasPermissionTo('myBilling')) {
+                    $subadmin->givePermissionTo('myBilling');
+                }
+            } else {
+                if ($subadmin->hasPermissionTo('myBilling')) {
+                    $subadmin->revokePermissionTo('myBilling');
+                }
+            }
+        }
+
+        if ($request->has('config')) {
+            if ($request->config) {
+                if (!$subadmin->hasPermissionTo('configuration')) {
+                    $subadmin->givePermissionTo('configuration');
+                }
+            } else {
+                if ($subadmin->hasPermissionTo('configuration')) {
+                    $subadmin->revokePermissionTo('configuration');
+                }
+            }
+        }
 
         return redirect()->back();
     }

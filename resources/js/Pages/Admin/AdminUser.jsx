@@ -18,7 +18,10 @@ import { useRef } from "react";
 import Tooltip from "@/Components/Tooltip";
 import EditAdmin from "./Partials/EditAdmin";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { DeleteLogoIcon } from "@/Components/Icon/Brand";
+import { AccessControlIcon, AdminProfileDIcon, DeleteLogoIcon } from "@/Components/Icon/Brand";
+import { hourglass } from 'ldrs';
+import NoSubAdmin from "@/Components/NoContent/NoSubAdmin.png"
+import toast from "react-hot-toast";
 
 export default function AdminUser() {
 
@@ -38,6 +41,7 @@ export default function AdminUser() {
     const [modalDetail, setModalDetail] = useState(null);
     const [deleteDetail, setDeleteDetail] = useState(null);
     const [dialogVisible, setDialogVisible] = useState(false);
+    hourglass.register()
 
     const { data, setData, post, processing, errors, reset } = useForm({
         search: '',
@@ -52,44 +56,271 @@ export default function AdminUser() {
 
     const fetchData = async () => {
         try {
-
-            const response = await axios.get('/admin/getSubAdmin');
-            
-            setAdmin(response.data);
-
-            if (response.data.length > 0) {
-                setAdminDetails(response.data[0]);
-            }
-            
+          const response = await axios.get('/admin/getSubAdmin');
+          setAdmin(response.data);
+    
+          if (response.data.length > 0) {
+            setAdminDetails(response.data[0]); // Set the first admin by default
+          }
         } catch (error) {
-            console.error('Error fetching data:', error);
+          console.error('Error fetching data:', error);
         } finally {
-            setIsLoading(false);
+          setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (adminDetails) {
+          const permissions = adminDetails.permissions_status;
+          setDashboardAccess(permissions.dashboard || false);
+          setItemAccess(permissions.itemListing || false);
+          setSalesAccess(permissions.salesReport || false);
+          setEinvoiceAccess(permissions.einvoice || false);
+          setAdminAccess(permissions.AdminUser || false);
+          setBillingAccess(permissions.myBilling || false);
+          setConfigAccess(permissions.configuration || false);
+        }
+    }, [adminDetails]);
 
     useEffect(() => {
         fetchData();
     }, []);
 
-    const handleChange = async (checked) => {
-            
-        // const id = rowData.id;
+    const handleDashboardAccessChange = async (checked) => {
+        setDashboardAccess(checked);
 
-        // try {
+        if (dashboardAccess != checked) {
+            try {
 
-        //     setEnabled(rowData.status === 'active' ? false : true);
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    dashboard: checked,
+                });
 
-        //     await axios.post('/item/update-status', {
-        //         id: id,
-        //     });
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the ‘Dashboard’.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the ‘Dashboard’.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
 
-        //     fetchData();
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+    };
 
-        // } catch (error) {
-        //     console.error('Error updating status:', error);
-        //     setEnabled(!checked);
-        // }
+    const handleItemAccessChange = async (checked) => {
+        setItemAccess(checked);
+
+        if (ItemAccess != checked) {
+            try {
+
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    item: checked,
+                });
+
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the \'Item Listing\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the \'Item Listing\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+
+    };
+
+    const handleSaleAccessChange = async (checked) => {
+        setSalesAccess(checked);
+
+        if (salesAccess != checked) {
+            try {
+
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    sales: checked,
+                });
+
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the \'Sales Report\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the \'Sales Report\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+
+    };
+
+    const handleInvoiceAccessChange = async (checked) => {
+        setEinvoiceAccess(checked);
+
+        if (einvoiceAccess != checked) {
+            try {
+
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    invoice: checked,
+                });
+
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the \'E-invoice\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the \'E-invoice\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+
+    };
+
+    const handleAdminAccessChange = async (checked) => {
+        setAdminAccess(checked);
+
+        if (adminAccess != checked) {
+            try {
+
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    admin: checked,
+                });
+
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the \'Admin User\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the \'Admin User\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+
+    };
+
+    const handleBillingAccessChange = async (checked) => {
+        setBillingAccess(checked);
+
+        if (billingAccess != checked) {
+            try {
+
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    billing: checked,
+                });
+
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the \'My Billing\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the \'My Billing\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+
+    };
+
+    const handleConfigAccessChange = async (checked) => {
+        setConfigAccess(checked);
+
+        if (configAccess != checked) {
+            try {
+
+                await axios.post('/admin/accessControl', {
+                    id: adminDetails.id,
+                    config: checked,
+                });
+
+                if (checked === true) {
+                    toast.success('Access Allowed.', {
+                        title: 'Access Allowed.',
+                        description: 'This admin will have access to the \'Configuration\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                } else if (checked === false) {
+                    toast.success('Access Denied.', {
+                        title: 'Access Denied.',
+                        description: 'This admin can no longer access the \'Configuration\'.',
+                        duration: 3000,
+                        variant: 'variant1',
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error updating:', error);
+            }
+        }
+
     };
 
     const adminAllDetails = (details) => {
@@ -184,7 +415,7 @@ export default function AdminUser() {
                                 {
                                     admin.map((subadmin, index) => (
                                         <div key={index} className={adminDetails.id === subadmin.id ? "p-5 flex gap-4 border border-gray-50 rounded-lg shadow-container bg-gray-50" : "p-5 flex gap-4 border border-gray-50 rounded-lg shadow-container bg-white"} onClick={() => adminAllDetails(subadmin)}>
-                                            <div className="w-1/6">
+                                            <div className="md:w-10 xl:w-1/6">
                                                 <img src={subadmin.profile_image ? subadmin.profile_image : 'https://st3.depositphotos.com/7048856/17963/i/1600/depositphotos_179637548-stock-photo-avatar-face-isolated-white-background.jpg'} className="w-10 h-10 rounded-full" alt="" />
                                             </div>
                                             <div className="flex flex-col gap-2 w-4/6">
@@ -205,14 +436,34 @@ export default function AdminUser() {
                             </div>
                         ) : (
                             <>
-                            
+                                {
+                                    isLoading ? (
+                                        <div className="bg-neutral-50 rounded-lg w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                            <l-hourglass
+                                                size="60"
+                                                bg-opacity="0.2"
+                                                speed="0.75" 
+                                                color="#0060ff" 
+                                            ></l-hourglass>
+                                        </div>
+                                    ) : (
+                                        <div className="w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                            <div>
+                                                <img src={NoSubAdmin} alt="no_admin" />
+                                            </div>
+                                            <div className="text-gray-400 text-sm font-medium">
+                                                No Sub Admin Created Yet
+                                            </div>
+                                        </div>
+                                    )
+                                }
                             </>
                         )
                     }
                     
                 </div>
                 {
-                    adminDetails && (
+                    adminDetails ? (
                         <>
                             <div className="w-1/3 hidden md:flex flex-col gap-5 ">
                                 <div className="border border-neutral-100 rounded-lg shadow-container p-5 flex flex-col gap-5 bg-white">
@@ -265,7 +516,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={dashboardAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setDashboardAccess}
+                                                onChange={handleDashboardAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -281,7 +532,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={ItemAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setItemAccess}
+                                                onChange={handleItemAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -297,7 +548,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={salesAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setSalesAccess}
+                                                onChange={handleSaleAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -313,7 +564,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={einvoiceAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setEinvoiceAccess}
+                                                onChange={handleInvoiceAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -329,7 +580,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={adminAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setAdminAccess}
+                                                onChange={handleAdminAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -345,7 +596,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={billingAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setBillingAccess}
+                                                onChange={handleBillingAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -361,7 +612,7 @@ export default function AdminUser() {
                                             <Switch
                                                 checked={configAccess}
                                                 // onChange={() => handleChange()}
-                                                onChange={setConfigAccess}
+                                                onChange={handleConfigAccessChange}
                                                 className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-secondary-500"
                                             >
                                                 <span
@@ -375,6 +626,31 @@ export default function AdminUser() {
                                 </div>
                             </div>
                         </>
+                    ) : (
+                        <div className="w-1/3 hidden md:flex flex-col gap-5 ">
+                            <div className="border border-neutral-100 rounded-lg shadow-container p-5 flex flex-col gap-5 bg-white h-[349px]">
+                                <div className="text-neutral-950 text-lg font-bold font-sf-pro">Profile</div>
+                                <div className="p-5 flex flex-col items-center justify-center gap-4 h-full">
+                                    <div className="p-2 rounded-full bg-gradient-to-b from-[#F1F5F6] to-[#fff]">
+                                        <AdminProfileDIcon />
+                                    </div>
+                                    <div className="text-gray-400 text-sm font-medium font-sf-pro text-center ">
+                                        Detail of sub admin will show up here...
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border border-neutral-100 rounded-lg shadow-container p-5 flex flex-col gap-5 bg-white h-[349px]">
+                                <div className="text-neutral-950 text-lg font-bold font-sf-pro">Access Control</div>
+                                <div className="p-5 flex flex-col items-center justify-center gap-4 h-full">
+                                    <div className="p-2 rounded-full bg-gradient-to-b from-[#F1F5F6] to-[#fff]">
+                                        <AccessControlIcon />
+                                    </div>
+                                    <div className="text-gray-400 text-sm font-medium font-sf-pro text-center ">
+                                        You can control the access of your sub-admin here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     )
                 }
 
