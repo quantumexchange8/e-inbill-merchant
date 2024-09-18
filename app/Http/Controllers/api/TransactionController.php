@@ -70,18 +70,25 @@ class TransactionController extends Controller
         $user = Auth::user();
 
         $getShift = ShiftTransaction::find($request->shift_id);
-       
-        $getShift->update([
-            'shift_closed' => now(),
-            'actual_cash' => $request->actual_cash ?? null,
-            'difference' => $request->actual_cash != null ? $getShift->expected_cash_amount - $request->actual_cash : null,
-            'status' => 'closed'
-        ]);
 
-        return response()->json([
-            'status' => 'succesfull closed shift',
-            'shift_details' => $getShift,
-        ], 200);
+        if ($getShift->status === 'opened') {
+            $getShift->update([
+                'shift_closed' => now(),
+                'actual_cash' => $request->actual_cash ?? null,
+                'difference' => $request->actual_cash != null ? $getShift->expected_cash_amount - $request->actual_cash : null,
+                'status' => 'closed'
+            ]);
+
+            return response()->json([
+                'status' => 'succesfull closed shift',
+                'shift_details' => $getShift,
+            ], 200);
+        } else {
+            return response()->json([
+                'shift_details' => $getShift->id,
+                'message' => $getShift->id . ', has closed'
+            ], 200);
+        }
 
     }
 
