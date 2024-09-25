@@ -286,7 +286,7 @@ class TransactionController extends Controller
 
         $transaction = Transaction::where('shift_transaction_id', $shift->id)
                 ->whereNot('transaction_type', 'shift')
-                ->with(['transaction_details', 'refund_details'])
+                ->with(['transaction_details', 'transaction_details.item', 'refund_details'])
                 ->get();
 
         return response()->json([
