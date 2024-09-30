@@ -498,6 +498,10 @@ export default function AdminUser() {
                                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{adminDetails.email}</div>
                                             </div>
                                             <div className="flex items-center gap-1">
+                                                <div className="text-neutral-950 text-sm font-sf-pro uppercase min-w-24">Role ID</div>
+                                                <div className="text-neutral-950 text-sm font-bold font-sf-pro">{adminDetails.role_id}</div>
+                                            </div>
+                                            <div className="flex items-center gap-1">
                                                 <div className="text-neutral-950 text-sm font-sf-pro uppercase min-w-24">DATE ADDED</div>
                                                 <div className="text-neutral-950 text-sm font-bold font-sf-pro">{formatDate(adminDetails.created_at)}</div>
                                             </div>

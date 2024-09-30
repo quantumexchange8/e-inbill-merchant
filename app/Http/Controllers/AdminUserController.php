@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Str;
 
 class AdminUserController extends Controller
 {
@@ -32,6 +33,7 @@ class AdminUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'subadmin',
+            'role_id' => 'SID' . Str::random(4),
             'merchant_id' => Auth::user()->merchant_id,
         ]);
 

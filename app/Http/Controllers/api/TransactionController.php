@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\OrderRefund;
 use App\Models\ShiftTransaction;
 use App\Models\Transaction;
@@ -139,6 +140,14 @@ class TransactionController extends Controller
         }
 
         foreach($request->sale_items as $sale_item) {
+            $checkItem = Item::find($sale_item['item_id']);
+
+            if ($checkItem) {
+                return response()->json([
+                    'error' => 'Invalid item ID: ' . $sale_item['item_id'],
+                ], 200);
+            } 
+
             $transaction_item = TransactionDetail::create([
                 'transaction_id' => $transaction->id,
                 'item_id' => $sale_item['item_id'],
