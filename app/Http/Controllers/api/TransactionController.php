@@ -140,13 +140,6 @@ class TransactionController extends Controller
         }
 
         foreach($request->sale_items as $sale_item) {
-            $checkItem = Item::find($sale_item['item_id']);
-
-            if ($checkItem) {
-                return response()->json([
-                    'error' => 'Invalid item ID: ' . $sale_item['item_id'],
-                ], 200);
-            } 
 
             $transaction_item = TransactionDetail::create([
                 'transaction_id' => $transaction->id,
