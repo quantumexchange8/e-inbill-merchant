@@ -161,6 +161,7 @@ class TransactionController extends Controller
         ], 200);
     }
 
+    // Refund Transaction
     public function refundOrders(Request $request)
     {
         $user = Auth::user();
@@ -201,6 +202,19 @@ class TransactionController extends Controller
 
         return response()->json([
             'status' => 'succesfull refund',
+        ], 200);
+    }
+
+    public function getRefundOrders(Request $request)
+    {
+
+        $user = Auth::user();
+
+        $refund = OrderRefund::where('user_id', $user->id)->with(['item', 'transaction'])->get();
+
+
+        return response()->json([
+            'refund_orders' => $refund,
         ], 200);
     }
 
