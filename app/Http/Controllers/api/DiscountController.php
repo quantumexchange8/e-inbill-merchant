@@ -15,10 +15,12 @@ class DiscountController extends Controller
     public function getDiscount()
     {
 
+        $user = Auth::user();
 
+        $discount = Discount::where('merchant_id', $user->merchant_id)->get();
 
         return response()->json([
-            'status' => 'succesfull created transaction',
+            'discount' => $discount,
         ], 200);
     }
 
@@ -59,11 +61,71 @@ class DiscountController extends Controller
         }
     }
 
-    public function deleteDiscount()
+    public function editDiscount(Request $request)
     {
-        
-        return response()->json([
-            'status' => 'succesfull created transaction',
-        ], 200);
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('discounts')->ignore($request->id),
+            ],
+            'value',
+            'type'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        } else {
+
+            $discount = Discount::find($request->id);
+
+            $discount->update([
+                'name' => $request->name,
+                'type' => $request->type,
+                'rate' => $request->value,
+                'status' => 'active',
+            ]);
+    
+            return response()->json([
+                'status' => 'succesfull updated discount',
+            ], 200);
+            
+        }
+
+    }
+
+    public function deleteDiscount(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'merchant_id' => [
+                'required',
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        } else {
+
+            $discount = Discount::find($request->id);
+
+            $discount->delete();
+    
+            return response()->json([
+                'status' => 'succesfull deleted discount',
+            ], 200);
+            
+        }
     }
 }

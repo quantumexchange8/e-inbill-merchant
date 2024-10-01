@@ -49,5 +49,6 @@ Route::group(["middleware" => ["auth:sanctum"]], function() {
     // discount
     Route::get('getDiscount', [DiscountController::class, 'getDiscount']);
     Route::post('addDiscount', [DiscountController::class, 'addDiscount']);
+    Route::post('editDiscount', [DiscountController::class, 'editDiscount']);
     Route::post('deleteDiscount', [DiscountController::class, 'deleteDiscount']);
 });
