@@ -10,6 +10,7 @@ class Discount extends Model
     use HasFactory;
 
     protected $fillable = [
+        'merchant_id',
         'name',
         'type',
         'rate',

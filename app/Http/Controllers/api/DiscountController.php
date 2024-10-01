@@ -45,6 +45,7 @@ class DiscountController extends Controller
         } else {
 
             $discount = Discount::create([
+                'merchant_id' => $user->merchant_id,
                 'name' => $request->name,
                 'type' => $request->type,
                 'rate' => $request->value,
