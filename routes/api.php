@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\DiscountController;
 use App\Http\Controllers\api\ItemController;
 use App\Http\Controllers\api\MerchantController;
 use App\Http\Controllers\api\TransactionController;
@@ -45,5 +46,8 @@ Route::group(["middleware" => ["auth:sanctum"]], function() {
     Route::post('payIn', [TransactionController::class, 'payIn']);
     Route::post('payOut', [TransactionController::class, 'payOut']);
 
-
+    // discount
+    Route::get('getDiscount', [DiscountController::class, 'getDiscount']);
+    Route::post('addDiscount', [DiscountController::class, 'addDiscount']);
+    Route::post('deleteDiscount', [DiscountController::class, 'deleteDiscount']);
 });
