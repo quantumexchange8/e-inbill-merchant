@@ -173,6 +173,10 @@ class TransactionController extends Controller
             'amount' => $request->refund_amount,
         ]);
         
+        return response()->json([
+            'status' => $request->itemRefund,
+        ], 200);
+
         if (is_array($request->itemRefund)) {
             foreach($request->itemRefund as $item) {
 
@@ -203,7 +207,7 @@ class TransactionController extends Controller
             return response()->json([
                 'status' => 'succesfull refund',
             ], 200);
-            
+
         } else {
             // Handle the case where itemRefund is not an array
             return response()->json(['error' => 'itemRefund should be an array'], 400);
