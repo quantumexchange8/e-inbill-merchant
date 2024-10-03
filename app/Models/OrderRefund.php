@@ -27,4 +27,9 @@ class OrderRefund extends Model
     {
         return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
     }
+
+    public function refundDetail(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(OrderRefundDetail::class, 'refund_id', 'id');
+    }
 }

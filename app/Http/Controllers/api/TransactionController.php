@@ -208,8 +208,7 @@ class TransactionController extends Controller
 
         $user = Auth::user();
 
-        $refund = OrderRefund::where('user_id', $user->id)->with(['item', 'transaction'])->get();
-
+        $refund = OrderRefund::where('user_id', $user->id)->with(['item', 'transaction', 'refundDetail'])->get();
 
         return response()->json([
             'refund_orders' => $refund,
