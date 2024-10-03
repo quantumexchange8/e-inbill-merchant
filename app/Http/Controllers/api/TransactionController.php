@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\OrderRefund;
+use App\Models\OrderRefundDetail;
 use App\Models\ShiftTransaction;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
@@ -184,7 +185,7 @@ class TransactionController extends Controller
                     'message' => 'this item is fully refunded'
                 ], 200);
             } else {
-                $refundDetails = OrderRefund::create([
+                $refundDetails = OrderRefundDetail::create([
                     'refund_id' => $refund->id,
                     'item_id' => $item['item_id'],
                     'refund_qty' => $item['qty'],
