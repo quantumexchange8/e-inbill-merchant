@@ -164,6 +164,13 @@ class TransactionController extends Controller
             ->first();
 
         $transaction = Transaction::find($request->id);
+
+        $refund = OrderRefund::create([
+            'transaction_id' => $transaction->id,
+            'user_id' => $user->id,
+            'refund_no' => RunningNumberService::getID('refund'),
+            'amount' => $request->refund_amount,
+        ]);
         
         foreach($request->itemRefund as $item) {
 
@@ -176,13 +183,11 @@ class TransactionController extends Controller
                     'message' => 'this item is fully refunded'
                 ], 200);
             } else {
-                $refund = OrderRefund::create([
-                    'transaction_id' => $transaction->id,
-                    'user_id' => $user->id,
-                    'refund_no' => RunningNumberService::getID('refund'),
+                $refundDetails = OrderRefund::create([
+                    'refund_id' => $refund->id,
                     'item_id' => $item['item_id'],
-                    'item_qty' => $item['qty'],
-                    'amount' => $item['amount'], 
+                    'refund_qty' => $item['qty'],
+                    'amount' => $item['amount'],
                 ]);
     
                 $transactionDetails->refunded_qty += $item['qty'];
