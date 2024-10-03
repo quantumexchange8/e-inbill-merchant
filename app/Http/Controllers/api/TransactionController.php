@@ -172,14 +172,13 @@ class TransactionController extends Controller
             'refund_no' => RunningNumberService::getID('refund'),
             'amount' => $request->refund_amount,
         ]);
-        
-        return response()->json([
-            'status' => $request->itemRefund,
-        ], 200);
 
-        if (is_array($request->itemRefund)) {
+        if ($request->itemRefund) {
             foreach($request->itemRefund as $item) {
-
+                return response()->json([
+                    'status' => $item,
+                ], 200);
+    
                 $transactionDetails = TransactionDetail::where('transaction_id', $transaction->id)
                         ->where('item_id', $item['item_id'])
                         ->first();
