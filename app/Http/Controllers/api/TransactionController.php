@@ -173,45 +173,35 @@ class TransactionController extends Controller
             'amount' => $request->refund_amount,
         ]);
         
-        return response()->json([
-            'status' => $request->itemRefund,
-        ], 200);
+        foreach($request->itemRefund as $item) {
 
-        if ($request->itemRefund) {
-            foreach($request->itemRefund as $item) {
-
-                $transactionDetails = TransactionDetail::where('transaction_id', $transaction->id)
-                        ->where('item_id', $item['item_id'])
-                        ->first();
-                if ($transactionDetails->quantity === $transactionDetails->refunded_qty) {
-                    return response()->json([
-                        'status' => 'failed',
-                        'message' => 'this item is fully refunded'
-                    ], 200);
-                } else {
-                    $refundDetails = OrderRefund::create([
-                        'refund_id' => $refund->id,
-                        'item_id' => $item['item_id'],
-                        'refund_qty' => $item['qty'],
-                        'amount' => $item['amount'],
-                    ]);
-        
-                    $transactionDetails->refunded_qty += $item['qty'];
-                    $transactionDetails->save();
-                }
+            $transactionDetails = TransactionDetail::where('transaction_id', $transaction->id)
+                    ->where('item_id', $item['item_id'])
+                    ->first();
+            if ($transactionDetails->quantity === $transactionDetails->refunded_qty) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'this item is fully refunded'
+                ], 200);
+            } else {
+                $refundDetails = OrderRefund::create([
+                    'refund_id' => $refund->id,
+                    'item_id' => $item['item_id'],
+                    'refund_qty' => $item['qty'],
+                    'amount' => $item['amount'],
+                ]);
+    
+                $transactionDetails->refunded_qty += $item['qty'];
+                $transactionDetails->save();
             }
-    
-            $transaction->refund_amount += $request->refund_amount;
-            $transaction->save();
-    
-            return response()->json([
-                'status' => 'succesfull refund',
-            ], 200);
-
-        } else {
-            // Handle the case where itemRefund is not an array
-            return response()->json(['error' => 'itemRefund should be an array'], 400);
         }
+
+        $transaction->refund_amount += $request->refund_amount;
+        $transaction->save();
+
+        return response()->json([
+            'status' => 'succesfull refund',
+        ], 200);
     }
 
     public function getRefundOrders(Request $request)
