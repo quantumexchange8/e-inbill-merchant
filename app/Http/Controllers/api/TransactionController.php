@@ -158,7 +158,6 @@ class TransactionController extends Controller
     public function refundOrders(Request $request)
     {
         $user = Auth::user();
-        $data = $request->all();
         
         $shift =  ShiftTransaction::where('merchant_id', $user->merchant_id)
             ->where('user_id', $user->id)
@@ -166,10 +165,6 @@ class TransactionController extends Controller
             ->first();
 
         $transaction = Transaction::find($request->id);
-
-        return response()->json([
-            'data' => $data,
-        ], 200);
 
         $refund = OrderRefund::create([
             'transaction_id' => $transaction->id,
