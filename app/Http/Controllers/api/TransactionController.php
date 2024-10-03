@@ -172,10 +172,6 @@ class TransactionController extends Controller
             'refund_no' => RunningNumberService::getID('refund'),
             'amount' => $request->refund_amount,
         ]);
-
-        return response()->json([
-            'data' => $refund
-        ], 200);
         
         foreach($request->itemRefund as $item) {
 
