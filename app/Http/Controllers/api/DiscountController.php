@@ -105,7 +105,7 @@ class DiscountController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
-            'merchant_id' => [
+            'id' => [
                 'required',
             ],
         ]);
