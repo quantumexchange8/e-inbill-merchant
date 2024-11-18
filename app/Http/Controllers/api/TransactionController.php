@@ -114,13 +114,16 @@ class TransactionController extends Controller
                 'payment_type' => 'cash',
                 'transaction_type' => 'sales',
                 'transaction_date' => now(),
+                'discount_id' => $request->discount_id ?? null,
+                'discount_amount' => $request->discount_amount,
+                'total_grand_amount' => $request->total_grand_amount,
             ]);
 
-            $shift->cash_amount += $request->total_amount;
-            $shift->expected_cash_amount += $request->total_amount;
+            $shift->cash_amount += $request->total_grand_amount;
+            $shift->expected_cash_amount += $request->total_grand_amount;
             $shift->gross_sales += $request->total_amount;
-            $shift->net_sales += $request->total_amount;
-            $shift->net_cash += $request->total_amount;
+            $shift->net_sales += $request->total_grand_amount;
+            $shift->net_cash += $request->total_grand_amount;
             $shift->save();
 
         } else {
@@ -132,6 +135,9 @@ class TransactionController extends Controller
                 'payment_type' => 'card',
                 'transaction_type' => 'sales',
                 'transaction_date' => now(),
+                'discount_id' => $request->discount_id ?? null,
+                'discount_amount' => $request->discount_amount,
+                'total_grand_amount' => $request->total_grand_amount,
             ]);
 
             $shift->gross_sales += $request->total_amount;

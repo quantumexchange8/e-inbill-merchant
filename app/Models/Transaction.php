@@ -23,6 +23,9 @@ class Transaction extends Model
         'refund_amount',
         'refund_status',
         'cash_management',
+        'discount_id',
+        'discount_amount',
+        'total_grand_amount',
     ];
 
     public function transaction_details(): \Illuminate\Database\Eloquent\Relations\hasMany
