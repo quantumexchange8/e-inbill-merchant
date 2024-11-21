@@ -206,6 +206,9 @@ class TransactionController extends Controller
         $transaction->refund_amount += $request->refund_amount;
         $transaction->save();
 
+        $shift->total_refund += $request->refund_amount;
+        $shift->save();
+
         return response()->json([
             'status' => 'succesfull refund',
         ], 200);
