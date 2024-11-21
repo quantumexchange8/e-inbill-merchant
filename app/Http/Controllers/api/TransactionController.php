@@ -124,6 +124,7 @@ class TransactionController extends Controller
             $shift->gross_sales += $request->total_amount;
             $shift->net_sales += $request->total_grand_amount;
             $shift->net_cash += $request->total_grand_amount;
+            $shift->total_discount += $request->discount_amount;
             $shift->save();
 
         } else {
