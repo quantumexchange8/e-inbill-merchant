@@ -250,7 +250,9 @@ class ItemController extends Controller
 
         $item = Item::find($request->item_id);
 
-        $item->delete();
+        $item->status = 'inactive';
+        $item->remark = 'deleted from app';
+        $item->save();
 
         return response()->json([
             'status' => 'succesfull deleted item',
