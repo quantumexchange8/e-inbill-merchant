@@ -49,21 +49,29 @@ class DashboardController extends Controller
 
     public function getTopSellingItem()
     {
-
         $topItems = TransactionDetail::query()
-                ->select('item_id', DB::raw('CAST(SUM(quantity) AS UNSIGNED) as total_quantity')) // Casting SUM to UNSIGNED INTEGER
-                ->groupBy('item_id')
-                ->orderBy('total_quantity', 'desc')
-                ->with(['item', 'item.category:id,name,color'])
-                ->take(10)
-                ->get();
+            ->select('item_id', DB::raw('CAST(SUM(quantity) AS UNSIGNED) as total_quantity')) // Casting SUM to UNSIGNED INTEGER
+            ->groupBy('item_id')
+            ->orderBy('total_quantity', 'desc')
+            ->with([
+                'item:id,name,category_id,image_color,image_shape', 
+                'item.category:id,name,color',
+            ])
+            ->whereHas('item', function ($query) {
+                $query->whereNull('deleted_at'); // Ensure the item is not soft-deleted
+            })
+            ->take(10)
+            ->get();
 
         $topItems->each(function ($topItem) {
-            $topItem->item->itemImgs = $topItem->item->getFirstMediaUrl('item_image');
+            if ($topItem->item) { // Check if the item exists (not null)
+                $topItem->item->itemImgs = $topItem->item->getFirstMediaUrl('item_image');
+            }
         });
 
         return response()->json($topItems);
     }
+
 
     public function getWeeklySales(Request $request)
     {

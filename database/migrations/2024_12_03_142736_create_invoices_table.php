@@ -11,23 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('branch')->nullable();
-            $table->unsignedBigInteger('shift_transaction_id');
+            $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('receipt_no')->nullable();
-            $table->string('refund_no')->nullable();
+            $table->unsignedBigInteger('transaction_id');
+            $table->string('invoice_no')->nullable();
+            $table->string('invoice_type')->nullable();
             $table->decimal('total_amount', 13, 2)->default('0.00');
-            $table->decimal('refund_amount', 13, 2)->nullable();
             $table->string('payment_type');
-            $table->decimal('paid_in', 13, 2)->default('0.00');
-            $table->decimal('paid_out', 13, 2)->default('0.00');
-            $table->string('cash_management')->nullable();
             $table->string('transaction_type');
             $table->dateTime('transaction_date');
             $table->string('invoice_status')->default(0);
-            $table->string('refund_status')->nullable();
             $table->string('remark');
             $table->softDeletes();
             $table->timestamps();
@@ -39,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('invoices');
     }
 };

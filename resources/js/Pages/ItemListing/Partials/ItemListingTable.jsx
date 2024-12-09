@@ -18,11 +18,11 @@ import toast from "react-hot-toast";
 import { hourglass } from 'ldrs';
 import { useMemo } from "react";
 
-export default function ItemListingTable({ type, searchVal, categories }) {
+export default function ItemListingTable({ type, searchVal, filters, categories }) {
 
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-
+    const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const menuRight = useRef(null);
     const [itemStatus, setItemStatus] = useState(data);
@@ -66,43 +66,6 @@ export default function ItemListingTable({ type, searchVal, categories }) {
         }
     }, [isLoading, data, type]);
 
-    const filteredSearchData = useMemo(() => {
-        if (!searchVal) return filteredData;
-        return filteredData.filter(item =>
-            item.name.toLowerCase().includes(searchVal.toLowerCase()) // Adjust filter logic as needed
-        );
-    }, [filteredData, searchVal]);
-
-    const columns = [
-        {
-            field: 'name',
-            header: 'Item Name',
-        },
-        {
-            field: 'price',
-            header: 'Price (RM)',
-        },
-        {
-            field: 'classification_code',
-            header: 'Classsification Code',
-        },
-        {
-            field: 'sku',
-            header: 'Sku',
-        },
-        {
-            field: 'cost',
-            header: 'Cost (RM)',
-        },
-        {
-            field: 'stock',
-            header: 'Stock',
-        },
-        {
-            field: 'barcode',
-            header: 'Barcode',
-        },
-    ];
 
     const handleSwitchChange = async (itemId) => {
 
@@ -374,6 +337,7 @@ export default function ItemListingTable({ type, searchVal, categories }) {
                                     scrollable 
                                     paginator
                                     removableSort
+                                    filters={filters}
                                     // paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                                     // currentPageReportTemplate="{first} to {last} of {totalRecords}" paginatorLeft={paginatorLeft} paginatorRight={paginatorRight}
                                     rowClassName={rowClassName}

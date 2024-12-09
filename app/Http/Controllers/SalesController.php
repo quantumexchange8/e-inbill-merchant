@@ -6,6 +6,7 @@ use App\Models\ShiftTransaction;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SalesController extends Controller
@@ -30,9 +31,12 @@ class SalesController extends Controller
 
     public function getSaleHistory()
     {
+        $user = Auth::user();
+
         $sales = Transaction::query()
+                ->where('merchant_id', $user->merchant_id)
                 ->where('transaction_type', 'sales')
-                ->with(['transaction_details', 'transaction_details.item'])
+                ->with(['transaction_details:id,transaction_id,item_id,quantity,amount', 'transaction_details.item:id,name,price,image_color,image_shape'])
                 ->latest()
                 ->get();
 

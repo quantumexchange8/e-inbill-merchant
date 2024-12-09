@@ -13,6 +13,7 @@ import ConfirmDialogMessage from "@/Components/ConfirmDialogMessage";
 import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
 import ItemListingTable from "./Partials/ItemListingTable";
 import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
+import { FilterMatchMode } from 'primereact/api';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -22,6 +23,7 @@ export default function ItemListing({ categories, items }) {
 
     const [selectedTab, setSelectedTab] = useState(0);
     const [refreshTable, setRefreshTable] = useState(false);
+    const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     const handleItemAdded = () => {
         setRefreshTable(prevState => !prevState);
@@ -38,6 +40,21 @@ export default function ItemListing({ categories, items }) {
             return items.filter(item => item.category_id !== null).length;
         }
         return items.filter(item => item.category_id === categoryId).length;
+    };
+
+    const [filters, setFilters] = useState({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    });
+
+    const onGlobalFilterChange = (e) => {
+        const value = e.target.value;
+        let _filters = { ...filters };
+
+        _filters['global'].value = value;
+
+        setFilters(_filters);
+        setGlobalFilterValue(value);
     };
 
     return (
@@ -62,10 +79,10 @@ export default function ItemListing({ categories, items }) {
                                 id="search"
                                 type="email"
                                 name="search"
-                                value={data.search}
+                                value={globalFilterValue}
                                 className="block w-full md:w-64"
                                 isFocused={false}
-                                handleChange={(e) => setData('search', e.target.value)}
+                                handleChange={onGlobalFilterChange}
                                 hasError={!!errors.search}
                                 placeholder='Search...'
                                 withIcon
@@ -154,7 +171,7 @@ export default function ItemListing({ categories, items }) {
                                     
                                 </Tab.List>
                                 <Tab.Panels>
-                                    <ItemListingTable key={refreshTable.toString()} type={selectedTab} searchVal={searchVal} categories={categories} />
+                                    <ItemListingTable key={refreshTable.toString()} type={selectedTab} searchVal={searchVal} filters={filters} categories={categories} />
                                 </Tab.Panels>
                             </Tab.Group>
                         </div>

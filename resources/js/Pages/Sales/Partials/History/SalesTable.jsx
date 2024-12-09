@@ -395,7 +395,7 @@ export default function SalesTable() {
                             </div>
                             <div className="px-5 flex flex-col gap-4">
                                 <div className="text-neutral-950 text-base font-sf-pro leading-none uppercase">ITEM</div>
-                                <div className="flex flex-col gap-4">
+                                <div className="flex flex-col gap-4 overflow-y-scroll max-h-44">
                                     {
                                         selectedDataModal.transaction_details.map((item, index) => (
                                             <div className="flex gap-5" key={index}>

@@ -21,4 +21,9 @@ class TransactionDetail extends Model
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
     }
+
+    public function transaction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
+    }
 }

@@ -43,19 +43,25 @@ export default function TopSellingItem() {
                                             <div className="bg-gradient-to-r from-[#FFF] via-[0.09%] to-[#FFF1F2] to-[135.96%] w-full flex items-center py-2 pr-5 gap-5 border-b border-gray-100">
                                                 <div className="w-14 h-14">
                                                     {
-                                                        topItem.item.itemImgs ? (
-                                                            <img src={topItem.item.itemImgs} alt="" />
-                                                        ) : (
+                                                        topItem.item && (
                                                             <>
-                                                                {topItem.item.image_shape === 'square' ? (
-                                                                    <SquareShape bgColor={topItem.item.image_color} />
-                                                                ) : topItem.item.image_shape === 'circle' ? (
-                                                                    <CircleShape bgColor={topItem.item.image_color}/>
-                                                                ) : topItem.item.image_shape === 'polygon' ? (
-                                                                    <PolygonShape bgColor={topItem.item.image_color}/>
-                                                                ) : (
-                                                                    <StarShape bgColor={topItem.item.image_color}/>
-                                                                )}
+                                                                {
+                                                                    topItem.item.itemImgs ? (
+                                                                        <img src={topItem.item.itemImgs} alt="" />
+                                                                    ) : (
+                                                                        <>
+                                                                            {topItem.item.image_shape === 'square' ? (
+                                                                                <SquareShape bgColor={topItem.item.image_color} />
+                                                                            ) : topItem.item.image_shape === 'circle' ? (
+                                                                                <CircleShape bgColor={topItem.item.image_color}/>
+                                                                            ) : topItem.item.image_shape === 'polygon' ? (
+                                                                                <PolygonShape bgColor={topItem.item.image_color}/>
+                                                                            ) : (
+                                                                                <StarShape bgColor={topItem.item.image_color}/>
+                                                                            )}
+                                                                        </>
+                                                                    )
+                                                                }
                                                             </>
                                                         )
                                                     }

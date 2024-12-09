@@ -9,6 +9,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
         md: 'max-w-[500px]',
         lg: 'sm:max-w-[800px]',
         xl: 'sm:w-full md:min-w-full lg:min-w-[1024px] xl:min-w-[1140px]',
+        full: 'sm:w-full md:min-w-full lg:min-w-[1024px] xl:min-w-full',
     }[maxWidth] ;
 
     const maxHeightClass = {
@@ -16,6 +17,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
         md: 'h-full md:max-h-[500px]',
         lg: 'min-h-[70vh] md:max-h-600px',
         xl: 'sm:h-full max-h-screen md:h-full lg:min-h-auto xl:min-h-[700px]',
+        full: 'sm:h-full max-h-screen md:h-full lg:min-h-auto xl:min-h-full',
     }[maxHeight];
 
     const handleOverlayClick = useCallback((e) => {

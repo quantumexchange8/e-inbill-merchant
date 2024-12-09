@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\InvoiceTransaction;
 use App\Models\Item;
 use App\Models\OrderRefund;
 use App\Models\OrderRefundDetail;
@@ -105,6 +106,7 @@ class TransactionController extends Controller
 
         if ($request->payment_type === 'cash') {
             $transaction = Transaction::create([
+                'merchant_id' => $user->merchant_id,
                 'shift_transaction_id' => $shift->id,
                 'user_id' => $user->id,
                 'receipt_no' => RunningNumberService::getID('order'),
@@ -127,8 +129,21 @@ class TransactionController extends Controller
             $shift->total_discount += $request->discount_amount;
             $shift->save();
 
+            $invoice = InvoiceTransaction::create([
+                'merchant_id' => $user->merchant_id,
+                'user_id' => $user->id,
+                'transaction_id' => $transaction->id,
+                'invoice_no' => RunningNumberService::getID('inv'),
+                'date_issue' => $transaction->created_at,
+                'total_amount' => $request->total_amount,
+                'payment_type' => $request->payment_type,
+                'invoice_type' => '01',
+                'invoice_status' => '0',
+            ]);
+
         } else {
             $transaction = Transaction::create([
+                'merchant_id' => $user->merchant_id,
                 'shift_transaction_id' => $shift->id,
                 'user_id' => $user->id,
                 'receipt_no' => RunningNumberService::getID('order'),
@@ -145,6 +160,19 @@ class TransactionController extends Controller
             $shift->net_sales += $request->total_amount;
             $shift->net_card += $request->total_amount;
             $shift->save();
+
+            $invoice = InvoiceTransaction::create([
+                'merchant_id' => $user->merchant_id,
+                'user_id' => $user->id,
+                'transaction_id' => $transaction->id,
+                'invoice_no' => RunningNumberService::getID('inv'),
+                'date_issue' => $transaction->created_at,
+                'total_amount' => $request->total_amount,
+                'payment_type' => $request->payment_type,
+                'invoice_type' => '01',
+                'invoice_status' => '0',
+            ]);
+
         }
 
         foreach($request->sale_items as $sale_item) {
@@ -253,6 +281,7 @@ class TransactionController extends Controller
         $shift->save();
 
         $payIn = Transaction::create([
+            'merchant_id' => $user->merchant_id,
             'shift_transaction_id' => $shift->id,
             'user_id' => $user->id,
             'payment_type' => 'cash',
@@ -292,6 +321,7 @@ class TransactionController extends Controller
         $shift->save();
 
         $payOut = Transaction::create([
+            'merchant_id' => $user->merchant_id,
             'shift_transaction_id' => $shift->id,
             'user_id' => $user->id,
             'payment_type' => 'cash',

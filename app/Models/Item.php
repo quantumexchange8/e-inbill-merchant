@@ -28,6 +28,7 @@ class Item extends Model implements HasMedia
         'image_code',
         'image_color',
         'image_shape',
+        'remark',
     ];
 
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo

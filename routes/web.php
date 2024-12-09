@@ -41,6 +41,21 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('invoice')->group(function () {
         Route::get('/e-invoice', [InvoiceController::class, 'eInvoice'])->name('invoice.e-invoice');
+
+        // Draft
+        Route::get('/getNormalInvoice', [InvoiceController::class, 'getNormalInvoice'])->name('invoice.getNormalInvoice');
+        Route::get('/getNormalInvoiceItem/{id}', [InvoiceController::class, 'getNormalInvoiceItem'])->name('invoice.getNormalInvoiceItem');
+        Route::get('/getConsolidateInvoice', [InvoiceController::class, 'getConsolidateInvoice'])->name('invoice.getConsolidateInvoice');
+        Route::post('/consolidateInvoice', [InvoiceController::class, 'consolidateInvoice'])->name('invoice.consolidateInvoice');
+        Route::post('/deleteInvoice', [InvoiceController::class, 'deleteInvoice'])->name('invoice.deleteInvoice');
+        Route::post('/archiveInvoice', [InvoiceController::class, 'archiveInvoice'])->name('invoice.archiveInvoice');
+
+        // Archive
+        Route::get('/getArchiveInvoice', [InvoiceController::class, 'getArchiveInvoice'])->name('invoice.getArchiveInvoice');
+        
+        // submitting einvoice 
+        Route::post('/submit-invoice', [InvoiceController::class, 'submitEinvoice'])->name('invoice.submit-invoice');
+
     });
 
      /**

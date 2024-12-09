@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             CurrencySeeder::class,
             StateSeeder::class,
+            MSICSubCategorySeeder::class,
+            EinvoiceSeeder::class,
+            TaxSeeder::class,
         ]);
 
         // User::factory()->create([

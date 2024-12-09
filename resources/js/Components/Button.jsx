@@ -23,7 +23,7 @@ export default ({
 
     switch (variant) {
         case 'secondary':
-            variantClasses = `bg-gray-100 text-xs hover:bg-gray-200 disabled:text-primary-700 disabled:bg-gray-100`
+            variantClasses = `bg-gray-100 text-xs text-primary-700 hover:bg-gray-200 disabled:text-primary-700 disabled:bg-gray-100`
             break
         case 'tertiary':
             variantClasses = `bg-transparent text-primary-700 text-xs border border-primary-700 rounded hover:border-primary-800 hover:bg-transparent hover:text-primary-800 disabled:text-primary-700 disabled:bg-transparent`

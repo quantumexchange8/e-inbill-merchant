@@ -34,6 +34,24 @@ const formatDate = (date, includeTime=false) => {
     }
 }
 
+const formatDMYDate = (date, includeTime = false) => {
+    const formattedDate = new Date(date);
+
+    const day = formattedDate.getDate().toString().padStart(2, '0');
+    const month = (formattedDate.getMonth() + 1).toString().padStart(2, '0'); // Add 1 because months are zero-indexed
+    const year = formattedDate.getFullYear();
+    const hours = formattedDate.getHours().toString().padStart(2, '0');
+    const minutes = formattedDate.getMinutes().toString().padStart(2, '0');
+    const seconds = formattedDate.getSeconds().toString().padStart(2, '0');
+
+    if (includeTime) {
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    } else {
+        return `${day}/${month}/${year}`;
+    }
+};
+
+
 const formatAmount = (amount) => {
     return parseFloat(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -41,5 +59,6 @@ const formatAmount = (amount) => {
 export {
     formatDateTime, 
     formatDate,
-    formatAmount
+    formatAmount,
+    formatDMYDate,
 };
