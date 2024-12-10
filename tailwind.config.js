@@ -130,6 +130,12 @@ export default {
                 'container': '3px 0px 7.2px 0px rgba(229, 229, 229, 0.31)',
                 'navbar': '0px 2px 4.6px 0px rgba(56, 97, 122, 0.04)',
                 'modal': '0px -4px 8.4px 0px rgba(0, 0, 0, 0.03)',
+            },
+            dropShadow: {
+                'delete' : [
+                    '0px 0px 6.6px rgba(249, 123, 128, 0.31)',
+                    '0px 11px 21.5px rgba(250, 57, 66, 0.36)',
+                ]
             }
         },
         fontSize: {

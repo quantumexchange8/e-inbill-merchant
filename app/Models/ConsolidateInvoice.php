@@ -18,8 +18,8 @@ class ConsolidateInvoice extends Model
         'remark',
     ];
 
-    public function transaction(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    public function transaction(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
+        return $this->HasMany(Transaction::class, 'consolidate_id', 'id');
     }
 }

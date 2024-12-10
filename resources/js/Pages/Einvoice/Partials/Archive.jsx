@@ -9,6 +9,8 @@ import { TieredMenu } from "primereact/tieredmenu";
 import { useRef } from "react";
 import { formatDMYDate } from "@/Composables";
 import { Calendar } from "primereact/calendar";
+import { hourglass } from 'ldrs';
+import ManageCategoryImgNoCont from "@/Components/NoContent/MangeCategory.png"
 
 export default function Archive() {
 
@@ -18,6 +20,7 @@ export default function Archive() {
     const [currentRowData, setCurrentRowData] = React.useState(null);
     const [dates, setDates] = useState(null);
     const menu = useRef(null);
+    hourglass.register()
 
     const fetchArchiveData = async () => {
         try {
@@ -88,17 +91,32 @@ export default function Archive() {
 
     const deleteAction = async () => {
 
-        // try {
+        try {
 
-        //     await axios.post('/invoice/deleteInvoice', {
-        //         invoices: selectedInvoice,
-        //     });
+            await axios.post(`/invoice/updateAction/${'delete'}`, {
+                invoices: selectedInvoice,
+            });
 
-        //     fetchDraftInvoice();
+            fetchArchiveData();
 
-        // } catch (error) {
-        //     console.error('Error updating status:', error);
-        // }
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    }
+
+    const draftAction = async () => {
+
+        try {
+
+            await axios.post(`/invoice/updateAction/${'draft'}`, {
+                invoices: selectedInvoice,
+            });
+
+            fetchArchiveData();
+
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
     }
 
     const actionTemplate = (rowData) => {
@@ -152,7 +170,7 @@ export default function Archive() {
                         </Button>
                     </div>
                     <div>
-                        <Button variant="gray-primary" size="lg" iconOnly className="gap-2" disabled={selectedInvoice === null ? true : false} >
+                        <Button variant="gray-primary" size="lg" iconOnly className="gap-2" disabled={selectedInvoice === null ? true : false} onClick={draftAction}>
                             <RecallIcon className='text-white' />
                             Show in Draft
                         </Button>
@@ -190,6 +208,27 @@ export default function Archive() {
                     </>
                 ) : (
                     <>
+                        {
+                            isLoading ? (
+                                <div className="bg-neutral-50 rounded-lg w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                    <l-hourglass
+                                        size="60"
+                                        bg-opacity="0.2"
+                                        speed="0.75" 
+                                        color="#0060ff" 
+                                    ></l-hourglass>
+                                </div>
+                            ) : (
+                                <div className="w-full flex flex-col justify-center items-center gap-4 min-h-[589px]">
+                                    <div>
+                                        <img src={ManageCategoryImgNoCont} alt="archive_content" />
+                                    </div>
+                                    <div className="text-gray-400 text-sm font-medium">
+                                        No Archive Invoice Found.
+                                    </div>
+                                </div>
+                            )
+                        }
                     </>
                 )
             }

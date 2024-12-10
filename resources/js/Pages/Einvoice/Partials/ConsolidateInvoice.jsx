@@ -20,7 +20,7 @@ export default function ConsolidateInvoice() {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedInvoice, setSelectedInvoice] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    const [expandedRows, setExpandedRows] = useState(null);
+    const [expandedRows, setExpandedRows] = useState([]);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
@@ -45,8 +45,8 @@ export default function ConsolidateInvoice() {
         fetchDraftInvoice();
     }, []);
 
-    const totalAmountTemplate = (transaction) => {
-
+    const dataTemplate = (transaction) => {
+        
         return (
             <div>
                 {formatDMYDate(transaction.created_at)}
@@ -54,14 +54,6 @@ export default function ConsolidateInvoice() {
         )
 
     }
-
-    const onRowExpand = (event) => {
-        // toast.current.show({ severity: 'info', summary: 'Product Expanded', detail: event.data.name, life: 3000 });
-    };
-
-    const onRowCollapse = (event) => {
-        // toast.current.show({ severity: 'success', summary: 'Product Collapsed', detail: event.data.name, life: 3000 });
-    };
 
     const orderNoTemplate = (data) => {
         return (
@@ -76,45 +68,8 @@ export default function ConsolidateInvoice() {
         )
     }
 
-    const txnNumTemplate = (data) => {
-
-        return (
-            <div>
-                {data.transaction && (
-                        <div>
-                            {data.transaction.receipt_no}
-                        </div>
-                    )
-                }
-            </div>
-        )
-    }
-
-    const amountTemplate = (data) => {
-        return (
-            <div>
-                {data.transaction && (
-                        <div>
-                            {data.transaction.total_amount}
-                        </div>
-                    )
-                }
-            </div>
-        )
-    }
-
     const selectSubAction = () => {
         
-    }
-
-    const subActionTemplate = (data) => {
-        return (
-            <div className="flex justify-center">
-                <div className="p-1 hover:bg-gray-50 rounded-full" onClick={selectSubAction}>
-                    <DotVerticalIcon className='text-gray-300' />
-                </div>
-            </div>
-        )
     }
 
     const selectAction = () => {
@@ -180,9 +135,13 @@ export default function ConsolidateInvoice() {
 
     const header = renderHeader();
 
-    const allowExpansion = (rowData) => {
-        return rowData.consolidate_sales.length > 0;
-    };
+    const headerTemplate = (data) => {
+        return (
+            <React.Fragment>
+                <span className="vertical-align-middle ml-2 font-bold line-height-3">{formatDMYDate(data.created_at)}</span>
+            </React.Fragment>
+        );
+    }
 
     return (
         <>
@@ -192,19 +151,29 @@ export default function ConsolidateInvoice() {
                         <div className="hidden md:block">
                             <DataTable
                                 value={draftTransaction}
-                                scrollable 
+                                scrollable
                                 paginator
                                 rows={10}
                                 rowsPerPageOptions={[5, 10, 25, 50]}
                                 removableSort
                                 tableStyle={{ minWidth: '50rem' }}
                                 selection={selectedInvoice}
-                                onSelectionChange={(e) => setSelectedInvoice(e.value.length === 0 ? null : e.value)}
+                                onSelectionChange={(e) =>
+                                    setSelectedInvoice(e.value.length === 0 ? null : e.value)
+                                }
                                 dataKey="id"
                                 header={header}
+                                rowGroupMode="subheader"
+                                groupRowsBy="transaction"
+                                sortMode="single"
+                                sortOrder={1}
+                                expandableRowGroups
+                                expandedRows={expandedRows}
+                                onRowToggle={(e) => setExpandedRows(e.data)}
+                                rowGroupHeaderTemplate={headerTemplate}
                             >
                                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                                <Column field="user_id" body={totalAmountTemplate} header="Date Issue" sortable style={{ minWidth: '120px' }}></Column>
+                                <Column field="user_id" body={dataTemplate} header="Date Issue" sortable style={{ minWidth: '120px' }}></Column>
                                 <Column field="receipt_no" header="Transaction No." sortable style={{ minWidth: '120px' }}></Column>
                                 <Column field="total_amount" header="Amount (RM)" sortable style={{ minWidth: '120px' }}></Column>
                                 <Column field="total_amount" header="" body={actionTemplate} style={{ minWidth: '30px' }}></Column>

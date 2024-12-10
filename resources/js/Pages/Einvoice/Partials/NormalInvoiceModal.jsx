@@ -24,9 +24,11 @@ export default function NormalInvoiceModal({ currentRowVal, viewModal, closeView
     hourglass.register()
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        id: currentRowVal.id || '',
-        invoice_no: currentRowVal.receipt_no || '',
-        issue_date: formatDateTime(currentRowVal.created_at) || '',
+        id: currentRowVal.id,
+        invoice_no: currentRowVal.receipt_no,
+        issue_date: formatDateTime(currentRowVal.created_at),
+        invoice_type: '',
+        invoice_version: '',
         currency: '',
         rate: '',
         supplier_name: '',
@@ -224,8 +226,13 @@ export default function NormalInvoiceModal({ currentRowVal, viewModal, closeView
                                     <div className="text-sm">Invoice Type</div>                                        
                                     <div>
                                         <InvoiceInput 
+                                            id="invoice_type"
+                                            type='text'
+                                            name="invoice_type"
+                                            value={data.invoice_type}
+                                            onChange={(e) => setData('invoice_type', e.target.value)}
                                             className='py-2 px-3 w-full'
-                                            
+                                            disabled={true}
                                         />
                                     </div>
                                 </div>
@@ -233,8 +240,13 @@ export default function NormalInvoiceModal({ currentRowVal, viewModal, closeView
                                     <div className="text-sm">Invoice Version</div>                                        
                                     <div>
                                         <InvoiceInput 
+                                            id="invoice_version"
+                                            type='text'
+                                            name="invoice_version"
+                                            value={data.invoice_version}
+                                            onChange={(e) => setData('invoice_version', e.target.value)}
                                             className='py-2 px-3 w-full'
-                                            
+                                            disabled={true}
                                         />
                                     </div>
                                 </div>

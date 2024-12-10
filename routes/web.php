@@ -8,6 +8,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SubmitInvoiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,9 +53,12 @@ Route::middleware('auth')->group(function () {
 
         // Archive
         Route::get('/getArchiveInvoice', [InvoiceController::class, 'getArchiveInvoice'])->name('invoice.getArchiveInvoice');
-        
+        Route::post('/draftInvoice', [InvoiceController::class, 'draftInvoice'])->name('invoice.draftInvoice');
+
+        Route::post('/updateAction/{type}', [InvoiceController::class, 'updateAction'])->name('invoice.updateAction');
+
         // submitting einvoice 
-        Route::post('/submit-invoice', [InvoiceController::class, 'submitEinvoice'])->name('invoice.submit-invoice');
+        Route::post('/submit-invoice', [SubmitInvoiceController::class, 'submitEinvoice'])->name('invoice.submit-invoice');
 
     });
 

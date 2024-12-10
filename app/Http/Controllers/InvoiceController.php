@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\ConsolidateInvoice;
 use App\Models\Merchant;
 use App\Models\ShiftTransaction;
+use App\Models\TaxpayerToken;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -28,7 +31,7 @@ class InvoiceController extends Controller
                 // ->where('user_id', $user->id)
                 ->where('invoice_status', 0)
                 ->where('merchant_id', $user->merchant_id)
-                ->with(['shiftSales', 'transaction_details']) // Eager load the related shift transaction
+                // ->with(['shiftSales', 'transaction_details']) // Eager load the related shift transaction
                 ->latest()
                 ->get();
 
@@ -39,12 +42,10 @@ class InvoiceController extends Controller
     public function getConsolidateInvoice()
     {
         $user = Auth::user();
-
-        $transactions = Transaction::whereIn('transaction_type', ['consolidate'])
-                // ->where('user_id', $user->id)
-                ->where('invoice_status', 0)
-                ->where('merchant_id', $user->merchant_id)
-                ->with(['shiftSales', 'consolidateSales', 'consolidateSales.transaction']) // Eager load the related shift transaction
+        
+        $transactions = ConsolidateInvoice::where('merchant_id', $user->merchant_id)
+                // ->with(['shiftSales', 'consolidateSales', 'consolidateSales.transaction']) // Eager load the related shift transaction
+                ->with(['transaction:consolidate_id,transaction_date,receipt_no,payment_type,total_amount,merchant_id'])
                 ->latest()
                 ->get();
 
@@ -54,10 +55,15 @@ class InvoiceController extends Controller
 
     public function consolidateInvoice(Request $request)
     {
-        dd($request->all());
+        
         $user = Auth::user();
 
         $totalAmount = 0;
+
+        $consolidate = ConsolidateInvoice::create([
+            'merchant_id' => $user->merchant_id,
+            'total_amount' => $totalAmount,
+        ]);
 
         foreach($request->invoices as $invoice) {
 
@@ -65,28 +71,13 @@ class InvoiceController extends Controller
 
             $updateTrans = Transaction::find($invoice['id']);
             $updateTrans->update([
-                'transaction_type' => 'grouped_consolidate'
-            ]);
-        }
-
-        $consolidate = Transaction::create([
-            'shift_transaction_id' => '0',
-            'user_id' => $user->id,
-            'receipt_no' => 'consolidate',
-            'total_amount' => $totalAmount,
-            'payment_type' => '-',
-            'transaction_type' => 'consolidate',
-            'transaction_date' => now(),
-        ]);
-
-        foreach($request->invoices as $invoice) {
-            $consolidateInvoice = ConsolidateInvoice::create([
-                'merchant_id' => $user->merchant_id,
                 'consolidate_id' => $consolidate->id,
-                'transaction_id' => $invoice['id'],
-                'total_amount' => $invoice['total_grand_amount'],
+                'invoice_status' => '4',
             ]);
         }
+
+        $consolidate->total_amount = $totalAmount;
+        $consolidate->save();
 
         return redirect()->back();
     }
@@ -124,41 +115,6 @@ class InvoiceController extends Controller
         return response()->json();
     }
 
-    public function deleteInvoice(Request $request)
-    {
-        
-        $datas = $request->all();
-        $user = Auth::user();
-
-        foreach ($request->invoices as $data) {
-            
-            $id = Transaction::find($data['id']);
-
-            $id->invoice_status = 3;
-            $id->handle_by = $user->id;
-            $id->save();
-        }
-
-        return redirect()->back();
-    }
-
-    public function archiveInvoice(Request $request)
-    {
-
-        $user = Auth::user();
-
-        foreach ($request->invoices as $data) {
-            
-            $id = Transaction::find($data['id']);
-
-            $id->invoice_status = 2;
-            $id->handle_by = $user->id;
-            $id->save();
-        }
-
-        return redirect()->back();
-    }
-
     // Archive function 
     public function getArchiveInvoice()
     {
@@ -175,4 +131,35 @@ class InvoiceController extends Controller
 
         return response()->json($transactions);
     }
+
+    public function updateAction(Request $request, $type)
+    {
+        
+        $user = Auth::user();
+        $merchantDetail = Merchant::find($user->merchant_id);
+        
+
+        foreach ($request->invoices as $data) {
+            
+            $id = Transaction::find($data['id']);
+
+            if ($type === 'draft') {
+                $id->invoice_status = 0;
+            }
+
+            if ($type === 'archive') {
+                $id->invoice_status = 2;
+            }
+
+            if ($type === 'delete') {
+                $id->invoice_status = 3;
+            }
+            
+            $id->handle_by = $user->id;
+            $id->save();
+        }
+
+        return redirect()->back();
+    }
+
 }

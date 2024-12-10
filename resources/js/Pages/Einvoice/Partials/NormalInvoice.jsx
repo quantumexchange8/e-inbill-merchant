@@ -20,6 +20,8 @@ import Modal from "@/Components/Modal";
 import TextInput from "@/Components/TextInput";
 import InvoiceInput from "@/Components/InvoiceInput";
 import NormalInvoiceModal from "./NormalInvoiceModal";
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { DeleteLogoIcon } from "@/Components/Icon/Brand";
 
 export default function NormalInvoice() {
 
@@ -32,6 +34,7 @@ export default function NormalInvoice() {
     const [viewModal, setViewModal] = useState(false);
     const [currentRowData, setCurrentRowData] = React.useState(null);
     const [dates, setDates] = useState(null);
+    const [dialogVisible, setDialogVisible] = useState(false);
     const menu = useRef(null);
 
     const [filters, setFilters] = useState({
@@ -161,11 +164,11 @@ export default function NormalInvoice() {
         setGlobalFilterValue(value);
     };
 
-    const deleteAction = async () => {
+    const acceptDelete = async () => {
 
         try {
 
-            await axios.post('/invoice/deleteInvoice', {
+            await axios.post(`/invoice/updateAction/${'delete'}`, {
                 invoices: selectedInvoice,
             });
 
@@ -174,12 +177,21 @@ export default function NormalInvoice() {
         } catch (error) {
             console.error('Error updating status:', error);
         }
+        
     }
+
+    const rejectDelete = () => {
+        setDialogVisible(false); // Close dialog without performing action
+    };
+    
+    const deleteAction = () => {
+        setDialogVisible(true);
+    };
 
     const archiveAction = async () => {
         try {
 
-            await axios.post('/invoice/archiveInvoice', {
+            await axios.post(`/invoice/updateAction/${'archive'}`, {
                 invoices: selectedInvoice,
             });
 
@@ -203,7 +215,21 @@ export default function NormalInvoice() {
         } catch (error) {
             console.error('Error updating status:', error);
         }
+    }
 
+    const submitAction = async () => {
+        
+        try {
+
+            await axios.post(`/invoice/submit-invoice`, {
+                invoices: selectedInvoice,
+            });
+
+            fetchDraftInvoice();
+
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
     }
 
     const renderHeader = () => {
@@ -241,7 +267,7 @@ export default function NormalInvoice() {
                         </Button>
                     </div>
                     <div>
-                        <Button size="lg" iconOnly className="gap-2" disabled={selectedInvoice === null ? true : false}>
+                        <Button size="lg" iconOnly className="gap-2" disabled={selectedInvoice === null ? true : false} onClick={submitAction}>
                             <SubmitIcon />
                             Submit
                         </Button>
@@ -319,6 +345,48 @@ export default function NormalInvoice() {
                     </>
                 )
             }
+
+            <ConfirmDialog 
+                visible={dialogVisible}
+                onHide={() => setDialogVisible(false)}
+                content={({ headerRef, contentRef, footerRef, hide, message }) => (
+                    <div className="relative flex flex-col gap-6 items-center p-5 rounded-lg border border-primary-200 max-w-[300px] bg-white">
+                        <div className="w-full flex justify-center h-3 pt-4">
+                            <div className="absolute top-[-42px] drop-shadow-delete ">
+                                <DeleteLogoIcon />
+                            </div>
+                        </div>
+                        <div className='flex flex-col gap-3 items-center'>
+                            <div className="font-bold text-lg text-neutral-950 font-sf-pro" ref={headerRef}>
+                                Delete this transaction?
+                            </div>
+                            <div className='text-neutral-950 text-base font-sf-pro text-center max-w-[250px]' ref={contentRef}>
+                                Selected transaction will be deleted permanently and this action cannot be undone.
+                            </div>
+                        </div>
+                        <div className="w-full flex items-center gap-2 " ref={footerRef}>
+                            <Button
+                                onClick={(event) => {
+                                    hide(event);
+                                    rejectDelete();
+                                }}
+                                size='lg'
+                                variant='gray-secondary'
+                                className="w-full flex justify-center font-sf-pro"
+                            >Cancel</Button>
+                            <Button
+                                onClick={(event) => {
+                                    hide(event);
+                                    acceptDelete();
+                                }}
+                                size='lg'
+                                variant="danger-primary"
+                                className="w-full flex justify-center font-sf-pro bg-[#0060FF]"
+                            >Delete</Button>
+                        </div>
+                    </div>
+                )}
+            />
         </>
     )
 }

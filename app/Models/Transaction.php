@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     // 1: submitted
     // 2: archive
     // 3: deleted
+    // 4: consilidated
 
 // submitted status:
     // pending: after submitted pending validate
@@ -43,6 +44,7 @@ class Transaction extends Model
         'total_grand_amount',
         'handle_by',
         'invoice_status',
+        'consolidate_id',
     ];
 
     public function transaction_details(): \Illuminate\Database\Eloquent\Relations\hasMany
@@ -60,8 +62,8 @@ class Transaction extends Model
         return $this->belongsTo(ShiftTransaction::class, 'shift_transaction_id', 'id');
     }
 
-    public function consolidateSales(): \Illuminate\Database\Eloquent\Relations\hasMany
-    {
-        return $this->hasMany(ConsolidateInvoice::class, 'consolidate_id', 'id');
-    }
+    // public function consolidateSales(): \Illuminate\Database\Eloquent\Relations\hasMany
+    // {
+    //     return $this->hasMany(ConsolidateInvoice::class, 'consolidate_id', 'id');
+    // }
 }
