@@ -87,7 +87,7 @@ class SubmitInvoiceController extends Controller
                 ]);
 
                 if ($response->successful()) {
-                    Log::debug('token ', ['response' => $response->json()]);
+                    // Log::debug('token ', ['response' => $response->json()]);
                     $getToken = TaxpayerToken::create([
                         'merchant_id' => $user->merchant_id,
                         'token' => $response['access_token'],
