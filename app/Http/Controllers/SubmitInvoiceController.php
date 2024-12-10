@@ -77,7 +77,7 @@ class SubmitInvoiceController extends Controller
                 
 
             } else {
-                $preprod = 'https://connect/token';
+                $preprod = 'https://preprod-api.myinvois.hasil.gov.my/connect/token';
 
                 $response = Http::post($preprod, [
                     'client_id' => $merchantDetail->irbm_client_id,
