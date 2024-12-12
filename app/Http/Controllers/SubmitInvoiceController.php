@@ -98,7 +98,10 @@ class SubmitInvoiceController extends Controller
                     $status = $response->status();
                     $error = $response->body();
 
-                    Log::debug('response error', $status, $error);
+                    Log::debug('response error', [
+                        'status' => $status, 
+                        'error' => $error
+                    ]);
                 }
             }
         
