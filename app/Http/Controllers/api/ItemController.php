@@ -226,7 +226,7 @@ class ItemController extends Controller
         ]);
 
         if($request->stock != null) {
-            $item->stock += $request->stock;
+            $item->stock = $request->stock;
             $item->save();
         }
 
