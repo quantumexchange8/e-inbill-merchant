@@ -343,17 +343,24 @@ class TransactionController extends Controller
         $user = Auth::user();
         $shift =  ShiftTransaction::where('merchant_id', $user->merchant_id)
             ->where('user_id', $user->id)
-            ->where('status', 'opened')
             ->first();
 
-        $transaction = Transaction::where('shift_transaction_id', $shift->id)
-                ->whereNot('transaction_type', 'shift')
-                ->with(['transaction_details', 'transaction_details.item', 'refund_details'])
-                ->get();
+        if ($shift) {
+            $transaction = Transaction::where('shift_transaction_id', $shift->id)
+                    ->whereNot('transaction_type', 'shift')
+                    ->with(['transaction_details', 'transaction_details.item', 'refund_details'])
+                    ->get();
+    
+            return response()->json([
+                'status' => 'success',
+                'transaction_history' => $transaction,
+            ], 200);
+        }
 
         return response()->json([
             'status' => 'success',
-            'transaction_history' => $transaction,
+            'message' => 'No shift transaction found',
         ], 200);
+
     }
 }
