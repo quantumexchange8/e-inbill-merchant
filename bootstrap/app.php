@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             // \App\Http\Middleware\CheckPermission::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-            \App\Console\Commands\ClearLogs::class,
+            // \App\Console\Commands\ClearLogs::class,
         ]);
 
         //
