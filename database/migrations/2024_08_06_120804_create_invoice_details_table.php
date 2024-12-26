@@ -13,14 +13,24 @@ return new class extends Migration
     {
         Schema::create('invoice_details', function (Blueprint $table) {
             $table->id();
+            $table->string('prefix');
+            $table->string('invoice_no');
             $table->string('company_name');
+            $table->string('register_no');
+            $table->string('msic_no');
+            $table->string('sst_no');
+            $table->string('tin_no');
+            $table->string('business_activity_desc');
+            $table->string('classification_code');
             $table->string('email');
+            $table->string('dial_code');
+            $table->string('phone');
             $table->string('contact_no');
             $table->string('company_address');
             $table->string('post_code');
             $table->string('area');
             $table->string('state');
-            $table->string('note');
+            $table->longText('note');
             $table->timestamps();
         });
     }

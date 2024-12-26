@@ -13,8 +13,6 @@ export default function EditAdmin({
     closeSub,
     modalDetail,
 }) {
-
-    console.log(modalDetail)
     
     const [previewImage, setPreviewImage] = useState(modalDetail.profile_image || null);
     

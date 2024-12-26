@@ -46,7 +46,6 @@ export default function MyInvois({ merchant }) {
             onSuccess: () => {
                 setEditMerchant(false);
                 setIsLoading(false);
-                fetchData();
                 toast.success('MyInvois details updated successfully.', {
                     title: 'MyInvois details updated successfully.',
                     duration: 3000,
