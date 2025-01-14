@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('subscription_term_id');
             $table->unsignedBigInteger('billing_interval_id');
             $table->string('discount_type');
+            $table->string('renewal_term');
             $table->string('renewal_type');
             $table->string('late_payment_charges');
             $table->string('status');
