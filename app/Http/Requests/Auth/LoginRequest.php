@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Merchant;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,16 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'role_id' => trans('auth.failed'),
+            ]);
+        }
+
+        $checkMerchant = Merchant::find(Auth::user()->merchant_id);
+
+        if ($checkMerchant->status === 'terminated') {
+            // Log the user out and throw an error if the role is not 'admin'
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'role_id' => 'Account not exist, please try again.',
             ]);
         }
 

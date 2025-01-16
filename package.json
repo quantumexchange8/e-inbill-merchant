@@ -21,10 +21,12 @@
     },
     "dependencies": {
         "@heroicons/react": "^2.1.5",
+        "@lottiefiles/react-lottie-player": "^3.6.0",
         "chart.js": "^4.4.4",
         "date-fns": "^3.6.0",
         "dayjs": "^1.11.12",
         "ldrs": "^1.0.2",
+        "lottie-react": "^2.4.0",
         "primeicons": "^7.0.0",
         "primereact": "^10.8.5",
         "react-chartjs-2": "^5.2.0",

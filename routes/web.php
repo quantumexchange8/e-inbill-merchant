@@ -122,6 +122,11 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('billing')->group(function () {
         Route::get('/my-billing', [BillingController::class, 'myBilling'])->name('billing.my-billing');
+        Route::get('/getSubscription', [BillingController::class, 'getSubscription'])->name('billing.getSubscription');
+        Route::get('/getUpComingDue', [BillingController::class, 'getUpComingDue'])->name('billing.getUpComingDue');
+        Route::get('/getInvoiceListing', [BillingController::class, 'getInvoiceListing'])->name('billing.getInvoiceListing');
+        Route::get('/getQuotaListing', [BillingController::class, 'getQuotaListing'])->name('billing.getQuotaListing');
+        
     });
 
     /**

@@ -39,6 +39,7 @@ class ConfigurationController extends Controller
         $merchantDetails = Merchant::find($merchant->merchant_id);
 
         $merchantDetails->update([
+            
             'merchant_name' => $request->merchant_name,
             'registration_no' => $request->registration_no,
             'classification_id' => $request->classification_id['id'],

@@ -15,7 +15,7 @@ export default {
         extend: {
             backgroundImage: {
                 'gradient-116': 'linear-gradient(116deg, var(--tw-gradient-stops))',
-                'bg-image': "url('/assets/einbill.png')"
+                'bg-image': "url('/assets/einbill.png')",
             },
             fontFamily: {
                 'sf-pro': ['SF Pro', 'sans-serif'],

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -49,19 +51,25 @@ class DashboardController extends Controller
 
     public function getTopSellingItem()
     {
+
+        $userMerchantID = Auth::user()->merchant_id;
+
         $topItems = TransactionDetail::query()
-            ->select('item_id', DB::raw('CAST(SUM(quantity) AS UNSIGNED) as total_quantity')) // Casting SUM to UNSIGNED INTEGER
-            ->groupBy('item_id')
-            ->orderBy('total_quantity', 'desc')
-            ->with([
-                'item:id,name,category_id,image_color,image_shape', 
-                'item.category:id,name,color',
-            ])
-            ->whereHas('item', function ($query) {
-                $query->whereNull('deleted_at'); // Ensure the item is not soft-deleted
-            })
-            ->take(10)
-            ->get();
+                ->select('transaction_details.item_id', DB::raw('SUM(transaction_details.quantity) as total_quantity'))
+                ->join('transactions', 'transactions.id', '=', 'transaction_details.transaction_id')
+                ->join('shift_transactions', 'shift_transactions.id', '=', 'transactions.shift_transaction_id')
+                ->where('shift_transactions.merchant_id', $userMerchantID) // Filter by merchant_id
+                ->groupBy('transaction_details.item_id')
+                ->orderBy('total_quantity', 'desc')
+                ->with([
+                    'item:id,name,category_id,image_color,image_shape',
+                    'item.category:id,name,color',
+                ])
+                ->whereHas('item', function ($query) {
+                    $query->whereNull('deleted_at'); // Ensure the item is not soft-deleted
+                })
+                ->take(10)
+                ->get();
 
         $topItems->each(function ($topItem) {
             if ($topItem->item) { // Check if the item exists (not null)

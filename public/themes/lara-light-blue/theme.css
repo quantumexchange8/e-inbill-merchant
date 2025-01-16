@@ -6157,19 +6157,19 @@
   line-height: 1.5rem;
 }
 .p-badge.p-badge-secondary {
-  background-color: #64748B;
+  background-color: #F1F5F6;
   color: #ffffff;
 }
 .p-badge.p-badge-success {
-  background-color: #22C55E;
+  background-color: #E4FFE5;
   color: #ffffff;
 }
 .p-badge.p-badge-info {
-  background-color: #3B82F6;
+  background-color: #D6EEFF;
   color: #ffffff;
 }
 .p-badge.p-badge-warning {
-  background-color: #F59E0B;
+  background-color: #F9EFC8;
   color: #ffffff;
 }
 .p-badge.p-badge-danger {
