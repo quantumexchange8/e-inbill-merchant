@@ -18,9 +18,9 @@ class ItemController extends Controller
     public function itemListing()
     {
 
-        $categories = Category::get();
+        $categories = Category::where('merchant_id', Auth::user()->merchant_id)->get();
 
-        $items = Item::get();
+        $items = Item::where('merchant_id', Auth::user()->merchant_id)->get();
 
         return Inertia::render('ItemListing/ItemListing', [
             'categories' => $categories,
@@ -66,7 +66,7 @@ class ItemController extends Controller
     public function getItem(Request $request)
     {
 
-        $item = Item::query()->with(['category', 'classification']);
+        $item = Item::query()->with(['category', 'classification'])->where('merchant_id', Auth::user()->merchant_id);
 
         $datas = $item->get();
 

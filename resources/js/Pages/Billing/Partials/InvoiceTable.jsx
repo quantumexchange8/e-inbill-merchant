@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useState } from "react";
 import { useEffect } from "react";
 import { formatAmount, formatDate } from "@/Composables";
-import { DotMenuIcon } from "@/Components/Icon/outline";
+import { DeleteIcon, DotMenuIcon, EditIcon, TabMenuIcon } from "@/Components/Icon/outline";
 import { TableLoadingTemplate } from "../TableLoadingTemplate";
 import NoContent from "@/Components/NoContent/NoContent.png"
 import { Badge } from "primereact/badge";
@@ -13,6 +13,8 @@ import { InputIcon } from "primereact/inputicon";
 import TextInput from "@/Components/TextInput";
 import { FilterMatchMode } from 'primereact/api';
 import { Calendar } from "primereact/calendar";
+import Button from "@/Components/Button";
+import { TieredMenu } from "primereact/tieredmenu";
 
 export default function InvoiceTable() {
 
@@ -20,6 +22,7 @@ export default function InvoiceTable() {
     const [getInvoiceListing, setGetInvoiceListing] = useState([]);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [dates, setDates] = useState(null);
+    const menu = useRef(null);
 
     const fetchInvoice = async () => {
         try {
@@ -120,10 +123,71 @@ export default function InvoiceTable() {
         )
     }
 
-    const actionTemplate = (data) => {
+    const [currentRowData, setCurrentRowData] = React.useState(null);
+
+    const handleMenuToggle = (e, rowData) => {
+        setCurrentRowData(rowData);
+        menu.current.toggle(e);
+    };
+
+    const actionItemRenderer = (item) => {
+        const handleClick = () => {
+            if (item.label === 'Edit') {
+                editRow(currentRowData.id, currentRowData);
+            } else if (item.label === 'Delete') {
+                deleteRow(currentRowData.id)
+            }
+        };
+    
         return (
-            <div className="flex justify-center items-center cursor-pointer">
-                <DotMenuIcon />
+            <a 
+                key={item.label}
+                className="flex justify-between align-items-center p-menuitem-link py-2 px-3 hover:rounded-md" 
+                onClick={handleClick}
+            >
+                <span className={item.label === 'Delete' ? "text-sm font-bold text-error-600" : "text-sm font-bold text-neutral-950"}>
+                    {item.label}
+                </span>
+                {item.icon && <span className="mr-2">{item.icon}</span>}
+            </a>
+        );
+    };
+
+    const actionItem = (rowData) => [
+        {
+            label: 'Edit',
+            icon: <EditIcon />,
+            template: actionItemRenderer
+        },
+        {
+            label: 'Delete',
+            icon: <DeleteIcon />,
+            template: actionItemRenderer
+        },
+    ];
+
+    const actionTemplate = (rowData) => {
+        return (
+            <div className="flex justify-center w-5 h-5 rounded-full hover:bg-gray-100">
+                <Button 
+                    label="Show" 
+                    onClick={(e) => handleMenuToggle(e, rowData)}
+                    variant="tertiary"
+                    className="border-0"
+                >
+                    <TabMenuIcon />
+                </Button>
+                
+                <TieredMenu 
+                    model={actionItem()} 
+                    popup 
+                    ref={menu} 
+                    breakpoint="767px" 
+                    pt={{
+                        root: "p-1",
+                        menuitem: "hover:bg-gray-100 "
+                    }}
+                />
             </div>
         )
     }

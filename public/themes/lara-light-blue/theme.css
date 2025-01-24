@@ -760,8 +760,8 @@
 .p-dropdown:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #BFDBFE;
-  border-color: #3B82F6;
+  box-shadow: 0 0 0 0.2rem #FFFFFF;
+  border-color: #0060ff;
 }
 .p-dropdown.p-dropdown-clearable .p-dropdown-label {
   padding-right: 1.75rem;
@@ -769,7 +769,7 @@
 .p-dropdown .p-dropdown-label {
   background: transparent;
   border: 0 none;
-  padding: 4px 12px;
+  padding: 14px 16px;
 }
 .p-dropdown .p-dropdown-label.p-placeholder {
   color: #6c757d;
@@ -779,7 +779,7 @@
   box-shadow: none;
 }
 .p-dropdown .p-dropdown-trigger {
-  background: transparent;
+  background: #F8FAFA;
   color: #6c757d;
   width: 30px;
   border-top-right-radius: 6px;

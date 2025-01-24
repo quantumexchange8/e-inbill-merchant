@@ -297,7 +297,7 @@ export default function EditItem({ editModal, setEditModal, editRow, closeEditRo
                                         optionValue="id"
                                         placeholder="Select Classification" 
                                         filter 
-                                        className="w-full md:w-14rem" 
+                                        className="w-full md:w-14rem"
                                     />
                                     <InputError message={errors.classification_id} className="mt-2" />
                                 </div>

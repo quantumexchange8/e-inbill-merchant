@@ -14,7 +14,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
 
     const maxHeightClass = {
         sm: 'sm:h-[500px] xl:h-[700px]',
-        md: 'h-full md:max-h-[500px]',
+        md: 'h-full md:max-h-auto',
         lg: 'min-h-[70vh] md:max-h-600px',
         xl: 'sm:h-full max-h-screen md:h-full lg:min-h-auto xl:min-h-[700px]',
         full: 'sm:h-full max-h-screen md:h-full lg:min-h-auto xl:min-h-full',

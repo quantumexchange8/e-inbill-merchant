@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +23,17 @@ Route::get('/components/buttons', function () {
 })->middleware(['auth', 'verified'])->name('components.buttons');
 
 Route::middleware('auth')->group(function () {
+    /**
+     * ==============================
+     *           Global use
+     * ==============================
+     */
+    Route::get('/getState', [GlobalController::class, 'getState'])->name('getState');
+    Route::get('/getTax', [GlobalController::class, 'getTax'])->name('getTax');
+    Route::get('/getDiscount', [GlobalController::class, 'getDiscount'])->name('getDiscount');
+    Route::get('/getPolicySetting', [GlobalController::class, 'getPolicySetting'])->name('getPolicySetting');
+    Route::get('/addOnQuota', [GlobalController::class, 'addOnQuota'])->name('addOnQuota');
+    Route::get('/getSubscription', [GlobalController::class, 'getSubscription'])->name('getSubscription');
 
     /**
      * ==============================
@@ -126,6 +138,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/getUpComingDue', [BillingController::class, 'getUpComingDue'])->name('billing.getUpComingDue');
         Route::get('/getInvoiceListing', [BillingController::class, 'getInvoiceListing'])->name('billing.getInvoiceListing');
         Route::get('/getQuotaListing', [BillingController::class, 'getQuotaListing'])->name('billing.getQuotaListing');
+        Route::post('/upgradeQuota', [BillingController::class, 'upgradeQuota'])->name('billing.upgradeQuota');
         
     });
 
